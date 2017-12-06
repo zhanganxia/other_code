@@ -1,0 +1,13 @@
+body {
+    background-color: yellow;
+}
+
+#skin01,
+#skin02 {
+    font-size: 30px;
+    width: 200px;
+    height: 200px;
+    background-color: royalblue;
+    color: darkorchid;
+    border-radius: 50%;
+}

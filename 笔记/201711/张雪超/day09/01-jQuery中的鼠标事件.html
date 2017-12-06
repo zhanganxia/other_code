@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery中的鼠标事件02</title>
+    <style>
+        .box {
+            width: 400px;
+            height: 400px;
+            /* dashed:虚线   dotted：点线*/
+            border: 1px solid black;
+            margin: 50px auto 0;
+        }
+        
+        .con {
+            width: 200px;
+            height: 200px;
+            background-color: green;
+            margin: 50px auto 0;
+        }
+    </style>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function() {
+            var $box = $('.box');
+            //mouseover mouseout存在的问题 如果鼠标在父子身上来回移动时，会导致事件重复触发
+            // 鼠标摸到大div时让它向下走100
+            // $box.mouseover(function() {
+            //     $box.animate({
+            //         'margin-top': 100
+            //     });
+            // })
+
+            // // 鼠标离开时让它回到原本的位置
+            // $box.mouseout(function() {
+            //     $box.animate({
+            //         'margin-top': 50
+            //     });
+            // })
+
+            // 鼠标摸到元素 进入子元素时不会重复触发
+            $box.mouseenter(function() {
+                $box.animate({
+                    'margin-top': 100
+                });
+            })
+
+            // 鼠标离开元素
+            $box.mouseleave(function() {
+                $box.animate({
+                    'margin-top': 50
+                });
+            })
+
+
+
+            // $box.hover(function() {
+
+            //     $box.animate({
+            //         'margin-top': 100
+            //     });
+            // }, function() {
+            //     $box.animate({
+            //         'margin-top': 50
+            //     });
+            // })
+
+        })
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="con"></div>
+    </div>
+</body>
+
+</html>

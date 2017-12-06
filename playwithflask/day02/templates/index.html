@@ -1,0 +1,16 @@
+<!-- <p>the local date and time is{{moment(current_time).format('LLL')}}.</p>
+<p>That was {{moment(current_time).fromNow(refresh=True)}}</p> -->
+
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Hello,{% if name %}{{name}}{% else %}Strange{% endif %}</h1>
+</div>
+{{wtf.quick_form(form) }}
+{% endblock %}
+<!-- format('LLL')根据客户端的时区和区域设置渲染日期和时间 -->
+<!-- fromNow()渲染相对时间戳，而且会随着时间的推移自动刷新显示时间 -->

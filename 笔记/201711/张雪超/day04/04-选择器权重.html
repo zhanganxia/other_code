@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    /* 选择器的权重：权重值
+    1.标签选择器      1
+    2.类和伪类选择器  10
+    3.id 选择器      100
+    4.行内式写法      1000
+    5.！important 修饰的属性 10000
+    6.层级选择器的权重值会进行累加
+    7.组选择器的权重不会累加
+     */
+    
+    div {
+        color: red !important;
+    }
+    
+    .con {
+        color: green;
+    }
+    /* 层级选择器 权重累加 */
+    
+    .box .con {
+        color: gold;
+    }
+    /* 7.组选择器的权重不会累加
+    .box,.con{
+
+    } */
+    
+    #box1 {
+        color: purple;
+    }
+</style>
+
+<body>
+    <div class="box">
+        <div class="con" id="box1" style="color:blue">
+            div标签
+        </div>
+    </div>
+</body>
+
+</html>

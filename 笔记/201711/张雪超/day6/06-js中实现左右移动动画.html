@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = function() {
+            var oDiv = document.getElementById('box'),
+                // div要移动的位置
+                iSpeed = 0,
+                // 每次要移动的距离
+                iMove = 5;
+
+            function fnMove() {
+                iSpeed += iMove;
+                if (iSpeed > 600) {
+                    iMove = -5;
+                    // 归为 不要走到605
+                    iSpeed = 600;
+                    return
+                } else if (iSpeed < 0) {
+                    iMove = 5;
+                    // 归位 不要走到-5
+                    iSpeed = 0;
+                    return
+                }
+
+                // 修改样式 left；
+                oDiv.style.left = iSpeed + 'px';
+            }
+            setInterval(fnMove, 30);
+        }
+    </script>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            border-radius: 100px;
+            background-color: green;
+            position: absolute;
+            left: 0px;
+            top: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" id="box">
+
+    </div>
+</body>
+
+</html>

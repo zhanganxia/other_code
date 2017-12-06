@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var $input = $('.input2');
+            // 让文本输入框自动成为焦点 一显示就可以输入
+            // $input.focus();
+
+            // 失去焦点，输入完成不能再输入的那一刻
+            $input.blur(function() {
+                console.log('验证用户输入的数据，验证用户在文本输入框中输入的内容是否满足规则');
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <input type="text" class="input1">
+    <input type="text" class="input2">
+    <input type="text">
+</body>
+
+</html>

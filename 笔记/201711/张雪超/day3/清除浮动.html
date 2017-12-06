@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .clearfix::before,
+    .clearfix::after {
+        content: '';
+        display: table;
+    }
+    
+    .clearfix::after {
+        clear: both;
+    }
+    
+    .clearfix {
+        zoom: 1;
+    }
+    
+    .box {
+        width: 210px;
+        border: 1px solid black;
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        /* overflow: hidden; */
+    }
+    
+    .box li {
+        background-color: gold;
+        width: 50px;
+        height: 50px;
+        margin: 10px;
+        line-height: 50px;
+        text-align: center;
+        float: left;
+    }
+</style>
+
+<body>
+    <ul class="box clearfix">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+    </ul>
+</body>
+
+</html>

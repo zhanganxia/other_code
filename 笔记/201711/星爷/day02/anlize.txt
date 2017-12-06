@@ -1,0 +1,26 @@
+1.快速搭建文件共享服务器
+python -m SimpleHTTPServer
+    通过浏览器访问本机ip,端口地址,在文件服务器获取图片地址,替换到HTML中
+
+2.关闭防火墙
+    切换用户到root-->iptables -F
+    切换到root(不用输入密码) -->sudo su -
+
+3.字符串格式化 %s
+
+4.shell 向脚本传参:
+    1.导入sys模块
+    2.4 if __name__ == '__main__':
+     for i in range(0,len(sys.argv)):
+        print(sys.argv[i])
+
+5.网页查看请求信息(仅仅获取登录action的请求)
+需要查看的内容:
+    1)request URL
+    2)request Method
+    3)Form Data
+4.简言之，HTTP Referer是header的一部分，当浏览器向web服务器发送请求的时候，一般会带上Referer，
+  告诉服务器我是从哪个页面链接过来的，服务器籍此可以获得一些信息用于处理
+
+  作用:防盗链(防止窃取连接)
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        //当浏览器加载完当前这个html之后，再做什么事件
+        window.onload = function() {
+            //获取id名称叫div1的那个标签对象
+            var oDiv = document.getElementById('div1');
+            alert(oDiv)
+
+            //用js修改元素样式
+            //在js中想要修改标签的样式，操作CSS时需要用标签对象.style
+            //然后再去.相应的css属性
+            oDiv.style.color
+
+            // 在css中带用“-”的属性，在js中写时把"-"去掉 然后后面的首字母大写
+
+            // 用js设置元素样式时，它采用的是行内式写法
+
+            // js只能获取行内式写法的样式属性的值
+
+            // innerHTML属性可以获取、设置标签中包裹的内容
+        }
+    </script>
+</head>
+
+<body>
+    <div id="div1">
+        标签</div>
+    <!-- id尽量保持唯一性 -->
+    <div id="div1">
+        标签1</div>
+</body>
+
+</html>

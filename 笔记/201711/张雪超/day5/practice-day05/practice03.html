@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>practice03</title>
+    <link rel="stylesheet" href="./css/practice03_base.css">
+    <script>
+        window.onload = function() {
+            var oMsgdt = document.getElementById("msg_dtl"),
+                oMsgcl = document.getElementById("msg_cl"),
+                oInputms = document.getElementById("input_msg"),
+                oSelectu = document.getElementById("select_user"),
+                oSendms = document.getElementById("send_msg");
+
+            oSendms.onclick = function() {
+                if (oSelectu.value == "0") {
+                    oMsgcl.innerHTML += '<div class="inner_box01"><p class="msg_c01">' + 'A说：' + oInputms.value + '</p></div>';
+                    oInputms.value = null;
+                } else {
+                    oMsgcl.innerHTML += '<div class="inner_box02"><p class="msg_c02">' + 'B说：' + oInputms.value + '</p></div>';
+                    oInputms.value = null;
+                }
+
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="inner_box" id="msg_cl">
+            <div class="inner_box01">
+                <p class="msg_c01">你吃饭了吗？</p>
+            </div>
+            <div class="inner_box02">
+                <p class="msg_c02">还没有，我们一起去吧.</p>
+            </div>
+            <!-- <div class="inner_box01">
+                <p class="msg_c01">嘟嘟户呼呼</p>
+            </div> -->
+
+        </div>
+        <div class="bottom">
+            <select class="user_box" id="select_user">
+                    <option value="0">A说：</option>
+                    <option value="1">B说：</option>
+            </select>
+            <input type="text" name="" class="text_input" value="" id="input_msg">
+            <input type="submit" name="" class="setbtn" value="发送" id="send_msg">
+        </div>
+    </div>
+</body>
+
+</html>

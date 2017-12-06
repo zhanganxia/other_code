@@ -1,0 +1,18 @@
+1.字典中的每个元素中的数据是可以修改的，只要通过key找到，即可修改
+
+2.对字典进行删除操作：del  clear()
+info = {'name':'monitor','sex':'f'}
+info.clear()  #清空
+del info['name']  #删除字典
+
+3.字典的长度：len
+
+4.info = {'name':'lili','high':180,'name':'zax'}
+    info.keys() -->获取字典的键
+    info.values() -->获取字典的值
+注意：字典中有两个相同的键，后者的值会覆盖前者，如上所示，输出info中name
+    的值是‘zax’
+    info.items() -->返回一个包含所有(键，值)元组的列表
+    info.has_key(key)-->如果key在字典中，返回True，否则返回False(python3中废弃了)
+    
+

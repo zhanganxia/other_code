@@ -1,0 +1,51 @@
+.box {
+    width: 450px;
+    height: 40px;
+    border: 1px solid #dddddd;
+    background-color: #fff;
+    margin: 50px auto;
+}
+
+.select_color {
+    line-height: 40px;
+    float: left;
+    margin: 0px 20px 0px 10px;
+    color: #666;
+}
+
+.select_color_01,
+.select_color_02,
+.select_color_03,
+.select_color_04,
+.select_color_05,
+.select_color_06 {
+    width: 30px;
+    height: 26px;
+    float: left;
+    margin: 8px 5px;
+    cursor: pointer;
+}
+
+.select_color_01 {
+    background-color: #0181cc;
+}
+
+.select_color_02 {
+    background-color: #00b9f1;
+}
+
+.select_color_03 {
+    background-color: #ef8201;
+}
+
+.select_color_04 {
+    background-color: #8fc320;
+}
+
+.select_color_05 {
+    background-color: #e84191;
+}
+
+.select_color_06 {
+    background-color: #ee87b4;
+}

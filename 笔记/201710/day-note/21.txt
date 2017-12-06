@@ -1,0 +1,36 @@
+1.网络概念
+目的:实施信息共享和数据传递
+数据通过IP地址(计算机网络的标识)
+每个IP地址包括两部分：网络地址和主机地址
+
+IPV4 -->4个字节
+IPv6 -->8个字节
+网络工程师-IP地址 路由 交换机*** CCNA CCNP
+
+UDP(user Datagram Protocol):用户数据报协议，是OSI（open system interconnection，开放式系统互联）
+    缺点：有不提供数据包分组、封装和不能对数据包进行排序的缺点
+
+127.0.0.1 -->本机地址
+ping 用于测试与目的IP地址的网络主机是否畅通
+
+2.端口
+    lsof -i :ssh 
+    用netstat -an  -->查看端口状态
+socket 要收发信息，必先有个socket
+
+3.字符串的编码和解码问题
+    str字符串类型
+    python3中新增一个类型就是Bytes字节类型（二进制类型）
+
+    str == ”“
+
+    str --------编码 str.encode()--> bytes
+    <----------解码
+
+deb 的包
+
+sudo dpkg -i 文件名，安装网络调试助手
+
+
+8.发送数据
+    套接字对象.sendto(data,目的地址的元组（IP，端口）)

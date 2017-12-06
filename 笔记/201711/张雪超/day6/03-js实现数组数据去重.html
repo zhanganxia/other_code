@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = function() {
+            var aList01 = ['1', '2', '1'];
+            aNewList = [];
+
+            for (var i = 0; i < aList01.length; i++) {
+                //通过指示角标有顺序的获取每一个元素
+                var sItem = aList01[i];
+
+                // 获取当前元素在数组中第一次出现的角标
+                var iIndex = aList01.indexOf(sItem);
+
+                // 判断:如果当前for循环的i和元素在第一次出现的角标，说明它是一样的
+                if (i == iIndex) {
+                    aNewList.push(sItem);
+                }
+                console.log(aNewList);
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

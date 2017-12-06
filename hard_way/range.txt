@@ -1,0 +1,27 @@
+函数原型：range (start,end,scan):
+参数含义：
+start：计数从start开始。默认是从0开始。例如range（5）等价与range（0，5）
+end：计数到end计数，但不包括end。例如：range(0,5)是[0,1,2,3,4]没有5
+scan:每次跳跃的间距，默认为1.例如：range(0,5)等价于range（0，5，1）
+
+list 的方法
+ L.append(var) #追加元素
+ L.insert(index,var) #插入元素
+ L.pop(var) #返回最后一个元素，并从list中删除之
+ L.remove(var) #删除第一次出现的该元素
+ L.count(var)#该元素在列表中出现的个数
+ L.index(var) #该元素的位置，无则抛异常
+ L.extend(list)#追加List，即合并List到L上
+ L.sort() #排序
+ L.reverse() #倒序
+
+list---->[] #列表
+dictionary---->{key:value} #字典
+tuple ---->() #元组（常量数组）
+string---->"" #字符串（即不能修改的字符list）
+字符串包含判断操作符：in，not in
+
+type()---->查看变量类型的Python内置函数
+id()---->查看变量内存地址的Python内置函数
+
+abs()---->函数返回数字的绝对值

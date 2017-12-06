@@ -1,0 +1,125 @@
+使用python DB API访问数据库流程
+--------------------------------------------------------------------------------------------
+
+pip3 install pymysql
+
+开始-->创建connection -->获取cursor(游标)-->执行处理数据-->关闭cursor-->关闭connection
+
+
+cursor ：1.执行sql语句； 2.将执行的结果集一行一行的取出来(获取结果集)
+
+
+事物
+--------------------------------------------------------------------------------------------
+--在mysql中事物可以手动开启，如果手动开启了事物，在开启的事物中所作的所有的数据更新
+    操作都不会立即影响到源数据库
+
+ 将开启事物中执行的sql语句看作是一个整体，全荣俱荣，一损俱损
+ 如果所有的sql语句都执行成功，才能后认为这个事物是成功的状态 此时才能够进行提交操作-->commit()
+ 但是有一个sql语句执行失败，整个事务就是一个失败的状态，此时应该回滚 -->rollback
+
+ 开启事物(begin) 一旦commit之后事物就会结束
+
+ 在命令终端默认开启了事物，并且自动提交了事物，如果手动开启了事物，就应该手动关闭事物(commit,rollback)
+
+
+
+京东项目
+---------------------------------------------------------------
+1.密码的加密逻辑
+密码是一个用户的隐私数据，设置密码长度为char(40)
+用户输入123 此时请按端直接将123明文传递给服务器 这个过程极度不安全
+前端页面会对用户输入的密码进行加密操作
+    常见的加密方式有md5 和sha1
+    md5 或者 sha1这种解密方式有一个特点：
+        同样的字符串加密得到的密文的字符串都是一样的，不可逆：通过密文无法得到明文
+    
+    --后端收到的密码是密文的密码，后台直接存储密文密码
+    --如果用户登录、用户输入用户名和密码：密码就是密文和密文之间的比较
+
+    --md5加密后的密文是32位
+    --sha1得到的长度为40位
+
+    --都不是绝对安全
+
+    终端 md5加密方式：md5 -s "123"
+    mysql md5加密：select md5("123") -->| 202cb962ac59075b964b07152d234b70
+    mysql sha1加密方式：select password("mysql")
+
+import hashlib -->使用sha1加密
+
+2.从键盘获取的键盘输入数据不能直接添加至sql语句中，需要进行字符串拼接，
+  ('%s','%s','%s')%(name,pwd,tel) 
+  注意：拼接的数据需要用''引起来
+
+  注册流程：
+  输入用户信息-->获取用户信息在数据库中查重-->添加数据
+
+
+如果执行的数据的插入操作，在sql语句执行完毕之后
+  cur.lastrowid
+
+非常严重的安全漏洞
+通过拼接参数的方式就能够导致sql注入
+sql注入  乌云网
+防范：cur.execute(sql,[idstr])-->参数2 向sql语句中传入参数
+
+视图：
+创建视图：create view 视图名 as sql
+视图和table在同一级别下
+删除视图：drop view 视图名
+
+select g.id,g.name,c.name,b.name,g.price from goods as g
+inner join goods_cates as c on g.cate_name = c.id
+inner join goods_brands as b on g.brand_name = b.id
+
+创建customer表
+create table customer(
+    id int unsigned primary key auto_increment not null,
+    name varchar(60) not null,
+    password char(40) not null,
+    tel varchar(40) not null
+);
+
+
+#创建订单表
+create table orders(
+    id int unsigned primary key auto_increment not null,
+    order_data_time datetime not null,
+    customer_id int not null
+);
+alter table orders modify customer_id int unsigned not null;
+
+#添加customer_id为外键，关联customer.id
+alter table orders add foreign key(customer_id) references customer(id);
+
+#创建订单信息表
+create table orders_detail(
+    id int unsigned primary key auto_increment not null,
+    order_id int unsigned not null,
+    goods_id int unsigned not null,
+    quantity int unsigned not null
+);
+alter table orders_detail add foreign key(order_id) references orders(id);
+alter table orders_detail add foreign key(goods_id) references goods(id)
+
+select g.id,g.name,c.name,b.name,g.price from goods as g
+inner join goods_cates as c on g.cate_name = c.id 
+inner join goods_brands as b on g.brand_name = b.id
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

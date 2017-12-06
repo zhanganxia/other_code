@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>practice02-定时器</title>
+    <link rel="stylesheet" href="css/main1.css">
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function() {
+            // 定义变量‘
+            var $btn = $('#btn'),
+                $pop_m = $('.pop_main'),
+                $pop_c = $('.pop_con'),
+                $top = $pop_c.css('top'),
+                $oPoptime = $('#count'),
+                $pop_close = $('.pop_title a'),
+                ipop = 1;
+
+            // 点击'弹出弹框'页面的操作
+            $btn.click(function() {
+                var iTime = 5;
+                $pop_m.css({
+                    'display': 'block'
+                });
+                $pop_c.css({
+                    'opacity': 0,
+                    'top': 0
+                });
+                // 从透明到不透明的过程中执行动画
+                $pop_c.animate({
+                    'opacity': 1,
+                    'top': $top
+                }, function() {
+
+                    var popTimer = setInterval(popTime, 1000);
+
+                    function popTime() {
+                        iTime -= ipop;
+                        // 如果倒计时的值大于0 ，就将值显示在页面
+                        if (iTime >= 0) {
+                            // 倒计时的时候更新页面的时间
+                            $oPoptime.html('<span id="count">' + iTime + '</span>');
+
+                            // 在倒计时的过程中点击关闭按钮
+                            $pop_close.click(function() {
+                                $pop_c.animate({
+                                    'opacity': 0,
+                                    'top': 0
+                                }, function() {
+                                    // 页面上移后，设置页面隐藏
+                                    $pop_m.css({
+                                        'display': 'none'
+                                    })
+                                });
+                                // 清除定时器
+                                clearInterval(popTimer);
+                                // 将页面的时间重新设置为5
+                                $oPoptime.html('<span id="count">' + '5' + '</span>');
+                            });
+                        } else if (iTime < 0) {
+                            //如果时间小于0 设置动画上移
+                            $pop_c.animate({
+                                'opacity': 0,
+                                'top': 0
+                            }, function() {
+                                // 页面上移后，设置页面隐藏
+                                $pop_m.css({
+                                    'display': 'none'
+                                });
+                                $oPoptime.html('<span id="count">' + '5' + '</span>');
+                            });
+                            clearInterval(popTimer);
+
+                        }
+                    }
+                });
+            });
+
+        })
+    </script>
+</head>
+
+<body>
+    <input type="button" value="弹出弹框" id="btn">
+    <div class="pop_main">
+        <div class="pop_con">
+            <div class="pop_title">
+                <h3>系统提示</h3>
+                <a href="#">×</a>
+            </div>
+            <div class="pop_detail">
+                <p class="pop_text">亲！确定要这么做吗？</p>
+            </div>
+            <!-- <div class="pop_footer">
+                <input type="button" value="取 消" class="cancel">
+                <input type="button" value="确 定" class="confirm">
+            </div> -->
+            <div class="pop_footer">
+                还有<span id="count">5</span>秒自动关闭弹框
+            </div>
+        </div>
+        <div class="mask"></div>
+    </div>
+</body>
+
+</html>

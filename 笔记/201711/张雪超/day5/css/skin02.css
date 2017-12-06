@@ -1,0 +1,13 @@
+body {
+    background-color: pink;
+}
+
+#skin01,
+#skin02 {
+    font-size: 30px;
+    width: 200px;
+    height: 200px;
+    background-color: purple;
+    color: yellow;
+    border-radius: 50%;
+}

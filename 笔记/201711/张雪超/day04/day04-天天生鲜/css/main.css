@@ -1,0 +1,484 @@
+body {
+    font-family: "Microsoft YaHei";
+}
+
+a:hover {
+    color: red !important;
+}
+
+.box {
+    height: 29px;
+    border-bottom: 1px solid #dddddd;
+    background-color: #f7f7f7;
+}
+
+.box .top {
+    width: 1200px;
+    height: 29px;
+    margin: 0px auto;
+    /* background-color: yellow; */
+}
+
+.top h3 {
+    font-size: 12px;
+    color: #666666;
+    line-height: 29px;
+}
+
+.top .top_right {
+    height: 29px;
+    float: right;
+    line-height: 29px;
+}
+
+.top_right li {
+    font-size: 12px;
+    line-height: 29px;
+    display: inline-block;
+}
+
+.top_right a {
+    font-size: 12px;
+    color: #666666;
+    line-height: 29px;
+}
+
+.top_right span {
+    margin: 0px 13px;
+}
+
+
+/* logo行 */
+
+.logo_line {
+    width: 1200px;
+    height: 90px;
+    margin: 0px auto;
+    /* background-color: yellow; */
+}
+
+.logo_line_logo {
+    display: inline-block;
+    background: url("../images/logo.png") no-repeat left center;
+    margin-top: 20px;
+}
+
+
+/* 搜索框相关样式 */
+
+.logo_line_center {
+    width: 616px;
+    height: 38px;
+    line-height: 90px;
+    border: 1px solid #37ab40;
+    display: inline-block;
+    margin-left: 120px;
+    margin-top: 10px;
+    text-align: center;
+    /* background-color: palevioletred; */
+}
+
+.logo_line_center form {
+    height: 38px;
+}
+
+.logo_line_center .input_text {
+    width: 514px;
+    height: 38px;
+    line-height: 38px;
+    text-align: left;
+    text-indent: 40px;
+    border: 0px;
+    padding: 0px;
+    background: url("../images/search.png") no-repeat 10px 9px;
+    /* margin: -1px; */
+    float: left;
+}
+
+.logo_line_center .input_sub {
+    width: 103px;
+    height: 39px;
+    float: left;
+    background-color: #37ab40;
+    border: 0px;
+    padding: 0px;
+    margin: -1px;
+    border-radius: 0px;
+    font: 14px "Microsoft YaHei";
+    color: white;
+    cursor: pointer;
+}
+
+
+/* 购物车样式 */
+
+.logo_line_buycar {
+    width: 200px;
+    height: 40px;
+    margin-top: 36px;
+    display: inline-block;
+    border: 1px solid #dddddd;
+    background: url("../images/buycar.png") no-repeat 14px 10px;
+    background-color: #f7f7f7;
+    /* text-indent: 56px; */
+    float: right;
+}
+
+.logo_line_buycar a {
+    width: 158px;
+    height: 38px;
+    font-size: 14px;
+    color: #37ab40;
+    line-height: 38px;
+    text-align: center;
+    display: inline-block;
+    float: left;
+    text-indent: 31px;
+}
+
+.logo_line_buycar_num {
+    width: 40px;
+    height: 41px;
+    line-height: 41px;
+    background-color: #ff8800;
+    float: right;
+    margin: -1px;
+    display: inline-block;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+}
+
+
+/* 商品分类模块样式 */
+
+.goods_type {
+    margin-top: 20px;
+    height: 40px;
+    margin-top: 26px;
+    border-bottom: 2px solid #37ab40;
+    /* background-color: gold; */
+}
+
+.goods_type_msg {
+    width: 1200px;
+    height: 40px;
+    margin: 0px auto;
+    /* background-color: purple; */
+}
+
+.goods_type_msg h2 {
+    width: 200px;
+    height: 40px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    display: inline-block;
+    background-color: #37ab40;
+}
+
+.goods_option_page {
+    margin-left: 35px;
+}
+
+.goods_option_page li {
+    float: left;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.goods_option_page span {
+    margin: 0 20px;
+    line-height: 40px;
+}
+
+
+/* 商品详情列表及轮播器样式 */
+
+.goods_type_detail {
+    height: 270px;
+}
+
+.goods_type_eg {
+    width: 1200px;
+    height: 270px;
+    margin: 0px auto;
+}
+
+.goods_type_list {
+    width: 200px;
+    height: 270px;
+    /* display: inline-block; */
+}
+
+.goods_type_list li {
+    width: 198px;
+    height: 44px;
+    border: 1px solid #f7f7f7;
+    margin-top: -1px;
+    text-align: center;
+    background: url("../images/sprite.png") no-repeat 30px 9px;
+}
+
+
+/* 设置鼠标放在列表上，背景变色 */
+
+.goods_type_list li:hover {
+    background-color: #f7f7f7 !important;
+}
+
+
+/* 设置箭头 */
+
+.goods_type_list a {
+    width: 198px;
+    height: 44px;
+    font-size: 14px;
+    line-height: 44px;
+    background: url("../images/arrow.png") no-repeat 170px 10px;
+    display: inline-block;
+}
+
+
+/* 精灵图样式调整 */
+
+.goods_type_eg .list1 {
+    background: url("../images/sprite.png") no-repeat 30px -40px;
+}
+
+.goods_type_eg .list2 {
+    background: url("../images/sprite.png") no-repeat 30px -91px;
+}
+
+.goods_type_eg .list3 {
+    background: url("../images/sprite.png") no-repeat 30px -142px;
+}
+
+.goods_type_eg .list4 {
+    background: url("../images/sprite.png") no-repeat 30px -190px;
+}
+
+.goods_type_eg .list5 {
+    background: url("../images/sprite.png") no-repeat 30px -240px;
+}
+
+
+/* 图片轮播 */
+
+.roll_img {
+    width: 760px;
+    height: 270px;
+    position: relative;
+    overflow: hidden;
+    background-color: green;
+}
+
+
+/* 注意a标签的权重，否则上面的a标签样式会覆盖此处的设置 */
+
+.roll_img_pics {
+    width: 3050px;
+    /* width: 760px; */
+    height: 270px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+
+/* .roll_img_pics a {
+    width: 760px;
+} */
+
+.roll_img_pics li {
+    float: left;
+}
+
+
+/* 左右箭头 */
+
+.left_arrow,
+.right_arrow {
+    width: 15px;
+    height: 23px;
+    position: absolute;
+    top: 122px;
+}
+
+.left_arrow {
+    background: url("../images/leftarrow.png") no-repeat;
+    left: 11px;
+}
+
+.right_arrow {
+    background: url("../images/rightarrow.png") no-repeat -10px 0px;
+    right: 11px;
+}
+
+
+/* 圆点切换器 */
+
+.point {
+    position: absolute;
+    left: 315px;
+    bottom: 9px;
+}
+
+.point li {
+    float: left;
+    margin: 0px 5px;
+}
+
+.point a {
+    /* 元素以块元素显示 */
+    display: block;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background-color: #9f9f9f;
+}
+
+.point .point_dot {
+    background-color: #cecece;
+}
+
+
+/* 右侧广告图 */
+
+.ad_right {
+    width: 240px;
+    height: 270px;
+}
+
+
+/* 右侧图片间距问题 */
+
+.ad_right img {
+    display: block;
+}
+
+
+/* 食物详情 */
+
+.goods_area {
+    width: 1200px;
+    height: 357px;
+    margin: 0px auto;
+}
+
+
+/* 食物详情顶部栏 */
+
+.area_top {
+    width: 1200px;
+    height: 33px;
+    margin-top: 22px;
+    border-bottom: 2px solid #37ab40;
+    /* background-color: coral; */
+}
+
+.area_top h1 {
+    height: 33px;
+    font-size: 16px;
+    color: #37ab40;
+    margin-right: 20px;
+    margin-top: 2px;
+    line-height: 33px;
+}
+
+.area_top_left {
+    margin: 3px 0 0 22px;
+}
+
+.area_top_left li {
+    height: 29px;
+    float: left;
+    margin-right: 15px;
+}
+
+.area_top_left a,
+.area_top_left span {
+    height: 29px;
+    font-size: 12px;
+    line-height: 29px;
+    color: #666666;
+    display: block;
+}
+
+
+/* “更多>>”的样式 */
+
+.more {
+    height: 29px;
+    font-size: 12px;
+    color: #666666;
+    line-height: 29px;
+    margin-top: 3px;
+}
+
+
+/* 商品缩略图行 */
+
+.goods_thum {
+    height: 300px;
+    display: block;
+}
+
+.goods_thum_list li {
+    float: left;
+    width: 249px;
+    height: 299px;
+    border-right: 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
+}
+
+.goods_thum_list li h2 {
+    font-size: 14x;
+    color: #666666;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.goods_thum_list li img {
+    margin-left: 30px;
+}
+
+.goods_thum_list li p {
+    font-size: 20px;
+    color: red;
+    /* font-weight: bold; */
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+/* 底部链接提示 */
+
+.bottom {
+    margin-top: 20px;
+    border-top: 1px solid #4ab14e;
+    font-size: 14px;
+    color: #4e4e4e;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.abouts {
+    margin-top: 35px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.abouts li {
+    display: inline-block;
+}
+
+.abouts a,
+.abouts span {
+    font-size: 14px;
+    color: #4e4e4e;
+}

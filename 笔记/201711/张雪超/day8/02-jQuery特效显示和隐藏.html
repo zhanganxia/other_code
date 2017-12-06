@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            display: none;
+        }
+    </style>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function() {
+            var $sub_btn = $('input'),
+                $div = $('.box');
+            $sub_btn.click(function() {
+                // $div.show();
+                // $div.hide();
+                // $div.toggle();
+                // alert($div.css('display'));
+
+                // if ($div.css('display') == 'none') {
+                //     $div.css({
+                //         'display': 'block'
+                //     });
+                // } else {
+                //     $div.css({
+                //         'display': 'none'
+                //     });
+                // }
+
+                // 三目运算符实现动画
+                $div.css({
+                    'display': ($div.css('display') == 'none') ? 'block' : 'none'
+                });
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <input type="button" value="动画按钮">
+    <div class="box"></div>
+    <p>后面跟的p标签</p>
+</body>
+
+</html>

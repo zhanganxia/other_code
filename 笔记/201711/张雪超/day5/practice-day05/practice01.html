@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>practice01</title>
+    <link rel="stylesheet" href="./css/practice01_base.css">
+    <script>
+        window.onload = function() {
+
+            var oDbody_color = document.getElementById("bd_color"),
+                oDopt_01 = document.getElementById("opt01"),
+                oDopt_02 = document.getElementById("opt02"),
+                oDopt_03 = document.getElementById("opt03"),
+                oDopt_04 = document.getElementById("opt04"),
+                oDopt_05 = document.getElementById("opt05"),
+                oDopt_06 = document.getElementById("opt06");
+
+            oDopt_01.onclick = function() {
+                oDbody_color.style.backgroundColor = '#0181cc';
+            }
+            oDopt_02.onclick = function() {
+                oDbody_color.style.backgroundColor = '#00b9f1';
+            }
+            oDopt_03.onclick = function() {
+                oDbody_color.style.backgroundColor = '#ef8201';
+            }
+            oDopt_04.onclick = function() {
+                oDbody_color.style.backgroundColor = '#8fc320';
+            }
+            oDopt_05.onclick = function() {
+                oDbody_color.style.backgroundColor = '#e84191';
+            }
+            oDopt_06.onclick = function() {
+                oDbody_color.style.backgroundColor = '#ee87b4';
+            }
+        }
+    </script>
+</head>
+
+<body id="bd_color">
+    <div class="box">
+        <div class="select_color">请选择网页的背景颜色：</div>
+        <div class="select_color_01" id="opt01"></div>
+        <div class="select_color_02" id="opt02"></div>
+        <div class="select_color_03" id="opt03"></div>
+        <div class="select_color_04" id="opt04"></div>
+        <div class="select_color_05" id="opt05"></div>
+        <div class="select_color_06" id="opt06"></div>
+
+    </div>
+</body>
+
+</html>

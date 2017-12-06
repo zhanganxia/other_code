@@ -1,0 +1,8 @@
+#如何实现带下标索引的遍历
+>>> chars = ['a','b','c','d']
+>>> i = 0
+>>> for chr in chars:
+...     print i,chr
+...     i+=1
+
+enumerate()-->翻译：枚举-->可直接带索引

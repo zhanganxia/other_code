@@ -1,0 +1,127 @@
+day02
+--------------------------------------------
+权限
+    passwd：修改当前用户的密码
+
+    修改 ubuntu 中的 root 密码：
+    1.sudo passwd：修改 root 密码
+    2.su 用户名：切换到 指定的用户
+    3.su root：切换到 root 用户
+    4.exit：退出当前用户
+
+重定向：
+    > 重定向  将本次输出结果覆盖到文件中
+    >> 输出重定向 将本次输出结果追加到文件末尾
+    cat f1 f2 > f3 将f1 f2文件进行合并
+    
+管道 
+    cmd1 | cmd2  将cmd1的输入当作cmd2的输入
+    如果没有管道 ls /bin/-l > a.txt more a.txt
+    管道 ls /bin/-l | more
+        ls /bin/-l | wc -l
+wc 统计文件的行数（-l）、字符数（-w）、字节数（-c）
+
+软/硬链接
+    软链接：ln -s 源文件 链接文件 
+        链接文件不存储文件数据，只存储一个标记
+        删除原文件，链接失效，访问失败（相当于快捷方式）
+    硬链接：ln 源文件 链接文件
+        基于同一份文件数据，只是有不同的链接名
+        删除源文件，硬链接可以访问数据（相当于copy一份文件）
+    区别：软链接可以跨分区，可以链接目录，反之则不行
+
+    sudo cmd 表示cmd以root权限访问[当前用户是管理员用户]
+
+文件搜索
+    grep ：根据内容去查找
+           -n 显示行号
+           -v 显示不匹配的数据
+           -i 忽略大小写
+           grep -ni ‘Tom’ 3.py
+    find ：根据文件大小，文件名称查找（通常用来在特定的目录下搜索符合条件的文件，也可以用来搜索特定用户数属主的文件）
+           -name 根据文件名查找
+		fin ./ -name test.sh :查找当前目录下所有名为test.sh的文件
+		fin ./ -name '*.txt' :查找当前目录下所有后缀为.txt的文件
+           -size 2M 根据大小查找
+                大于2M +2M
+                小于2M -2M
+                等于 2M
+
+归档管理 tar :
+        该命令选项的 -号可以省略
+        创建归档文件使用gzip压缩 tar -cvf 归档名称 打包的文件列表
+        解开归档文件  tar -xvf 归档名称
+        -c 生成归档文件，打包文件
+
+        压缩 gzip bzip2压缩算法
+        gzip文件只能压缩单个文件，所以不能单独使用，需和tar结合使用
+        z gzip：
+        创建归档文件使用gzip压缩 tar -zcvf 压缩文件（tar.gz）
+        解压并且解开归档文件 tar -zxvf 压缩文件名称（tar.gz）
+
+        j bzip2:
+        创建归档文件使用gzip压缩 tar -jcvf 压缩文件（tar.bz2）
+        tar jcvf 1.tar.bz2 11.py 13.py
+
+        解压并且解开归档文件 tar -jxvf 压缩文件名称（tar.bz2）
+        tar jxvf 1.tar.bz2 
+
+        -C 指定解压路径
+压缩和解压缩zip unzip
+        压缩：zip[-r] 目标文件(没有扩展名) 源文件
+        zip test *.py
+
+        解压缩：unzip -d 解压文件目录 目标解压文件
+        unzip -d ./D test.zip
+
+查看命令位置：which  #which ls
+
+更改文件所属用户权限
+    chmod o-r 1.tar 取消其他用户的可读权限
+    chmod g-w 1.tar 取消用户组的写权限
+    chmod u+x 1.tar 添加用户的执行权限
+    chmod a-r d.py  取消所有用户的读权限
+
+    r read 读 4
+    w write 写 2
+    x execute 执行 1
+
+用户 
+    sudo cmd 以root 用户权限运行后面的额命令
+    passwd 用户名 修改指定用户的密码
+
+    sudo passwd root ---以root用户权限修改root
+    who 查看登录用户
+    whoami 查看当前用户
+    添加用户：sudo useradd -m pythontest
+    设置用户密码：passwd pythontest -->回车设置密码
+    删除用户:userdel -r pythontest   注意：如果不加参数 “-r”只会删除用户，不会删除用户家目录
+    切换用户：1)普通用户切换到root--> su -  （需要输入密码）
+	    2)root 用户切换到普通用户 --> su - 用户名  （不需要输入密码）
+注意：设置用户密码和删除用户，只能在root权限下进行，普通用户无访问的权限，普通用户可以添加用户但是无法设置用户密码
+
+安装软件
+    注意：先备份要修改的镜像源文件
+        1.修改国内镜像源（fedora修改地址）
+        gedit /etc/yum.repos.d/fedora.repo
+            和gedit /etc/yum.repos.d/fedora-updates.repo
+        2.切换到超级管理员权限(也可以不用): sudo -s 
+        3.执行命令：apt-get update -->让更新源生效
+        4.显示“正在读取软件包列表...完成”即表示修改完成
+        5.安装软件：apt-get install 软件名
+        例如：sudo apt-get install tree openssh-server
+
+        删除安装：sudo apt-get remove package 删除包
+        重新安装：sudo apt-get install package --reinstall 重新安装包
+
+搭建FTP服务器
+    1.安装vsftpd服务器
+    sudo apt-get install vsftpd
+
+    2.配置vsftpd.conf文件(验证用户名、传递的目录)
+    sudo vi /etc/vsftpd.conf
+
+
+
+vi 有3中工作模式
+    + 命令模式

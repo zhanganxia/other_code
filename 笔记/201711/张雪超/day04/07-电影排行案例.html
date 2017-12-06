@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>电影排行案例</title>
+</head>
+<!-- 一张图片重复使用，不会占用多个内存，电脑中只会保存一份 -->
+<!-- 雪碧图/精灵图  sprite 多个小图片组合成一张图片使用 -->
+<style>
+    .list {
+        list-style: none;
+        margin: 50px auto;
+        padding: 0px;
+        width: 300px;
+    }
+    /* 边框的样式
+    dashed:虚线
+    dotted：点线
+
+     */
+    
+    .list li {
+        height: 60px;
+        line-height: 60px;
+        font-size: 14px;
+        font-family: "MicroSoft Yahei";
+        border-bottom: 1px dotted black;
+        text-indent: 50px;
+        background: url("./images/sprite_bg.png")no-repeat 0px 10px;
+    }
+    /* 设计图片样式时需注意权重的问题 */
+    /* backgroud-repeat:设置背景图片如何重复平铺
+            no-reapeat:不平铺
+            repeat-x:横向平铺盒子
+            repeat-y:纵向平铺盒子
+
+      background-position:设置背景图片的位置  
+        1) 水平方向：left、center、right
+        2) 垂直方向：top、center、bottom 
+        3) 具体数值：
+    */
+    
+    .list .cons1 {
+        background: url("./images/sprite_bg.png")no-repeat 0px -71px;
+    }
+    /* background: url("./images/sprite_bg.png")no-repeat 0px -71px;
+        0px:表示左右位置不动 正数表示向右，负数表示向左
+        -71px; 表示向上偏移71px 正数表示向下，负数表示向上
+    */
+    
+    .list .cons2 {
+        background: url("./images/sprite_bg.png")no-repeat 0px -152px;
+    }
+    
+    .list .cons3 {
+        background: url("./images/sprite_bg.png")no-repeat 0px -233px;
+    }
+    
+    .list .cons4 {
+        background: url("./images/sprite_bg.png")no-repeat 0px -314px;
+    }
+</style>
+
+<body>
+    <ul class="list">
+        <li>电影排行1</li>
+        <li class="cons1">电影排行2</li>
+        <li class="cons2">电影排行3</li>
+        <li class="cons3">电影排行4</li>
+        <li class="cons4">电影排行5</li>
+    </ul>
+</body>
+
+</html>

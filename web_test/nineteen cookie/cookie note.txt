@@ -1,0 +1,10 @@
+有时候我们需要验证浏览器中是否存在某个cookies，因为基于真实的cookies的测试是无法通过白盒测试和集成测试完成的。
+webdriver可以读取、添加和删除cookie信息
+
+webdriver操作cookies的方法有：
+get_cookies()   获取所有cookie信息
+get_cookie（name） 返回特定neme有cookies信息
+add_cookie(cookie_dict) 添加cookie，必须有name和value值
+delete_cookie(name)  删除特定（部分）的cookie信息
+delete_cookies()  删除所有cookie信息
+

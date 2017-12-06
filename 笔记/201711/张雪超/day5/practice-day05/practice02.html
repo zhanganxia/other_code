@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>practice02</title>
+    <link rel="stylesheet" href="./css/practice02_base.css">
+    <script>
+        window.onload = function() {
+            var oInput01 = document.getElementById('input01'),
+                oInput02 = document.getElementById('input02'),
+                oInput03 = document.getElementById('input03'),
+                oInput04 = document.getElementById('input04'),
+                oInput05 = document.getElementById('input05'),
+                oSub_btn = document.getElementById('msg_change'),
+                oChg_ele = document.getElementById('change_ele'),
+                oChg_obj = document.getElementById('change_obj');
+
+            oSub_btn.onclick = function() {
+                var oVlu01 = oInput01.value,
+                    oVlu02 = oInput02.value,
+                    oVlu03 = oInput03.value,
+                    oVlu04 = oInput04.value,
+                    oVlu05 = oInput05.value;
+
+
+                if (oVlu01 != null || oVlu02 != null || oVlu03 != null || oVlu04 != null || oVlu05 != null) {
+                    oChg_obj.style.width = oVlu01;
+                    oChg_obj.style.height = oVlu02;
+                    oChg_obj.style.backgroundColor = oVlu03;
+                    oChg_obj.style.border = oVlu04;
+                    oChg_obj.style.borderRadius = oVlu05;
+                    return;
+                }
+                return
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="set_con">
+        <!-- 左侧部分 -->
+        <div class="left_set">
+            <label>宽度：</label>
+            <input type="text" value="100px" id="input01">
+            <label>高度：</label>
+            <input type="text" value="100px" id="input02">
+            <label>背景色：</label>
+            <input type="text" value="gold" id="input03">
+            <label>边框：</label>
+            <input type="text" value="5px solid #000" id="input04">
+            <label>圆角：</label>
+            <input type="text" value="0px" id="input05">
+            <input type="button" value="设 置" class="setbtn" id="msg_change">
+        </div>
+        <!-- 右侧部分 -->
+        <div class="right_show" id="change_ele">
+            <div class="box" id="change_obj"></div>
+        </div>
+    </div>
+</body>
+
+</html>

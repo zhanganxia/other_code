@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>淡入淡出和卷起展开特效</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            display: none;
+        }
+    </style>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script>
+        // 文档加载准备
+        $(function() {
+            var $sub_btn = $('input'),
+                $div = $('.box');
+
+            $sub_btn.click(function() {
+                // 淡入
+                // $div.fadeIn();
+
+                //淡出
+                // $div.fadeOut(2000);
+
+                // 如果当前显示就淡出，不显示就淡入
+                // $div.fadeToggle(2000);
+
+
+                // 自定义淡出透明度
+                // 参数1:动画时间
+                // 参数2:透明度 0~1
+                // $div.fadeTo(2000, 0.6);
+
+                // 展开
+                // $div.slideDown(1000);
+                //  卷起
+                // $div.slideUp(1000);
+
+                $div.stop().slideToggle(1000);
+
+
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <input type="button" value="动画按钮">
+    <div class="box"></div>
+    <p>后面跟的p标签</p>
+</body>
+
+</html>

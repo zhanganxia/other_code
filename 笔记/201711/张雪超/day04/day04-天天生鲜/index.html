@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>天天生鲜</title>
+
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <!-- 样式重置在前，不然可能重置的样式覆盖最终的样式 -->
+</head>
+
+<body>
+    <!-- 1.欢迎栏 顶部 -->
+    <!-- Div:1200px  29px  margin:0 auto; -->
+    <div class="box">
+        <div class="top">
+
+            <h3 class="fl">欢迎来到天天生鲜!</h3>
+
+            <div class="top_right fr">
+                <ul>
+                    <li class="userInfo">欢迎您：<a href="#">zax</a></li>
+                    <span>|</span>
+                    <li>
+                        <a href="#">我的购物车</a>
+                    </li>
+                    <span>|</span>
+                    <li>
+                        <a href="#">我的订单</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2.logo和搜多框 -->
+    <div class="logo_line">
+        <div class="logo_line_logo">
+            <img src="./images/logo.png">
+        </div>
+        <div class="logo_line_center">
+            <form>
+                <input type="text" class="input_text" placeholder="搜索">
+                <input type="submit" class="input_sub" value="搜索">
+            </form>
+        </div>
+
+        <div class="logo_line_buycar">
+            <!-- <img src="./images/buycar.png"> -->
+            <a href="#">我的购物车</a>
+            <span class="logo_line_buycar_num">0</span>
+
+        </div>
+    </div>
+
+    <!-- 3.商品分类 -->
+    <div class="goods_type">
+        <div class="goods_type_msg">
+            <h2 class="fl">全部商品分类</h2>
+
+            <ul class="goods_option_page fl">
+                <li><a href="#">首页</a>
+                    <span>|</span>
+                </li>
+                <li><a href="#">手机生鲜</a>
+                    <span>|</span>
+                </li>
+                <li><a href="#">抽奖</a></li>
+            </ul>
+
+        </div>
+    </div>
+
+    <!-- 4.商品详情列表及轮播器 -->
+    <div class="goods_type_detail">
+        <!-- 产品列表分类 -->
+        <div class="goods_type_eg">
+            <ul class="goods_type_list fl">
+                <li><a href="#">海鲜水果</a></li>
+                <li class="list1"><a href="#">海鲜水产</a></li>
+                <li class="list2"><a href="#">猪牛羊肉</a></li>
+                <li class="list3"><a href="#">禽类蛋品</a></li>
+                <li class="list4"><a href="#">新鲜蔬菜</a></li>
+                <li class="list5"><a href="#">速冻食品</a></li>
+            </ul>
+            <!-- 轮播图片 -->
+            <div class="roll_img fl">
+                <ul class="roll_img_pics">
+                    <li>
+                        <a href="#"><img src="./images/slider.jpg"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="./images/slider.jpg"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="./images/slider.jpg"></a>
+                    </li>
+                    <li>
+                        <a href="#"><img src="./images/slider.jpg"></a>
+                    </li>
+                </ul>
+
+                <!-- 左右箭头 -->
+                <a href="#" class="left_arrow"></a>
+                <a href="#" class="right_arrow"></a>
+
+                <!-- 圆点切换器 -->
+                <ul class="point">
+                    <li>
+                        <a href="#" class="point_dot"></a>
+                    </li>
+                    <li>
+                        <a href="#"></a>
+                    </li>
+                    <li>
+                        <a href="#"></a>
+                    </li>
+                    <li>
+                        <a href="#"></a>
+                    </li>
+                    <li>
+                        <a href="#"></a>
+                    </li>
+                    <li>
+                        <a href="#"></a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 右侧广告图（广告：advertisement  ad） -->
+            <div class="ad_right fl">
+                <a href=""><img src="./images/right01.jpg" alt=""></a>
+                <a href=""><img src="./images/right02.jpg" alt=""></a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- 5.食物详情 -->
+    <div class="goods_area">
+        <!-- 新鲜水果区 -->
+        <!-- 顶部推荐栏 -->
+        <div class="area_top">
+            <h1 class="fl">新鲜水果</h1>
+            <ul class="area_top_left fl">
+                <li><span>|</span></li>
+                <li><a href="">鲜芒</a></li>
+                <li><a href="">加州提子</a></li>
+                <li><a href="">亚马逊牛油果</a></li>
+            </ul>
+            <a href="" class="more fr">更多&gt;&gt;</a>
+        </div>
+        <div class="goods_thum">
+            <!-- 商品缩略图（thumbnail）栏 -->
+            <img src="./images/friut.jpg" alt="" class="fl">
+            <ul class="goods_thum_list fl">
+                <li>
+                    <h2>柠檬</h2>
+                    <a href="#"><img src="./images/goods001.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>葡萄</h2>
+                    <a href="#"><img src="./images/goods002.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>草莓</h2>
+                    <a href="#"><img src="./images/goods003.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>黄杏</h2>
+                    <a href="#"><img src="./images/goods004.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 海鲜水产区 -->
+    <div class="goods_area">
+        <!-- 顶部推荐栏 -->
+        <div class="area_top">
+            <h1 class="fl">新鲜水果</h1>
+            <ul class="area_top_left fl">
+                <li><span>|</span></li>
+                <li><a href="">深海鳕鱼</a></li>
+                <li><a href="">帝王蟹</a></li>
+                <!-- <li><a href="">亚马逊牛油果</a></li> -->
+            </ul>
+            <a href="" class="more fr">更多&gt;&gt;</a>
+        </div>
+        <div class="goods_thum">
+            <!-- 商品缩略图（thumbnail）栏 -->
+            <img src="./images/fish.jpg" alt="" class="fl">
+            <ul class="goods_thum_list fl">
+                <li>
+                    <h2>基围虾</h2>
+                    <a href="#"><img src="./images/goods005.jpg" alt=""></a>
+                    <p>￥ 38.00</p>
+                </li>
+                <li>
+                    <h2>葡萄</h2>
+                    <a href="#"><img src="./images/goods002.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>草莓</h2>
+                    <a href="#"><img src="./images/goods003.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>黄杏</h2>
+                    <a href="#"><img src="./images/goods004.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 猪牛羊肉区 -->
+    <div class="goods_area">
+        <!-- 顶部推荐栏 -->
+        <div class="area_top">
+            <h1 class="fl">猪牛羊肉</h1>
+            <ul class="area_top_left fl">
+                <li><span>|</span></li>
+                <li><a href="">深海鳕鱼</a></li>
+                <li><a href="">帝王蟹</a></li>
+                <!-- <li><a href="">亚马逊牛油果</a></li> -->
+            </ul>
+            <a href="" class="more fr">更多&gt;&gt;</a>
+        </div>
+        <div class="goods_thum">
+            <!-- 商品缩略图（thumbnail）栏 -->
+            <img src="./images/meat.jpg" alt="" class="fl">
+            <ul class="goods_thum_list fl">
+                <li>
+                    <h2>基围虾</h2>
+                    <a href="#"><img src="./images/goods004.jpg" alt=""></a>
+                    <p>￥ 38.00</p>
+                </li>
+                <li>
+                    <h2>葡萄</h2>
+                    <a href="#"><img src="./images/goods002.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>草莓</h2>
+                    <a href="#"><img src="./images/goods003.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>黄杏</h2>
+                    <a href="#"><img src="./images/goods005.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 禽类蛋类区 -->
+    <div class="goods_area">
+        <!-- 顶部推荐栏 -->
+        <div class="area_top">
+            <h1 class="fl">禽类蛋品</h1>
+            <ul class="area_top_left fl">
+                <li><span>|</span></li>
+                <li><a href="">深海鳕鱼</a></li>
+                <li><a href="">帝王蟹</a></li>
+                <!-- <li><a href="">亚马逊牛油果</a></li> -->
+            </ul>
+            <a href="" class="more fr">更多&gt;&gt;</a>
+        </div>
+        <div class="goods_thum">
+            <!-- 商品缩略图（thumbnail）栏 -->
+            <img src="./images/egg.jpg" alt="" class="fl">
+            <ul class="goods_thum_list fl">
+                <li>
+                    <h2>基围虾</h2>
+                    <a href="#"><img src="./images/goods002.jpg" alt=""></a>
+                    <p>￥ 38.00</p>
+                </li>
+                <li>
+                    <h2>葡萄</h2>
+                    <a href="#"><img src="./images/goods003.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>草莓</h2>
+                    <a href="#"><img src="./images/goods005.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>黄杏</h2>
+                    <a href="#"><img src="./images/goods004.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 新鲜蔬菜区 -->
+    <div class="goods_area">
+        <!-- 顶部推荐栏 -->
+        <div class="area_top">
+            <h1 class="fl">新鲜蔬菜</h1>
+            <ul class="area_top_left fl">
+                <li><span>|</span></li>
+                <li><a href="">乳黄瓜</a></li>
+                <li><a href="">紫薯</a></li>
+                <!-- <li><a href="">亚马逊牛油果</a></li> -->
+            </ul>
+            <a href="" class="more fr">更多&gt;&gt;</a>
+        </div>
+        <div class="goods_thum">
+            <!-- 商品缩略图（thumbnail）栏 -->
+            <img src="./images/vagetable.jpg" alt="" class="fl">
+            <ul class="goods_thum_list fl">
+                <li>
+                    <h2>基围虾</h2>
+                    <a href="#"><img src="./images/goods005.jpg" alt=""></a>
+                    <p>￥ 38.00</p>
+                </li>
+                <li>
+                    <h2>葡萄</h2>
+                    <a href="#"><img src="./images/goods002.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>草莓</h2>
+                    <a href="#"><img src="./images/goods003.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>黄杏</h2>
+                    <a href="#"><img src="./images/goods004.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 速冻食品区 -->
+    <div class="goods_area">
+        <!-- 顶部推荐栏 -->
+        <div class="area_top">
+            <h1 class="fl">速冻食品</h1>
+            <ul class="area_top_left fl">
+                <li><span>|</span></li>
+                <li><a href="">伊利巧乐兹</a></li>
+                <li><a href="">可爱多</a></li>
+                <!-- <li><a href="">亚马逊牛油果</a></li> -->
+            </ul>
+            <a href="" class="more fr">更多&gt;&gt;</a>
+        </div>
+        <div class="goods_thum">
+            <!-- 商品缩略图（thumbnail）栏 -->
+            <img src="./images/icecream.jpg" alt="" class="fl">
+            <ul class="goods_thum_list fl">
+                <li>
+                    <h2>基围虾</h2>
+                    <a href="#"><img src="./images/goods004.jpg" alt=""></a>
+                    <p>￥ 38.00</p>
+                </li>
+                <li>
+                    <h2>葡萄</h2>
+                    <a href="#"><img src="./images/goods002.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>草莓</h2>
+                    <a href="#"><img src="./images/goods005.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+                <li>
+                    <h2>黄杏</h2>
+                    <a href="#"><img src="./images/goods001.jpg" alt=""></a>
+                    <p>￥ 28.00</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- </div> -->
+    <!-- 6.底部 -->
+    <div class="bottom">
+        <ul class="abouts">
+            <li><a href="">关于我们</a></li>
+            <li> <span>|</span></li>
+            <li><a href="">联系我们</a></li>
+            <li> <span>|</span></li>
+            <li><a href="">招聘人才</a></li>
+            <li> <span>|</span></li>
+            <li><a href="">友情链接</a>
+            </li>
+        </ul>
+        <p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+        <p>电话:010-****888 京ICP备*******8号</p>
+    </div>
+</body>
+
+</html>

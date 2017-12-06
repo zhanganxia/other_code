@@ -1,0 +1,44 @@
+>>> payload = {'key1': 'value1', 'key2': 'value2'}
+
+>>> r = requests.post("http://httpbin.org/post", data=payload)
+>>> print(r.text)
+{
+  ...
+  "form": {
+    "key2": "value2",
+    "key1": "value1"
+  },
+  ...
+}
+
+
+
+content = '''<?xml version="1.0" encoding="UTF-8"?>
+<request>
+    <Index>-1</Index>
+    <Phones>
+        <Phone>18218366324</Phone>
+    </Phones>
+    <Sca></Sca>
+    <Content>爱坚强</Content>
+    <Length>2</Length>
+    <Reserved>0</Reserved>
+    <Date>2017-11-04 22:25:04</Date>
+</request>
+'''
+
+r = requests.post("http://192.168.8.1/api/sms/send-sms",data = content.encode("utf-8"))
+print(r.text)
+
+
+
+Request URL:http://192.168.8.1/api/user/login
+
+Request Method:POST
+
+content = '''
+<?xml version="1.0" encoding="UTF-8"?><request><Username>admin</Username><Password>YWRtaW4=</Password></request>
+'''
+r = requests.post("http://192.168.8.1/api/user/login",data = content.encode("utf-8"))
+print(r.text)
+
