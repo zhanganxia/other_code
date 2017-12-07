@@ -1,4 +1,4 @@
-1.框架
+1. 框架
     MVC架构
         M：模型  
         V：视图
@@ -12,7 +12,7 @@
     分模块目的：解耦  降低代码之间的关联
 
 
-2.环境(虚拟环境)
+2. 环境(虚拟环境)
     虚拟环境的作用：虚拟环境可以为每个项目搭建独立的python运行环境，使得每个项目依赖的python环境独立
 
     2.1 安装虚拟环境包
@@ -55,8 +55,166 @@
         安装Django包： pip install django==1.8.2
         显示所有的安装包：pip list
 
+3. 创建项目
+    3.1创建项目准备
+        workon py_django 进入虚拟环境
+        cd /项目存放目录
+        mkdir pytest
+        cd pytest
+    3.2创建项目（名称为test1）
+        django-admin startproject test1
+
+        项目目录说明：
+        manage.py: 是项目运行的入口文件和管理文件
+        项目配置包，与项目同名，所有的项目配置都在这里
+        init.py: 是一个空的文件，作用是这个目录test1可以被当作包使用
+        settings.py: 是项目的整体配置文件
+        urls.py: 是项目的URL配置文件
+        wsgi.py：是web服务器和django框架交互的入口
+
+    3.3创建应用（应用名：booktest）
+        python manage.py startapp booktest
+
+        应用目录说明：
+        admin.py: 后台页面设置文件
+        migrations: 数据迁移文件夹
+        models.py: 写和数据库相关的内容，对应MVT中的--M
+        views.py: 接收请求，进行处理，和M,T进行交互，返回应答，对应MVT中的--V
+        tests.py: 用于软件测试用，暂不使用
+
+        注意：此处需要将应用（booktest）添加至setting.py的INSTALLED_APPS配置中
+
+    3.4开发服务器
+        django提供了一个纯python编写的轻量级web服务器，仅在开发阶段使用
+        python manage.py runsever 
+
+        启动后，在浏览器运行：http：//127.0.0.1:8000/
+
+        ctrl + c 停止服务器
+
+4. 设计模型
+    使用django进行数据库开发的步骤如下：
+        4.1 在models.py中定义模型类
+            from django.db import models
+
+            class BookInfo(models.Model):
+                btitle = models.CharField(max_length=20)
+                bpub_date = models.DateField()
+                def __str__(self):
+                    return "%d" % self.id
+
+            class HeroInfo(models.Model):
+                hname = models.CharField(max_length=20)
+                hgender = models.BooleanField()
+                hcontent = models.CharField(max_length=100)
+                hbook = models.ForeignKey(BookInfo)
+                def __str__(self):
+                    return "%d" % self.id
+        
+        4.2 迁移
+            数据迁移的目的：django通过设计的模型类，自动生成数据表，django默认采用sqlite3数据库
+
+            4.2.1 生成迁移文件：根据模型类生成创建表的语句
+            命令：
+                python manage.py makemigrations
+
+            4.2.2 执行迁移：根据第一步生成的语句在数据库中创建表
+            命令：
+                python manage.py migrate
+
+            注意：此处请确保应用（booktest）已添加至setting.py的INSTALLED_APPS配置中，否则会无法迁移
+
+        4.3 在数据库中查看数据
+            迁移完成后，项目根目录下会生成一个：db.sqlite3 文件
+            在数据库图像界面打开此文件，即可看到数据表结构
+
+5. 操作数据
+操作数据的两种方式：
+    5.1 通过shell命令行操作数据：python manage.py shell
+        5.1.1添加数据
+            >>> from booktest.models import BookInfo,HeroInfo
+            >>> from datetime import date
+            <!-- 添加书籍1 -->
+            >>> b=BookInfo()
+            >>> b.btitle="天龙八部"
+            >>> b.bpub_date=date(1982,5,6)
+            >>> b.save()
+            <!-- 添加英雄1 -->
+            >>> h=HeroInfo()
+            >>> h.hname='乔峰'
+            >>> h.hgender=False
+            >>> h.hconten='降龙十八掌'
+            >>> h.hbook=b
+            >>> h.save()
+            <!-- 添加书籍2 -->
+            >>> b2=BookInfo()
+            >>> b2.btitle="射雕英雄传"
+            >>> b2.bpub_date=date(1990,3,4)
+            >>> b2.save()
+            <!-- 添加英雄2 -->
+            >>> h2 = HeroInfo()
+            >>> h2.hname = '郭靖'
+            >>> h2.hgender = False
+            >>> h2.hcontent = '降龙十八掌'
+            >>> h2.hbook = b2
+            >>> h2.save()
+            <!-- 添加英雄3 -->
+            >>> h3 = HeroInfo()
+            >>> h3.hname = '黄蓉'
+            >>> h3.hgender = True
+            >>> h3.hcontent = '降龙十八掌'
+            >>> h3.hbook = b2
+            >>> h3.save()
+
+        5.1.2 修改数据 
+            >>> b1.btitle="鹿鼎记"
+            >>> b1.save()
+
+        5.1.3 删除数据
+            h.delete()
+        
+        5.1.4 查找数据
+            books = BookInfo.objects.all() 查找多条数据
+            book = BookInfo.objects.get(id=1) 查找一条数据  -->查出来的只是一个id
+            
+            <!-- 显示数据的具体值 -->
+            book.btitle,book.bpub_date -->要查找的数据之间用逗号隔开
+
+            关联查询：
+                图书和英雄之间是一对多的关系，django中提供了关联的操作方式获得关联集合
+                b2.heroinfo_set.all() -->"射雕英雄传"这本数关联的英雄
+
+    5.2 通过后台表格和表单的界面操作数据
+        步骤：
+            5.2.1管理界面本地化（将显示的语言、时间等使用本地的习惯） 
+                LANGUAGE_CODE = 'zh-Hans'
+                TIME_ZONE = 'Asia/Shanghai'
+                注意：此处的时区使用亚洲/上海时区
+            5.2.2创建管理员
+                python manage.py createsuperuser
+                    username:默认使用当前用户名（kk）
+                    Email address: 遵循邮箱格式即可(python@163.com)
+                    password:XXX (123456)
+                注：括号中的设置为我的本地设置
+
+                启动服务器：python manag.py runserver
+                浏览器中输入：http://127.0.0.1:8000/admin 即可访问
+                
+            3.注册模型类
+            4.自定义管理页面
+
+             
 
 
+
+
+
+
+
+
+
+
+            
 
 
 
