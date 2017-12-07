@@ -1,5 +1,6 @@
 playwithflask/venv/
 project_flask/venv/
+django/py_django/
 .vscode/
 # Byte-compiled / optimized / DLL files
 __pycache__/
