@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .list {
+            width: 600px;
+            border: 1px solid #bbbbbb;
+            border-collapse: collapse
+        }
+        
+        .list td {
+            padding: 10px;
+            border: 1px solid #bbbbbb;
+        }
+        
+        .list th {
+            padding: 10px;
+            border: 1px solid #bbbbbb;
+            font-weight: normal
+        }
+    </style>
+</head>
+
+<body>
+    <p>1.显示所有图书</p>
+    <table class="list">
+        {% for book in books1 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>2.显示未逻辑删除的图书</p>
+    <table class="list">
+        {% for book in books2 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>3.id==1</p>
+    <table class="list">
+        {% for book in books3 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>4.书名包含"传"的所有数据</p>
+    <table class="list">
+        {% for book in books4 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>5.书名以"湖"结尾的所有数据</p>
+    <table class="list">
+        {% for book in books5 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>6.备注不为空的图书数据</p>
+    <table class="list">
+        {% for book in books6 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+            <td>{{book.bcontext}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>7.查询id为1，3的图书信息</p>
+    <table class="list">
+        {% for book in books7 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+            <td>{{book.bcontext}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>8.查询编号大于3的图书信息</p>
+    <table class="list">
+        {% for book in books8 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+            <td>{{book.bcontext}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>9.查询发布时间为1986年的图书</p>
+    <table class="list">
+        {% for book in books9 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+            <td>{{book.bcontext}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>10.查询id不等于3的图书信息</p>
+    <table class="list">
+        {% for book in books10 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+            <td>{{book.bcontext}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>11.阅读量大于评论量的图书信息</p>
+    <table class="list">
+        {% for book in books11 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+            <td>{{book.bcontext}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>12.查询id大于3且阅读量大于30的图书信息</p>
+    <table class="list">
+        {% for book in books12 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+            <td>{{book.bcontext}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>13.查询所有图书信息，按照id从大到小进行排序</p>
+    <table class="list">
+        {% for book in books13 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+            <td>{{book.bcontext}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>14.id大于1的图书信息按阅读量从达到小排序显示</p>
+    <table class="list">
+        {% for book in books14 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <th>{{book.bcommet}}</th>
+            <th>{{book.bread}}</th>
+            <td>{{book.bpub_date}}</td>
+            <th>{{book.isDelete}}</th>
+            <td>{{book.bcontext}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>15.查询所有图书阅读量的总和</p>
+    <table class="list">
+        <tr>
+            <td>阅读量总和：{{books15}}</td>
+        </tr>
+    </table>
+    <p>16.查询图书，要求图书中英雄的描述包含'十'</p>
+    <table class="list">
+        {% for book in books16 %}
+        <tr>
+            <th>{{book.id}}</th>
+            <td>{{book.btitle}}</td>
+            <!-- <th>{{heroinfo.hname}}</th>
+            <td>{{heroinfo.hcontent}}</td> -->
+        </tr>
+        {% endfor %}
+    </table>
+</body>

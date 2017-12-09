@@ -202,13 +202,53 @@
                 浏览器中输入：http://127.0.0.1:8000/admin 即可访问
                 
             3.注册模型类
+                登录后台管理后，默认没有我们创建的应用中定义的模型类，需要在自己应用中的admin.py文件中注册，可以在后台管理中看到，并进行CRUD操作。
+                打开booktest/admin.py文件，编写如下代码：
+                    from django.contrib import adim
+                    from models import BookInfo,HeroInfo
+
+                    admin.site.register(BookInfo)
+                    admin.site.register(HeroInfo)
             4.自定义管理页面
-
+                打开booktest/admin.py文件，自定义类，继承自admin.ModelAdmin类，属性list_display表示要显示哪些属性
              
+6. 视图及URL
+    视图开发步骤：1.定义视图 2.配置URL
+    6.1 定义视图：
+        视图就是一个python函数，第一个参数是HttpRequest类型的对象request,包含了所有请求的信息，视图必须返回HttpResponse对象，包含返回给请求者的响应信息
+    6.2 配置URL
+        需要两步完成URLconf配置
 
+        a.打开项目配置文件夹中的urls.py文件，为urlpatterns列表增加项如下：
+        urlpatterns = [
+            url(r'^admin/', include(admin.site.urls)),
+            url(r'^', include('booktest.urls'))  # 增加的一项
+        ]
+        b.在应用下创建urls文件，定义代码如下：
+            from django.conf.urls import url
+            from booktest import views
+            urlpatterns = [
+                url(r'^index$', views.index)
+            ]
 
+7.定义模板
+    创建模板：在应用的平级目录创建templates文件夹，在文件夹下创建和应用同名的子文件夹，然后在与应用同名的子文件夹中创建模板文件。
+    templates-->booktest-->index.html
 
+    配置模板路径：
+        在项目的settings.py文件中设置TEMPLATES的DIRS的值
+        'DIRS':[os.path.join(BASE_DIR,'templates')]
 
+    定义模板
+        在模板中输出变量或者输入代码的语法:
+            {{变量名}} 在模板中写变量
+            {%代码段%} 在模板中写python代码
+
+    视图调用模板
+        可以使用render函数来调用模板，render包含三个参数：
+        第一个参数为request对象
+        第二个参数为模板文件路径
+        第三个参数为字典，表示向模板中传递的数据
 
 
 
