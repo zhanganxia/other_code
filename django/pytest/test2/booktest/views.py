@@ -6,7 +6,46 @@ from booktest.models import AreaInfo
 
 
 def index(request):
-    return HttpResponse('hello world!')
+    str='%s<br>%s'%(request.path,request.encoding)
+    return HttpResponse(str)
+
+# def index1(request,value1,value2):
+#     context = {'v1':value1,'v2':value2}
+#     return render(request,'booktest/index.html',context)
+
+def index2(request,parameter1,parameter2):
+    context1 = {'val01':parameter1,'val02':parameter2}
+    return render(request, 'booktest/index.html',context1)
+
+def method1(request):
+    return render(request,'booktest/method1.html')
+
+def method2(request):
+    return HttpResponse(request.method)
+
+def method3(request):
+    return HttpResponse(request.method)
+
+def get(request):
+    # 通过GET属性获取地址栏上的数据，获取的QueryDict对象
+    dict = request.GET
+
+    a = dict.getlist('a') #返回所有值
+    b = dict.get('b')
+
+    context = {'a':a, 'b':b}
+    return render(request,'booktest/get.html',context)
+
+def getwish(request):
+    dict = request.GET
+    name = dict.get('name')
+    list = dict.getlist('a')
+    textlist = ['生日快乐','节日快乐','学习进步','四季平安']
+    str = ''
+    for i in list:
+        str += textlist[int(i)]+ ' '
+    context = {'name':name,'wish' : str}
+    return render(request,'booktest/getwish.html',context)
 
 def booklist(request):
     # 1.获取所有图书

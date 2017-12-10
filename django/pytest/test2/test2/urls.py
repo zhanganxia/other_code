@@ -19,7 +19,8 @@ from booktest import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^index$',views.index),
-    url(r'^booklist$',views.booklist),
-    url(r'^area$',views.area),
+    url(r'',include('booktest.urls')),
+    # url(r'^index$',views.index),
+    # url(r'^booklist$',views.booklist),
+    # url(r'^area$',views.area),
 ]

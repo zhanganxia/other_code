@@ -3,5 +3,13 @@ from booktest import views
 
 urlpatterns = [
     url(r'^index$',views.index),
-    url(r'^booklist$',views.booklist)
+    url(r'^booklist$',views.booklist),
+    url(r'^area$',views.area),
+    # url(r'^(\d+)/(\d+)/$',views.index1),
+    url(r'^(?P<parameter1>\d+)/(?P<parameter2>\d+)/$',views.index2),
+    url(r'^method1/$',views.method1),
+    url(r'^method2/$',views.method2),
+    url(r'^method3/$',views.method3),
+    url(r'^get$',views.get),
+    url(r'^getwish$',views.getwish)
 ]
