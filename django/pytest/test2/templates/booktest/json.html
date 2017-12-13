@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="/static/js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function() {
+            $('#btn').click(function() {
+                $.ajax({
+                    'url': '/json2/',
+                    'type': 'get',
+                    'dateType': 'json'
+                }).done(function(dat) {
+                    // console.log(dat.list)
+                    var list = dat.list;
+                    var str = '';
+                    for (var i = 0; i < list.length; i++) {
+                        str += '<li>' + list[i].btitle + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' + list[i].bpub_date + '</li>';
+                    }
+                    $('.list').html(str);
+                }).fail(function() {
+                    alert('服务器超时，请重试')
+                })
+            })
+        })
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>图书列表</h2>
+    <input type="button" value="显示" id="btn">
+    <ul class="list"></ul>
+</body>
+
+</html>

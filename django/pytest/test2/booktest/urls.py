@@ -11,5 +11,11 @@ urlpatterns = [
     url(r'^method2/$',views.method2),
     url(r'^method3/$',views.method3),
     url(r'^get$',views.get),
-    url(r'^getwish$',views.getwish)
+    url(r'^getwish$',views.getwish),
+    # post 请求的POST属性：准备表单
+    url(r'^post/$',views.post),
+    # 获取表单提交的参数
+    url(r'^post1/$',views.post1),
+    url(r'^json1/$',views.json1),
+    url(r'^json2/$',views.json2)
 ]

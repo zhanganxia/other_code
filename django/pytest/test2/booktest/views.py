@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from booktest.models import BookInfo,HeroInfo
 from django.db.models import F,Q,Sum,Count
 from booktest.models import AreaInfo
@@ -46,6 +46,50 @@ def getwish(request):
         str += textlist[int(i)]+ ' '
     context = {'name':name,'wish' : str}
     return render(request,'booktest/getwish.html',context)
+
+def post(request):
+    return render(request, 'booktest/post.html')
+
+def post1(request):
+    dict = request.POST
+    username = dict.get('username')
+    password = dict.get('password')
+    gender = dict.get('gender')
+    hobby = dict.getlist('hobby')#一键多值
+    context = {
+        'name':username,
+        'pwd':password,
+        'gender':gender,
+        'hobby':hobby
+    }
+    return render(request,'booktest/post1.html',context)
+
+def json1(request):
+    return render(request,'booktest/json.html')
+
+def json2(request):
+    books = BookInfo.objects.all()
+    list = []
+    for book in books:
+        list.append({'btitle':book.btitle,'bpub_date':book.bpub_date})
+    return JsonResponse({'list':list})
+# # 定义对象，设置cookie
+# def setcookie(request):
+#     request = HttpResponse('设置cookie')
+#     response.set_cookie('num01',123)
+
+#     return response
+
+# def getcookie(request):
+#     cookie = request.COOKIES
+#     str=''
+#     if 'num01' in cookie:
+#         str = 'cookie的值是：'+cookie['num01']
+#     else:
+#         str = '没有cookie'
+
+#     return HttpResponse
+        
 
 def booklist(request):
     # 1.获取所有图书

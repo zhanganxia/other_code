@@ -80,7 +80,7 @@ URLconf
         COOKIES：一个标准的Python字典，包含所有的cookie，键和值都是字符串
         SESSION：一个既可读又可写的类似于字典的对象，表示当前的会话，只有当Django 启用会话的支持时才可用
 
-    7.1.QueryDict对象
+    7.1 QueryDict对象
         . QueryDict对象定义在django.http.request中，HttpRequest对象的GET、POST属性都是QueryDict类型的对象（重要）
         . QueryDict类型的对象不是字典，仅仅是类似字典的对象而已
         . 与标准的python字典不同，QueryDict类型的对象可以用来处理同一个键带有多个值的情况
@@ -90,6 +90,17 @@ URLconf
         get()方法：根据键获取值，如果一个键同时拥有多个值将获取最后一个值，如果键不存在则返回None值，可以设置默认值进行后续处理
 
         getlist()方法：根据键获取值，值以列表返回，可以获取指定键的所有值，如果键不存在则返回空列表[]
+    7.2 GET属性
+        请求格式：在请求地址结尾使用？，之后以"键=值"的格式拼接，多个键值对值以&连列
+        例：http://www.itcast.cn/?a=10&b=20&c=python
+        请求的参数为：
+            a=10&b=20&c=python
+            a. 分析请求参数：键'a','b','c',值为       '10'、'20'、'python'
+            b. 在Django中可以使用HttpRequest对象的GET属性获取get方式请求的参数
+            c. GET属性返回QueryDict类型的对象，键和值都是字符串类型
+            d. 键是开发然人员在编写代码时确定下来的
+            e. 值是根据数据生成的
+
 
 
 MIDDLEWARE_CLASSES  中间件
