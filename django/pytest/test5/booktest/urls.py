@@ -7,6 +7,8 @@ urlpatterns = [
     url(r'^pic_handle$',views.pic_handle),
     url(r'^pic_show$',views.pic_show),
     url(r'^page(\d*)/$',views.pagelist),
+    url(r'^area$',views.area_select),
+    url(r'^areas$',views.areas),
 ]
 
 

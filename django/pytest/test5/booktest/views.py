@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.core.paginator import Paginator
-from .models import PicTest,AreaInfo
+from booktest.models import PicTest,AreaInfo
 
 
 # Create your views here.
@@ -39,6 +39,24 @@ def pagelist(request,pindex):
     return render(request,'booktest/page_test.html',{'page':page})
 
 def area_select(request):
-    return render(request,'booktest/area_select.html')
+    '''省市区下拉框选择页面'''
+    return render(request,'booktest/area.html')
 
 
+def areas(request):
+    '''处理页面ajax请求'''
+    parent = request.GET.get('parent')
+    # print(parent)
+    if parent == 'None':
+        areas = AreaInfo.objects.filter(aParent_id = None)
+        # print(areas)
+    else:
+        areas = AreaInfo.objects.filter(aParent_id = parent)
+        print('*',areas)
+
+    jsonstr = []
+    for area in areas:
+        jsonstr.append({'id':area.id,'atitle':area.atitle,'aparent':area.aParent_id})
+
+    print('--',jsonstr)
+    return JsonResponse({'data':jsonstr})
