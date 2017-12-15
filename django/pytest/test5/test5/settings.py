@@ -25,7 +25,7 @@ SECRET_KEY = 'vp2*ll9@-#nv1q)1$lor5g+6xol4v2ql22&rq&lkgng&x1musf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,7 +49,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'booktest.middleware.my_mid',
+    # 'booktest.middleware.my_mid',
 )
 
 ROOT_URLCONF = 'test5.urls'
@@ -110,3 +110,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
 ]
+
+MEDIA_ROOT = os.path.join(BASE_DIR,"static/media")
