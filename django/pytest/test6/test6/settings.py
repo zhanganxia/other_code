@@ -102,6 +102,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# 配置session
 SESSION_ENGINE = 'redis_sessions.session'
 SESSION_REDIS_HOST = 'localhost'
 SESSION_REDIS_PORT = 6379
@@ -109,3 +110,14 @@ SESSION_REDIS_DB = 2
 SESSION_REDIS_PASSWORD = ''
 SESSION_REDIS_PREFIX = 'session'
 
+# 配置邮箱
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 465
+# 发送邮件的邮箱
+EMAIL_HOST_USER = '605613403@qq.com'
+# 邮箱的密码
+EMAIL_HOST_PASSWORD = 'wyjujotngujpbddc'
+# 收件人看到的发件人
+DEFAULT_FROM_EMAIL = 'python<605613403@qq.com>'
