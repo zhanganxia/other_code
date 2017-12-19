@@ -1,19 +1,19 @@
 from django.shortcuts import render,redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
+from django.views.generic import View
 from user.models import User
 import re
 
-
-# /user/rigster
-def register(request):
-    '''页面跳转至注册页面'''
-    if request.method == 'GET':
+# /user/register
+class RegisterView(View):
+    '''注册'''
+    def get(self,request):
+        '''显示'''
         return render(request,'register.html')
-    else:
-# /user/register_handle
-# def register_handle(request):
-        # '''注册页面的处理函数'''
+
+    def post(self,request):
+        '''注册处理'''
         # 接收参数
         username = request.POST.get('user_name')
         password = request.POST.get('pwd')
@@ -50,7 +50,6 @@ def register(request):
 
         # 返回应答:跳转到首页
         return redirect(reverse('goods:index'))
-
 
 
 
