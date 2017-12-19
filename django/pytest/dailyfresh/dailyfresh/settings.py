@@ -112,8 +112,22 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 
+# 富文本配置
 TINYMCE_DEFAULT_CONFIG={
     'them':'advanced',
     'width':600,
     'height':400,
 }
+
+# 邮件配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 456
+
+# 发送邮件的邮箱
+EMAIL_HOST_USER = '605613403@qq.com'
+# 邮箱的密码：
+EMAIL_HOST_PASSWORD = 'wyjujotngujpbddc'
+# 收件人看到的发件人
+DEFAULT_FROM_EMAIL = 'python<605613403@qq.com>' 
