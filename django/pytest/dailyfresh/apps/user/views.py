@@ -10,6 +10,7 @@ from itsdangerous import SignatureExpired
 from django.core.mail import send_mail
 from django.core.mail import send_mass_mail
 from celery_tasks.sendmail_task import send_register_active_email
+from django.contrib.auth import authenticate #django自己的认证系统
 
 # /user/register
 class RegisterView(View):
@@ -66,16 +67,6 @@ class RegisterView(View):
 
         # 3.借助selery给用户发送激活邮件
         send_register_active_email.delay(email,username,token)
-        # 组织邮件内容
-        # subject = '天天生鲜欢迎信息'
-        # message = ''
-        # html_message = '<h1>%s,欢迎您成为天天生鲜注册会员</h1>请点击以下链接激活您的账户<br><a href="http:127.0.0.1:8000/user/active/%s">http:127.0.0.1:8000/user/active/%s</a>'%(username,token,token)
-        # sender = settings.DEFAULT_FROM_EMAIL 
-        # receiver = [email]
-        # print(receiver)
-        # send_mail(subject,message,sender,receiver,html_message=html_message)
-
-        # 返回应答:跳转到首页
         return redirect(reverse('goods:index'))
 
 # 2./user/active/激活token信息
@@ -106,3 +97,29 @@ class LoginView(View):
     def get(self, request):
         # 显示
         return render(request,'login.html')
+
+    def post(self,request):
+        ''''登录处理'''
+        # 1.接收参数
+        username = request.POST.get('username')
+        password = request.POST.get('pwd')
+        # 2.参数校验
+        if not all([username,password]):
+            return render(request,'login.html',{'errmsg':'输入的数据不完整'})
+        # 3.业务处理：登录校验
+            # 不用django认证系统的实现方式
+            # User.objects.get(username = username,password=password)
+        
+        # django认证系统中的：authenticate(),认证一组给定的用户名和密码
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            #用户名密码正确
+            if user.is_active:
+                # 用户有效，跳转到首页
+                return redirect(reverse('goods:index'))
+            else:
+                return render(request,'login.html',{'errmsg':'用户是无效的'})
+        else:
+            # 用户名或密码不正确
+            return render(request,'login.html',{'errmsg':'用户名或密码错误'})
+        # 4.返回应答
