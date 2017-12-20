@@ -7,6 +7,8 @@ from user.models import User
 import re
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer #实现数据的加密/解密/过期时间
 from itsdangerous import SignatureExpired
+from django.core.mail import send_mail
+from django.core.mail import send_mass_mail
 
 # /user/register
 class RegisterView(View):
@@ -56,12 +58,34 @@ class RegisterView(View):
         # 1.加密用户身份信息，生成激活token（这里使用的密钥是借助django自己的密钥）
         serializer = Serializer(settings.SECRET_KEY,3600)
         info = {'confirm':user.id}
+        # info = {'confirm':999}
+
         token = serializer.dumps(info)#加密数据，bytes类型
-        token = token.decode('utf8') #str
+        token = token.decode('utf-8') #str
         print('加密后的信息是：',token)
 
-        # 给用户发送激活邮件
+        # 3.给用户发送激活邮件
+        # 组织邮件内容
+        subject = '天天生鲜欢迎信息'
+        message = '<h1>%s,欢迎您成为天天生鲜注册会员</h1>请点击以下链接激活您的账户<br><a href="http:127.0.0.1:8000/user/active/%s">http:127.0.0.1:8000/user/active/%s</a>'%(username,token,token)
+        sender = settings.DEFAULT_FROM_EMAIL 
+        print('*****',sender)
+        receiver = [email]
+        print(receiver)
+        print('111111111111111111111111')
+        send_mail(subject,'',sender,receiver,html_message=message)
+        # msg = '12355'
+        # send_mail('注册激活','','smartli_it@163.com',
+        #     ['605613403@qq.com'],
+        #     html_message=msg,
+        #     fail_silently=False,)
+        # datatuple = (
+        #     ('Subject', 'Message.', 'from@example.com', ['605613403@qq.com']),
+        #     ('Subject', 'Message.', 'from@example.com', ['605613403@qq.com']),
+        # )
+        # send_mass_mail(datatuple)
 
+        print('22222222222222222222222')
 
         # 返回应答:跳转到首页
         return redirect(reverse('goods:index'))
@@ -72,7 +96,7 @@ class ActiveView(View):
     def get(self,request,token):
         '''激活处理'''
         serializer = Serializer(settings.SECRET_KEY,3600)
-        try：
+        try:
             # 解密数据
             info = serializer.loads(token)
             # 获取待激活的用户的id
@@ -91,6 +115,6 @@ class ActiveView(View):
 # /user/login
 class LoginView(View):
     """登录"""
-    def get(self,request):
-        """显示""""
+    def get(self, request):
+        # 显示
         return render(request,'login.html')
