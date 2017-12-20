@@ -66,11 +66,12 @@ class RegisterView(View):
         # 3.给用户发送激活邮件
         # 组织邮件内容
         subject = '天天生鲜欢迎信息'
-        message = '<h1>%s,欢迎您成为天天生鲜注册会员</h1>请点击以下链接激活您的账户<br><a href="http:127.0.0.1:8000/user/active/%s">http:127.0.0.1:8000/user/active/%s</a>'%(username,token,token)
+        message = ''
+        html_message = '<h1>%s,欢迎您成为天天生鲜注册会员</h1>请点击以下链接激活您的账户<br><a href="http:127.0.0.1:8000/user/active/%s">http:127.0.0.1:8000/user/active/%s</a>'%(username,token,token)
         sender = settings.DEFAULT_FROM_EMAIL 
         receiver = [email]
         print(receiver)
-        send_mail(subject,'',sender,receiver,html_message=message)
+        send_mail(subject,message,sender,receiver,html_message=html_message)
 
         # 返回应答:跳转到首页
         return redirect(reverse('goods:index'))
@@ -78,7 +79,7 @@ class RegisterView(View):
 # 2./user/active/激活token信息
 class ActiveView(View):
     '''激活'''
-    def get(self,request,token):
+    def get(self, request, token):
         '''激活处理'''
         serializer = Serializer(settings.SECRET_KEY,3600)
         try:
