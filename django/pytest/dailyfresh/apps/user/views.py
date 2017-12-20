@@ -62,30 +62,15 @@ class RegisterView(View):
 
         token = serializer.dumps(info)#加密数据，bytes类型
         token = token.decode('utf-8') #str
-        print('加密后的信息是：',token)
 
         # 3.给用户发送激活邮件
         # 组织邮件内容
         subject = '天天生鲜欢迎信息'
         message = '<h1>%s,欢迎您成为天天生鲜注册会员</h1>请点击以下链接激活您的账户<br><a href="http:127.0.0.1:8000/user/active/%s">http:127.0.0.1:8000/user/active/%s</a>'%(username,token,token)
         sender = settings.DEFAULT_FROM_EMAIL 
-        print('*****',sender)
         receiver = [email]
         print(receiver)
-        print('111111111111111111111111')
         send_mail(subject,'',sender,receiver,html_message=message)
-        # msg = '12355'
-        # send_mail('注册激活','','smartli_it@163.com',
-        #     ['605613403@qq.com'],
-        #     html_message=msg,
-        #     fail_silently=False,)
-        # datatuple = (
-        #     ('Subject', 'Message.', 'from@example.com', ['605613403@qq.com']),
-        #     ('Subject', 'Message.', 'from@example.com', ['605613403@qq.com']),
-        # )
-        # send_mass_mail(datatuple)
-
-        print('22222222222222222222222')
 
         # 返回应答:跳转到首页
         return redirect(reverse('goods:index'))

@@ -119,24 +119,6 @@ TINYMCE_DEFAULT_CONFIG={
     'height':400,
 }
 
-# 邮件配置
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-# EMAIL_USE_SSL = True
-# EMAIL_HOST = 'smtp.qq.com'
-# EMAIL_PORT = 456
-
-# # 发送邮件的邮箱
-# EMAIL_HOST_USER = '605613403@qq.com'
-# # 邮箱的密码：
-# EMAIL_HOST_PASSWORD = 'wyjujotngujpbddc'
-# # 收件人看到的发件人
-# DEFAULT_FROM_EMAIL = 'python<605613403@qq.com>' 
-
-
 # 配置邮箱
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_SSL = True
@@ -148,6 +130,3 @@ EMAIL_HOST_USER = '605613403@qq.com'
 EMAIL_HOST_PASSWORD = 'wyjujotngujpbddc'
 # 收件人看到的发件人
 DEFAULT_FROM_EMAIL = 'python<605613403@qq.com>'
-
-##二货呀，你把 EMAIL_PORT = 465 写成了 456 导致邮箱 一直无法连接远程服务器，导致最后 Exception Type:	TimeoutError
-##超时报错
