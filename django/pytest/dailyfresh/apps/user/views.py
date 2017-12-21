@@ -51,11 +51,6 @@ class RegisterView(View):
         user = User.objects.create_user(username,email,password)
         user.is_active = 0
         user.save()
-
-        # 给用户的注册邮箱发送激活邮件，激活邮件中需要包含激活链接（每一个用户的激活链接不一样，点击需要识别用户的身份）
-        # 激活链接的设计：/user/active/用户ID
-        # 以上激活链接的弊端：直接放置用户ID，会导致有人可能恶意请求网站
-        # 解决方法：对用户ID加密，使用itsdangerous -->dumps()方法加密；loads()方法解密
         
         # 1.加密用户身份信息，生成激活token（这里使用的密钥是借助django自己的密钥）
         serializer = Serializer(settings.SECRET_KEY,3600)
@@ -128,10 +123,6 @@ class LoginView(View):
                 response = redirect(reverse('goods:index'))
                 #1.用户名密码正确后判断是否勾选‘记住密码’
                 if remember == 'on':
-                    # 记住用户名，密码（设置cookie记住：set_cookie方法）
-                    # 设置cookie:set_cookie -->HttpResponse对象的方法
-                    # 删除cookie:delete_cookie
-                    # HttpResponseRedirect是HttpResponse的子类
                     response.set_cookie('username',username,max_age = 7*24*3600)
                 else:
                     # 不记住用户名，密码
@@ -152,3 +143,23 @@ class LogoutView(View):
         logout(request)
         # 返回应答：跳转到首页
         return redirect(reverse('goods:index'))
+
+# /user/usercenter
+class UsercenterView(View):
+    '''用户中心页面显示'''
+    def get(self,request):
+        # 返回用户中心页面的显示
+        return render(request,'user_center_info.html',{'page':'usercenter'})
+
+# /user/userorder
+class UserorderView(View):
+    '''用户定点页面显示'''
+    def get(self,request):
+        return render(request,'user_center_order.html',{'page':'userorder'})
+
+# /user/usersite
+class UsersiteView(View):
+    '''用户收货地址页面显示'''
+    def get(self,request):
+        return render(request,'user_center_site.html',{'page':'usersite'})
+
