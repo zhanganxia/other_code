@@ -179,10 +179,7 @@ class UsersiteView(LoginRequiredMixin,View):
         # 获取登录用户
         user = request.user
         # 获取默认地址
-        try:
-            address = Address.objects.get(user=user,is_default=True)
-        except Address.DoesNotExist:
-            address = None
+        address = Address.objects.get_default_address(user)
         return render(request,'user_center_site.html',{'page':'usersite','address':address})
     
     def post(self,request):
@@ -199,11 +196,7 @@ class UsersiteView(LoginRequiredMixin,View):
         # 如果用户的地址已经存在默认收货地址，新添加的地址做为非默认地址，否则添加的地址做为默认地址
         # 获取当前用户的默认地址
         user = request.user
-        try:
-            address = Address.objects.get(user=user,is_default=True)
-        except Address.DoesNotExist:
-            # 用户不存在默认地址
-            address = None
+        address = Address.objects.get_default_address(user)
         is_default = True
         if address:
             # 已经有默认地址了：
