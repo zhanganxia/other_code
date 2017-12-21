@@ -96,32 +96,48 @@ class LoginView(View):
     """登录"""
     def get(self, request):
         # 显示
-        return render(request,'login.html')
+        # 2.判读cookie中是否存入username
+        if 'username' in request.COOKIES:
+            # 记住了用户名
+            username = request.COOKIES['username']
+            checked = 'checked'
+        else:            
+            #没有用户名 
+            username = ''
+            checked = ''
+        return render(request,'login.html',{'username':username,'checked':checked})
 
     def post(self,request):
         ''''登录处理'''
         # 1.接收参数
         username = request.POST.get('username')
         password = request.POST.get('pwd')
+        remember = request.POST.get('remember')
+        print("11111111111111111111111", remember)
         # 2.参数校验
         if not all([username,password]):
             return render(request,'login.html',{'errmsg':'输入的数据不完整'})
         # 3.业务处理：登录校验
-            # 不用django认证系统的实现方式
-            # User.objects.get(username = username,password=password)
-        
         # django认证系统中的：authenticate(),认证一组给定的用户名和密码
         user = authenticate(username=username, password=password)
         if user is not None:
             #用户名密码正确
             if user.is_active:
-                # 用户有效，跳转到首页
-                # 记录用户的登录状态：自己的实现方式
-                # request.session['islogin'] = True
                 # django认证系统中记录登录状态：login(),它接受一个HttpRequest对象和一个User对象，记录登录用户的ID存在session中                
                 login(request,user)    
-                # request.user.is_authenticated()判断用户是否登录
-                return redirect(reverse('goods:index'))
+                # 返回首页
+                response = redirect(reverse('goods:index'))
+                #1.用户名密码正确后判断是否勾选‘记住密码’
+                if remember == 'on':
+                    # 记住用户名，密码（设置cookie记住：set_cookie方法）
+                    # 设置cookie:set_cookie -->HttpResponse对象的方法
+                    # 删除cookie:delete_cookie
+                    # HttpResponseRedirect是HttpResponse的子类
+                    response.set_cookie('username',username,max_age = 7*24*3600)
+                else:
+                    # 不记住用户名，密码
+                    response.delete_cookie('username')
+                return response
             else:
                 return render(request,'login.html',{'errmsg':'用户是无效的'})
         else:
