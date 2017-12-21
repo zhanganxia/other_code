@@ -12,6 +12,8 @@ from django.core.mail import send_mass_mail
 from celery_tasks.sendmail_task import send_register_active_email
 from django.contrib.auth import authenticate,login,logout #django自己的认证系统
 
+
+
 # /user/register
 class RegisterView(View):
     '''注册'''
@@ -118,9 +120,13 @@ class LoginView(View):
             #用户名密码正确
             if user.is_active:
                 # django认证系统中记录登录状态：login(),它接受一个HttpRequest对象和一个User对象，记录登录用户的ID存在session中                
-                login(request,user)    
-                # 返回首页
-                response = redirect(reverse('goods:index'))
+                login(request,user) 
+
+                # 获取登录后要跳转到的next地址，默认跳转到首页
+                next_url = request.GET.get('next',reverse('goods:index'))
+
+                # 跳转到next_url
+                response = redirect(next_url)
                 #1.用户名密码正确后判断是否勾选‘记住密码’
                 if remember == 'on':
                     response.set_cookie('username',username,max_age = 7*24*3600)
