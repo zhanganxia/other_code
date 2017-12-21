@@ -113,7 +113,6 @@ class LoginView(View):
         username = request.POST.get('username')
         password = request.POST.get('pwd')
         remember = request.POST.get('remember')
-        print("11111111111111111111111", remember)
         # 2.参数校验
         if not all([username,password]):
             return render(request,'login.html',{'errmsg':'输入的数据不完整'})
