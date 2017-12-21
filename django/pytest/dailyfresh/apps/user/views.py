@@ -150,26 +150,30 @@ class LogoutView(View):
         # 返回应答：跳转到首页
         return redirect(reverse('goods:index'))
 
-from utils.mixin import LoginRequiredView
+from utils.mixin import LoginRequiredView,LoginRequiredMixin
 
 # /user/usercenter
 # class UsercenterView(View):
-class UsercenterView(LoginRequiredView):
+# class UsercenterView(LoginRequiredView):
+class UsercenterView(LoginRequiredMixin,View):
     '''用户中心页面显示'''
     def get(self,request):
         # 返回用户中心页面的显示
+        # print(UsercenterView.__mro__) #查看方法的执行顺序
         return render(request,'user_center_info.html',{'page':'usercenter'})
 
 # /user/userorder
 # class UserorderView(View):
-class UserorderView(LoginRequiredView):
+# class UserorderView(LoginRequiredView):
+class UserorderView(LoginRequiredMixin,View):
     '''用户定点页面显示'''
     def get(self,request):
         return render(request,'user_center_order.html',{'page':'userorder'})
 
 # /user/usersite
 # class UsersiteView(View):
-class UsersiteView(LoginRequiredView):
+# class UsersiteView(LoginRequiredView):
+class UsersiteView(LoginRequiredMixin,View):
     '''用户收货地址页面显示'''
     def get(self,request):
         return render(request,'user_center_site.html',{'page':'usersite'})
