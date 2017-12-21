@@ -10,7 +10,7 @@ from itsdangerous import SignatureExpired
 from django.core.mail import send_mail
 from django.core.mail import send_mass_mail
 from celery_tasks.sendmail_task import send_register_active_email
-from django.contrib.auth import authenticate #django自己的认证系统
+from django.contrib.auth import authenticate,login,logout #django自己的认证系统
 
 # /user/register
 class RegisterView(View):
@@ -116,6 +116,11 @@ class LoginView(View):
             #用户名密码正确
             if user.is_active:
                 # 用户有效，跳转到首页
+                # 记录用户的登录状态：自己的实现方式
+                # request.session['islogin'] = True
+                # django认证系统中记录登录状态：login(),它接受一个HttpRequest对象和一个User对象，记录登录用户的ID存在session中                
+                login(request,user)    
+                # request.user.is_authenticated()判断用户是否登录
                 return redirect(reverse('goods:index'))
             else:
                 return render(request,'login.html',{'errmsg':'用户是无效的'})
@@ -123,3 +128,12 @@ class LoginView(View):
             # 用户名或密码不正确
             return render(request,'login.html',{'errmsg':'用户名或密码错误'})
         # 4.返回应答
+
+# /user/logout
+class LogoutView(View):
+    '''退出登录'''
+    def get(self,request):
+        # 清除用户的登录状态:logout()
+        logout(request)
+        # 返回应答：跳转到首页
+        return redirect(reverse('goods:index'))
