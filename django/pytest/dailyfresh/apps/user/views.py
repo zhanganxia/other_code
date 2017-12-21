@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
-from user.models import User
+from user.models import User,Address
 import re
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer #实现数据的加密/解密/过期时间
 from itsdangerous import SignatureExpired
@@ -159,7 +159,7 @@ class UsercenterView(LoginRequiredMixin,View):
     '''用户中心页面显示'''
     def get(self,request):
         # 返回用户中心页面的显示
-        # print(UsercenterView.__mro__) #查看方法的执行顺序
+        # print(UsercenterView.__mro__) #查看调用类的执行顺序
         return render(request,'user_center_info.html',{'page':'usercenter'})
 
 # /user/userorder
@@ -176,5 +176,41 @@ class UserorderView(LoginRequiredMixin,View):
 class UsersiteView(LoginRequiredMixin,View):
     '''用户收货地址页面显示'''
     def get(self,request):
-        return render(request,'user_center_site.html',{'page':'usersite'})
+        # 获取登录用户
+        user = request.user
+        # 获取默认地址
+        try:
+            address = Address.objects.get(user=user,is_default=True)
+        except Address.DoesNotExist:
+            address = None
+        return render(request,'user_center_site.html',{'page':'usersite','address':address})
+    
+    def post(self,request):
+        '''添加地址'''
+        # 接收参数
+        receiver = request.POST.get('receiver')
+        addr = request.POST.get('addr')
+        zip_code = request.POST.get('zip_code')
+        phone = request.POST.get('phone')
+        # 参数校验
+        if not all([receiver,addr,phone]):
+            return render(request,'user_center_site.html',{'errmsg':'数据不完整'})
+        # 业务处理：添加收货地址
+        # 如果用户的地址已经存在默认收货地址，新添加的地址做为非默认地址，否则添加的地址做为默认地址
+        # 获取当前用户的默认地址
+        user = request.user
+        try:
+            address = Address.objects.get(user=user,is_default=True)
+        except Address.DoesNotExist:
+            # 用户不存在默认地址
+            address = None
+        is_default = True
+        if address:
+            # 已经有默认地址了：
+            is_default = False
+
+        # 添加地址
+        Address.objects.create(user=user,receiver=receiver,addr=addr,zip_code=zip_code,phone=phone,is_default=is_default)
+        # 返回应答：跳转到收货地址页面
+        return redirect(reverse('user:usersite'))#get
 

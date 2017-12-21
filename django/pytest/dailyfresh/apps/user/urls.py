@@ -16,4 +16,4 @@ urlpatterns = [
     url(r'^usersite$',UsersiteView.as_view(),name = 'usersite'),#用户收货地址
 ]
 
-# 重写View的as_view方法，在重写的方法中返回login_required,在路由中使用的还是之前的方法.as_view()的形式
+# 重写View的as_view方法，在重写的方法中返回login_required,在路由中使用的还是之前的方法：类名.as_view()的形式
