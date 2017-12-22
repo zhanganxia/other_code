@@ -148,3 +148,6 @@ SESSION_CACHE_ALIAS = "default"
 # 指定登录页面的url地址
 LOGIN_URL = '/user/login'
 
+# 指定django系统文件存储类
+DEFAULT_FILE_STORAGE='utils.fdfs.storage.FDFSStorage'
+
