@@ -15,10 +15,13 @@ class User(AbstractUser,BaseModel):
 
 class AddressManager(models.Manager):
     '''模型管理器类'''
+    # 添加模型管理器类的场景：
+        # 1.改变原有查询的结果集
+        # 2.添加额外的方法：操作self所在的模型类对应的数据表(增删改查)
     def get_default_address(self,user):
         '''获取user用户的默认地址'''
         # self.model-->获取self对象所在的模型类，类名发生变化的时候此处的代码不会变
-        # Address.objects.get_default_address(user)
+        # Address.objects.get_default_address(user)        
         try:
             # get是Manager的方法
             address = self.get(user=user,is_default=True)

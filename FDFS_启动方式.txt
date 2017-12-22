@@ -1,0 +1,31 @@
+
+0. 查看自己的ip
+ip a
+
+1. 修改本机ip 为 fastdfs.rhel.cc
+sudo  vi /etc/hosts
+
+启动：
+sudo service fdfs_trackerd restart
+sudo service fdfs_storaged restart
+
+启动nginx：
+/usr/local/nginx/sbin/nginx
+
+
+关闭防火墙：
+
+iptables -F
+
+上传图片：
+fdfs_upload_file /etc/fdfs/client.conf /home/kk/1.png
+
+
+上传图片-推荐
+/usr/bin/fdfs_test /etc/fdfs/client.conf upload /home/kk/1.png
+
+关闭nginx：
+/usr/local/nginx/sbin/nginx -s stop
+
+
+

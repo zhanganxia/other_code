@@ -4,6 +4,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.views.generic import View
 from user.models import User,Address
+from goods.models import GoodsSKU
 import re
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer #实现数据的加密/解密/过期时间
 from itsdangerous import SignatureExpired
@@ -11,8 +12,8 @@ from django.core.mail import send_mail
 from django.core.mail import send_mass_mail
 from celery_tasks.sendmail_task import send_register_active_email
 from django.contrib.auth import authenticate,login,logout #django自己的认证系统
-
-
+from django_redis import get_redis_connection
+from utils.mixin import LoginRequiredView,LoginRequiredMixin
 
 # /user/register
 class RegisterView(View):
@@ -150,8 +151,6 @@ class LogoutView(View):
         # 返回应答：跳转到首页
         return redirect(reverse('goods:index'))
 
-from utils.mixin import LoginRequiredView,LoginRequiredMixin
-
 # /user/usercenter
 # class UsercenterView(View):
 # class UsercenterView(LoginRequiredView):
@@ -160,7 +159,48 @@ class UsercenterView(LoginRequiredMixin,View):
     def get(self,request):
         # 返回用户中心页面的显示
         # print(UsercenterView.__mro__) #查看调用类的执行顺序
-        return render(request,'user_center_info.html',{'page':'usercenter'})
+        # 获取用户默认的信息
+        user = request.user
+        address = Address.objects.get_default_address(user)
+        # 获取用户的浏览记录
+        # 连接到redis数据库
+        # 方式一
+        # from redis import StrictRedis
+        # conn = StrictRedis(host='127.0.0.1',port=6379,db=6)
+        # 方式二
+        conn = get_redis_connection('default')
+        history_key = 'history_%d'%user.id
+        # 获取用户最新浏览的5个商品的id
+        sku_ids = conn.lrange(history_key,0,4)
+
+        # select * from df_goods_sku where id in (3,2,1)
+        # 注意：我们需要保证查询的顺序和取出的顺序是一致的，数据库中查出来的数据顺序是：按id从小向大排序
+        # 保证用户浏览的顺序的两种方法：
+
+        #方法一：只查询一次
+        # skus = GoodsSKU.objects.filter(id__in=sku_ids)
+        # skus_li = []
+        # for sku_id in sku_ids:
+        #     for sku in skus:
+        #         if sku.id == int(sku_id):
+        #             skus_li.append(sku)
+
+        # 方法二：查询5次
+        skus = []
+        for sku_id in sku_ids:
+            # 根据sku_id获取商品的信息
+            sku = GoodsSKU.objects.get(id=sku_id)
+            # 添加到skus列表中
+            skus.append(sku)
+
+        # 组织模板上下文
+        context = {
+            'skus':skus,
+            'page':'usercenter',
+            'address':address
+        }
+
+        return render(request,'user_center_info.html',context)
 
 # /user/userorder
 # class UserorderView(View):
