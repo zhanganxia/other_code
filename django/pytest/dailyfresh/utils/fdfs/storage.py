@@ -8,6 +8,17 @@ import os
 # 自定义文件存储类
 class FDFSStorage(Storage):
     '''fastdfs系统文件存储类'''
+
+    def __init__(self,client_conf=None,nginx_url=None):
+        '''初始化'''
+        if client_conf is None:
+            client_conf = settings.FDFS_CLIENT_CONF
+        self.client_conf = client_conf
+
+        if nginx_url is None:
+            nginx_url = settings.FDFS_NGINX_URL
+        self.nginx_url = nginx_url 
+
     def _open(self,name,mode='rb'):
         '''打开文件'''
         pass
@@ -18,7 +29,7 @@ class FDFSStorage(Storage):
         # content:包含上传文件内容的file对象
 
         # 把文件上传到fastdfs系统中
-        client = Fdfs_client(os.path.join(settings.BASE_DIR,'utils/fdfs/client.conf'))
+        client = Fdfs_client(self.client_conf)
         
         # 获取上传文件内容
         content = content.read()
@@ -41,4 +52,4 @@ class FDFSStorage(Storage):
     def url(self,name):
         '''返回一个可以访问到文件的url路径'''
         # name:文件id
-        return 'http://192.168.20.50:8888/'+name
+        return self.nginx_url+name

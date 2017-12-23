@@ -151,3 +151,8 @@ LOGIN_URL = '/user/login'
 # 指定django系统文件存储类
 DEFAULT_FILE_STORAGE='utils.fdfs.storage.FDFSStorage'
 
+# 指定fdfs客户端配置文件的路径
+FDFS_CLIENT_CONF = os.path.join(BASE_DIR,'utils/fdfs/client.conf')
+
+# 指定fdfs系统机器上的nginx的ip和端口号
+FDFS_NGINX_URL = 'http://192.168.20.50:8888/'
