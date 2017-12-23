@@ -37,3 +37,8 @@ class FDFSStorage(Storage):
 # 在调用save方法之前，django系统会先调用exists方法，判断文件的系统是否存在
     def exists(self,name):
         return False
+
+    def url(self,name):
+        '''返回一个可以访问到文件的url路径'''
+        # name:文件id
+        return 'http://192.168.20.50:8888/'+name

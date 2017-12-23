@@ -29,3 +29,15 @@ fdfs_upload_file /etc/fdfs/client.conf /home/kk/1.png
 
 
 
+from fdfs_client.client import *
+client_file = '/etc/fdfs/client.conf'
+test_file = '/root/work/testing-platform-execute/Conf/fast_client.conf'
+download_file = 'test2.txt'
+
+client = Fdfs_client(client_file)
+
+/opt/fastdfs/tracker/data-and-log
+
+
+
+fastdfs.rhel.cc
