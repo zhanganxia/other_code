@@ -39,9 +39,12 @@ class GoodsSKU(BaseModel):
         db_table = 'df_goods_sku'
         verbose_name = '商品'
         verbose_name_plural = verbose_name
+    def __str__(self):
+        return self.name
 
 class Goods(BaseModel):
     '''商品SPU模型类'''
+
     name = models.CharField(max_length=20,verbose_name='商品SPU名称')
     detail = HTMLField(blank=True,verbose_name='商品详情')
 
@@ -49,6 +52,10 @@ class Goods(BaseModel):
         db_table = 'df_goods'
         verbose_name = '商品SPU'
         verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
 
 class GoodsImage(BaseModel):
     '''商品图片模型'''
@@ -84,7 +91,7 @@ class IndexTypeGoodsBanner(BaseModel):
     index = models.SmallIntegerField(default=0,verbose_name='展示顺序')
 
     class Meta:
-        db_table:'df_index_type_goods'
+        db_table = 'df_index_type_goods'
         verbose_name = '主页分类展示商品'
         verbose_name_plural = verbose_name
 
