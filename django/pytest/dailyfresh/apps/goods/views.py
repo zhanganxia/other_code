@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import View
 from goods.models import GoodsType,IndexGoodsBanner,IndexPromotionBanner,IndexTypeGoodsBanner
+from django_redis import get_redis_connection
 
 # http://127.0.0.1:8000
 class IndexView(View):
@@ -28,6 +29,14 @@ class IndexView(View):
 
         # 获取用户购物车商品的数目
         cart_count = 0
+
+        # 获取user的登录状态
+        user = request.user
+        if user.is_authenticated():
+            # 用户已登录
+            conn = get_redis_connection('default')
+            cart_key = 'cart_%d'%user.id
+            cart_count = conn.hlen(cart_key)
 
         # 组织上下文
         context = {
