@@ -1,5 +1,5 @@
 from django.contrib import admin
-
+from django.core.cache import cache
 from goods.models import GoodsType,IndexGoodsBanner,IndexPromotionBanner,IndexTypeGoodsBanner,GoodsSKU,Goods
 
 
@@ -11,7 +11,9 @@ class BaseAdmin(admin.ModelAdmin):
         # 附加操作，发出generate_static_index_html任务
         from celery_tasks.sendmail_task import generate_static_index_html
         generate_static_index_html.delay()
-        print('send generate_static_index_html ok')
+        
+        # 附加操作：清除首页缓存
+        cache.delete('index_page_data')
 
     def delete_model(self, request, obj):
         # 调用父类的方法，完成删除的操作
@@ -19,6 +21,9 @@ class BaseAdmin(admin.ModelAdmin):
         # 附加操作，发出generate_static_index_html任务
         from celery_tasks.sendmail_task import generate_static_index_html
         generate_static_index_html.delay()
+
+        # 附加操作：清除首页的缓存
+        cache.delete('index_page_data')
 
 class GoodsTypeAdmin(BaseAdmin):
     pass
