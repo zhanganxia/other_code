@@ -42,5 +42,7 @@ admin.site.register(IndexGoodsBanner,GoodsBannerAdmin) #商品轮播图df_index_
 admin.site.register(IndexPromotionBanner,IndexPromotionBannerAdmin) #促销商品信息df_index_promotion
 admin.site.register(IndexTypeGoodsBanner,IndexTypeGoodsBannerAdmin) #首页分类商品展示信息df_index_type_goods
 
-
+# 静态首页和IndexView区分
+# 部署时，为了把静态index.html和IndexView区分开，会部署一个调度的nginx服务器，
+# 用户访问网站的时候直接访问调度的nginx服务器,最终由调度niginx更具地址的不同采用不同的方式获取首页内容,在返回首页内容给浏览器
 
