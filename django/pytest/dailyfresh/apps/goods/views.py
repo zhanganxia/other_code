@@ -88,6 +88,9 @@ class DetailView(View):
         new_skus = GoodsSKU.objects.filter(type=sku.type).order_by('-create_time')[:2]
         # 获取商品的评论信息
         order_sku = OrderGoods.objects.filter(sku=sku).exclude(commont='').order_by('-update_time')
+        
+        # 获取和sku商品同一SPU的其他规格的商品
+        same_spu_skus = GoodsSKU.objects.filter(goods=sku.goods).exclude(id=sku_id)
         # 获取登录用户的额购物车中商品的条目信息
         cart_count = 0
         user = request.user
@@ -103,7 +106,8 @@ class DetailView(View):
             'types':types,
             'new_skus':new_skus,
             'order_sku':order_sku,
-            'cart_count':cart_count
+            'cart_count':cart_count,
+            'same_spu_skus':same_spu_skus
         }
 
         # 使用模板
