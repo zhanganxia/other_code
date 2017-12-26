@@ -87,7 +87,7 @@ class DetailView(View):
         # 获取和商品同一分类的2个商品信息
         new_skus = GoodsSKU.objects.filter(type=sku.type).order_by('-create_time')[:2]
         # 获取商品的评论信息
-        order_sku = OrderGoods.objects.filter(sku=sku).exclude(comment='').order_by('-update_time')
+        order_sku = OrderGoods.objects.filter(sku=sku).exclude(commont='').order_by('-update_time')
         # 获取登录用户的额购物车中商品的条目信息
         cart_count = 0
         user = request.user

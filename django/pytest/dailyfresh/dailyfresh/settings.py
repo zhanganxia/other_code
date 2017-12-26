@@ -156,4 +156,4 @@ FDFS_CLIENT_CONF = os.path.join(BASE_DIR,'utils/fdfs/client.conf')
 
 # 指定fdfs系统机器上的nginx的ip和端口号
 #FDFS_NGINX_URL = 'http://192.168.3.18:8888/'
-FDFS_NGINX_URL = 'http://192.168.20.73:8888/'
+FDFS_NGINX_URL = 'http://192.168.20.87:8888/'
