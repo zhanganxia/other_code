@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.core.urlresolvers import reverse
 from django.views.generic import View
-from goods.models import GoodsType,IndexGoodsBanner,IndexPromotionBanner,IndexTypeGoodsBanner
+from goods.models import GoodsSKU,GoodsType,IndexGoodsBanner,IndexPromotionBanner,IndexTypeGoodsBanner
+from order.models import OrderGoods
 from django_redis import get_redis_connection
 from django.core.cache import cache
 
@@ -65,3 +67,44 @@ class IndexView(View):
 
         # 使用模板
         return render(request,'index.html',context)
+
+# 访问商品的详情页面时，需要传递商品的id
+# 前端向后端传递参数的额方式：
+    # 1. get(只涉及到数据的获取) /goods?sku_id = 商品id
+    # 2. post(涉及到数据的修改)传递
+    # 3. url捕获参数 /goods/商品id
+class DetailView(View):
+    '''商品详情页面'''
+    def get(self,request,sku_id):
+        # 获取sku_id商品的详情信息
+        try:
+            sku = GoodsSKU.objects.get(id=sku_id)
+        except GoodsSKU.DoseNotExist:
+            # 商品不存在，跳转到首页
+            return redirect(reverse('goods:index'))
+        # 获取商品的分类信息
+        types = GoodsType.objects.all()
+        # 获取和商品同一分类的2个商品信息
+        new_skus = GoodsSKU.objects.filter(type=sku.type).order_by('-create_time')[:2]
+        # 获取商品的评论信息
+        order_sku = OrderGoods.objects.filter(sku=sku).exclude(comment='').order_by('-update_time')
+        # 获取登录用户的额购物车中商品的条目信息
+        cart_count = 0
+        user = request.user
+        if user.is_authenticated():
+            # 用户已登录
+            conn = get_redis_connection('default')
+            cart_key = 'cart_%d' % user.id
+            cart_count = conn.hlen(cart_key)
+
+        # 组织模板上下文
+        context = {
+            'sku':sku,
+            'types':types,
+            'new_skus':new_skus,
+            'order_sku':order_sku,
+            'cart_count':cart_count
+        }
+
+        # 使用模板
+        return render(request,'detail.html',context)
