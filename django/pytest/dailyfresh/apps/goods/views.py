@@ -95,11 +95,19 @@ class DetailView(View):
         cart_count = 0
         user = request.user
         if user.is_authenticated():
-            # 用户已登录
+            # 用户已登录，获取用户购物车中商品的条目数
             conn = get_redis_connection('default')
             cart_key = 'cart_%d' % user.id
             cart_count = conn.hlen(cart_key)
 
+            # 添加用户历史浏览记录
+            history_key = 'history_%d'%user.id
+            # 先尝试从redis对应的列表删除元素sku_id
+            conn.lrem(history_key,0,sku_id)
+            # 把sku_id加入到redis对应列表的左侧
+            conn.lpush(history_key,sku_id)
+            # 保留用户最近浏览的5个商品的浏览记录:ltrim
+            conn.ltrim(history_key,0,4)
         # 组织模板上下文
         context = {
             'sku':sku,
