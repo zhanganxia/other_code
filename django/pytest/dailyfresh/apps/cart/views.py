@@ -29,8 +29,13 @@ class CartAddView(View):
             sku = GoodsSKU.objects.get(id=sku_id)
         except Exception as e:
             # 商品数目非法
+            return JsonResponse({'res':3,'errmsg':'商品信息错误'})
+        # 校验商品的数目
+        try:
+            count = count
+        except Exception as e:
             return JsonResponse({'res':3,'errmsg':'商品数目非法'})
-        
+
         if count <= 0:
             # 商品数目非法
             return JsonResponse({'res':4,'errmsg':'商品数量不合法'})
@@ -69,12 +74,14 @@ class CartInfoView(LoginRequiredMixin,View):
         conn = get_redis_connection('default')
         cart_key = 'cart_%d'%user.id
         cart_dict = conn.hgetall(cart_key) #{商品id：商品数量}
+        print('********',cart_dict)
 
         skus = []
         total_count = 0
         total_price = 0
         # 遍历获取商品的信息
         for sku_id, count in cart_dict.items():
+            print('#############',sku_id)
             # 根据商品的id获取商品的信息
             sku = GoodsSKU.objects.get(id=sku_id)
             # 计算商品的小计
@@ -96,5 +103,5 @@ class CartInfoView(LoginRequiredMixin,View):
                 'skus':skus
             }
 
-            # 使用模板
-            return render(request,'cart.html',context)
+        # 使用模板
+        return render(request,'cart.html',context)
