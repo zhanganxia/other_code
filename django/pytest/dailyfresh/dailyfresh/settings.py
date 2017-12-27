@@ -161,7 +161,7 @@ FDFS_NGINX_URL = 'http://192.168.3.18:8888/'
 
 # 全文检索框架配置
 HAYSTACK_CONNECTIONS = {
-    'dafualt':{
+    'default':{
         # 使用whools引擎
         'ENGINE':'haystack.backends.whoosh_backend.WhooshEngine',
         # 索引文件路径
