@@ -5,6 +5,7 @@ from goods.models import GoodsSKU,GoodsType,IndexGoodsBanner,IndexPromotionBanne
 from order.models import OrderGoods
 from django_redis import get_redis_connection
 from django.core.cache import cache
+from django.core.paginator import Paginator
 
 # http://127.0.0.1:8000
 class IndexView(View):
@@ -120,3 +121,84 @@ class DetailView(View):
 
         # 使用模板
         return render(request,'detail.html',context)
+
+#访问列表页面需要传递的参数
+# 种类id(type_id),页码(page)，排序方式(sort)
+# /list?type_id=种类id&page=页码&sort=排序方式
+# /list/种类id/页码/排序方式
+# /list/种类id/页码?sort=排序方式
+class ListView(View):
+    '''列表页面'''
+    def get(self,request,type_id,page):
+        '''显示'''
+        # 获取type_id对应的分类信息
+        try:
+            type = GoodsType.objects.get(id=type_id)
+        except GoodsType.DoesNotExist:
+            # 商品种类不存在，跳转到首页
+            return redirect(reverse('goods:index'))
+        print('******',type)
+        # 获取商品分类信息
+        types = GoodsType.objects.all()
+
+        # 获取排序方式 获取分类商品的信息 
+        sort = request.GET.get('sort','default')
+        # sort=='default':按照默认方式(商品id)排序
+        # sort=='price':按照商品的价格(price)排序
+        # sort== 'hot':按照产品的销量(sales)排序
+        if sort == 'price':
+            skus = GoodsSKU.objects.filter(type=type).order_by('price')
+        elif sort == 'hot':
+            skus = GoodsSKU.objects.filter(type=type).order_by('-sales')
+        else:
+            # 默认排序
+            sort = 'default'
+            skus = GoodsSKU.objects.filter(type=type).order_by('-id')
+        
+        # 分页
+        paginator = Paginator(skus,1)
+        # 处理页码
+        page = int(page)
+        if page > paginator.num_pages or page <= 0:
+            # 默认显示第一页
+            page = 1
+        # 获取第page页的Page对象
+        skus_page = paginator.page(page)
+
+        # 页码处理（页面最多值显示出5个页码）
+        # 1.总页数不是5页，显示所有页码
+        # 2.当前页是前3页，显示1-5页
+        # 3.当前页是后3页，显示后5页
+        # 4.其他情况，显示当前页的前2页，当前页，当前页的后2页
+        num_pages = paginator.num_pages
+        if num_pages < 5:
+            pages = range(1,num_pages+1)
+        elif page <=3:
+            pages = range(1,6)
+        elif num_pages - page <=2:
+            pages = range(num_pages-4,num_pages+1)
+        else:
+            pages = range(page-2,page+3)
+
+        # 获取分类的两个新品信息
+        new_skus = GoodsSKU.objects.filter(type=type).order_by('-create_time')[:2]
+        # 获取登录用户购物车中商品的条目数
+        cart_count = 0
+        user = request.user
+        if user.is_authenticated():
+            conn = get_redis_connection('default')
+            cart_key = 'cart_%d' % user.id
+            cart_count = conn.hlen(cart_key)
+        # 组织模板上下文
+        context = {
+            'type':type,
+            'types':types,
+            'skus':skus,
+            'skus_page':skus_page,
+            'new_skus':new_skus,
+            'cart_count':cart_count,
+            'sort':sort,
+            'pages':pages
+        }
+        # 使用模板
+        return render(request,'list.tmpl',context)
