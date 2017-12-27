@@ -1,4 +1,4 @@
-{% extends 'base_no_cart.html' %}
+{% extends 'base_no_cart.html' %}{% load staticfiles %}
 <!--  -->
 {% block title %}天天生鲜-购物车{% endblock title %}
 <!--  -->
@@ -16,6 +16,7 @@
 </ul>
 {% for sku in skus %}
 <ul class="cart_list_td clearfix">
+
     <li class="col01"><input type="checkbox" name="" checked></li>
     <li class="col02"><img src="{{ sku.image.url }}"></li>
     <li class="col03">{{ sku.name }}<br><em>{{ sku.price }}元/{{ sku.unite }}</em></li>
@@ -39,7 +40,55 @@
     <li class="col04"><a href="place_order.html">去结算</a></li>
 </ul>
 {% endblock body %}
+<!--  -->
+{% block bottomfiles %}
+<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+<script>
+    // 更新页面上被选中的商品的总数目和总价格
+    function update_page_info() {
+        var total_count = 0
+        var total_price = 0
+        $('.cart_list_td').find(':checked').parents('ul').each(function() {
+                var count = $(this).find('.num_show').val()
+                var amount = $(this).children('.col07').text()
+                    // 累加计算被选中的商品的总数目和总价格
+                total_count += parseInt(count)
+                total_price += parseFloat(amount)
+            })
+            // 设置页面被选中的商品的总数目和总价格
+        $('.settlements').find('em').text(total_price.toFixed(2))
+        $('.settlements').find('b').text(total_count)
+    }
 
+    // 商品的全选和全部选
+    $('.settlements').find(':checkbox').change(function() {
+        // 获取全选checkbox选中的状态
+        var is_checked = $(this).prop('checked')
+            // 设置商品对应的checkbox选中的状态和全选checkbox保持一致
+        $('.cart_list_td').find(':checkbox').each(function() {
+                $(this).prop('checked', is_checked)
+            })
+            // 更新页面上被选中的商品的总数目和总价格
+        update_page_info()
+            // 商品的选中状态发生改变时，全选checkbox状态的改变
+        $('.cart_list_td').find(':checkbox').change(function() {
+            // 获取所有商品的对应的checkbox的数量
+            var all_len = $('.cart_list_td').find(':checkbox').length
+                //获取所有被选中的商品对应的checkbox的数量
+            var checked_len = $('.cart_list_td').find(':checked').length
+                // 对比判断
+            var is_checked = true
+            if (checked_len < all_len) {
+                is_checked = false
+            }
+            // 设置全选checkbox的选中状态
+            $('.settlements').find(':checkbox').prop('checked', is_checked)
+                // 更新页面上被选中的商品的总数目和总价格
+            update_page_info()
+        })
+    })
+</script>
+{% endblock bottomfiles %}
 </body>
 
 </html>
