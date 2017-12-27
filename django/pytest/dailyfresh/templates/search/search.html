@@ -11,10 +11,10 @@
     <ul>
         <li>哈哈哈</li>
         {% for i in page %}
-        <li>item:{{ i }}</li>
+        <li>item:{{ i.object }}</li>
         {% endfor %}
     </ul>
-    分页paginator对象：{{ paginator }}
+    分页paginator对象：{{ paginator }} <br/>分页之后的总页数: {{ paginator.num_pages }}
 </body>
 
 </html>
