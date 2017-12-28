@@ -119,6 +119,7 @@ class CartUpdateView(View):
             return JsonResponse({'res':0,'errmsg':'用户未登录'})
         # 接收参数
         sku_id = request.POST.get('sku_id')
+        print('sku_id:')
         count = request.POST.get('count')
         # 参数校验
          # 参数校验
@@ -126,10 +127,11 @@ class CartUpdateView(View):
             return JsonResponse({'res':1,'errmsg':'数据不完整'})
         # 校验商品id是否存在
         try:
-            sku = GoodsSKU.objects.get(id=sku_id)
+            sku = GoodsSKU.objects.get(id = sku_id)            
         except Exception as e:
             # 商品数目非法
             return JsonResponse({'res':3,'errmsg':'商品信息错误'})
+        print('*****',sku.name,'########')
         # 校验商品的数目是否合法
         try:
             count = int(count)
@@ -150,4 +152,48 @@ class CartUpdateView(View):
         #更新redis中的记录
         conn.hset(cart_key,sku_id,count)
 
-        return JsonResponse({'res':6,'errmsg':'信息更新成功'})
+        # 计算用户购物车中商品的总件数
+        total_count = 0
+        vals = conn.hvals(cart_key)
+        for val in vals:
+            total_count += int(val)
+
+        return JsonResponse({'res':6,'total_count':total_count,'errmsg':'信息更新成功'})
+
+# /cart/delete
+# 前端采用ajax post请求
+# 需要传递的参数：商品的id(sku_id)
+class CartDeleteView(View):
+    '''购物车记录的删除'''
+    def post(self,request):
+        # 删除购物车记录
+        user = request.user
+        if not user.is_authenticated():
+            return JsonResponse({'res':0,'errmsg':'用户未登录'})
+
+        # 获取参数
+        sku_id = request.POST.get('sku_id')
+        if not all([sku_id]):
+            return JsonResponse({'res':1,'errmsg':'参数不完整'})
+
+        # 校验商品的id
+        try:
+            sku =  GoodsSKU.objects.get('sku_id')
+        except GoodsSKU.DoesNotExist:
+            return JsonResponse({'res':2,'errmsg':'商品不存在'})
+
+        # 业务处理：购物车记录删除
+        conn = get_redis_connection('default')
+        cart_key = 'cart_%d'%user.id
+        # 删除redis中对应的记录
+        conn.hdel(cart_key,sku_id)
+
+        # 计算用户购物车中商品的总件数
+        total_count = 0
+        vals = conn.hvals(cart_key)
+        for val in vals:
+            total_count += int(val)
+        
+        # 返回应答
+        return JsonResponse({'res':3,'total_count':total_count,'message':'删除成功'})
+
