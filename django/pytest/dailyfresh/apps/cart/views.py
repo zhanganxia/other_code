@@ -173,12 +173,13 @@ class CartDeleteView(View):
 
         # 获取参数
         sku_id = request.POST.get('sku_id')
+        
         if not all([sku_id]):
             return JsonResponse({'res':1,'errmsg':'参数不完整'})
 
         # 校验商品的id
         try:
-            sku =  GoodsSKU.objects.get('sku_id')
+            sku =  GoodsSKU.objects.get(id=sku_id)
         except GoodsSKU.DoesNotExist:
             return JsonResponse({'res':2,'errmsg':'商品不存在'})
 
@@ -193,7 +194,7 @@ class CartDeleteView(View):
         vals = conn.hvals(cart_key)
         for val in vals:
             total_count += int(val)
-        
+        print('^^^^^^',total_count)
         # 返回应答
         return JsonResponse({'res':3,'total_count':total_count,'message':'删除成功'})
 
