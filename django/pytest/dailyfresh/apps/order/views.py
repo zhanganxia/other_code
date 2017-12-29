@@ -142,6 +142,10 @@ class OrderCommitView(View):
             # 获取用户要购买的商品的数量（从redis中读取）
             count = conn.hget(cart_key,sku_id)
 
+            # 判断商品的库存
+            if int(count) > sku.stock:
+                return JsonResponse({'res':6,'errmsg':'商品库存不足'})
+
             # todo:向df_order_goods中添加一条记录
             OrderGoods.objects.create(order=order,sku=sku,count=count,price=sku.price)
 
