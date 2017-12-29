@@ -5,6 +5,7 @@ from django.views.generic import View
 from utils.mixin import LoginRequiredMixin
 from user.models import Address
 from goods.models import GoodsSKU
+from order.models import OrderInfo,OrderGoods
 from django_redis import get_redis_connection
 
 
@@ -17,6 +18,7 @@ class OrderView(LoginRequiredMixin,View):
         '''显示'''
         # 获取用户所要购买的商品的id
         sku_ids = request.POST.getlist('sku_id')
+        print('^^^^',sku_ids)
         # 数据校验
         if not all([sku_ids]):
             return redirect(reverse('cart:show'))
@@ -63,5 +65,5 @@ class OrderView(LoginRequiredMixin,View):
         }
         # 使用模板
 
-        return render(request,'place_order.html',context)
+        return render(request, 'place_order.html', context)
 
