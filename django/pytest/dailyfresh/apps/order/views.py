@@ -8,6 +8,7 @@ from goods.models import GoodsSKU
 from order.models import OrderInfo,OrderGoods
 from django_redis import get_redis_connection
 from datetime import datetime
+from django.db import transaction
 
 
 # /order/
@@ -91,6 +92,7 @@ class OrderView(LoginRequiredMixin,View):
 # 传递的参数：收货地址id(addr_id) 支付方式(pay_method) 用户要购买商品的id(sku_ids)1,2,3
 class OrderCommitView(View):
     '''订单创建'''
+    @transaction.atomic
     def post(self,request):
         '''订单创建'''
         user =  request.user
@@ -124,35 +126,47 @@ class OrderCommitView(View):
         total_count = 0
         total_price = 0
 
-        # todo:向df_order_info表中添加一条记录
-        order = OrderInfo.objects.create(order_id=order_id,user=user,addr=addr,pay_method=pay_method,
-                                total_count=total_count,total_price=total_price,transit_price=transit_price)
+        # todo:设置事务保存点
+        sid = transaction.savepoint()
 
-        # todo:遍历向df_order_goods中添加记录
-        conn =  get_redis_connection('default')
-        cart_key = 'cart_%d'%user.id
-        sku_ids = sku_ids.split(',')
-        for sku_id in sku_ids:
-            # 获取商品的信息
-            try:
-                sku = GoodsSKU.objects.get(id=sku_id)
-            except GoodsSKU.DoesNotExist:
-                return JsonResponse({'res':4,'errmsg':'商品不存在'})
+        try:
+            # todo:向df_order_info表中添加一条记录
+            order = OrderInfo.objects.create(order_id=order_id,user=user,addr=addr,pay_method=pay_method,
+                                    total_count=total_count,total_price=total_price,transit_price=transit_price)
 
-            # 获取用户要购买的商品的数量（从redis中读取）
-            count = conn.hget(cart_key,sku_id)
+            # todo:遍历向df_order_goods中添加记录
+            conn =  get_redis_connection('default')
+            cart_key = 'cart_%d'%user.id
+            sku_ids = sku_ids.split(',')
+            for sku_id in sku_ids:
+                # 获取商品的信息
+                try:
+                    sku = GoodsSKU.objects.get(id=sku_id)
+                except GoodsSKU.DoesNotExist:
+                    # 商品不存在，回滚到sid事务保存点
+                    transaction.savepoint_rollback(sid)
+                    return JsonResponse({'res':4,'errmsg':'商品不存在'})
 
-            # 判断商品的库存
-            if int(count) > sku.stock:
-                return JsonResponse({'res':6,'errmsg':'商品库存不足'})
+                # 获取用户要购买的商品的数量（从redis中读取）
+                count = conn.hget(cart_key,sku_id)
 
-            # todo:向df_order_goods中添加一条记录
-            OrderGoods.objects.create(order=order,sku=sku,count=count,price=sku.price)
+                # 判断商品的库存
+                if int(count) > sku.stock:
+                    # 商品库存不足，回滚到事务保存点
+                    transaction.savepoint_rollback(sid)
+                    return JsonResponse({'res':6,'errmsg':'商品库存不足'})
 
-            # todo:减少商品的库存，增加销量
-            sku.stock -= int(count)
-            sku.sales += int(count)
-            sku.save()
+                # todo:向df_order_goods中添加一条记录
+                OrderGoods.objects.create(order=order,sku=sku,count=count,price=sku.price)
+
+                # todo:减少商品的库存，增加销量
+                sku.stock -= int(count)
+                sku.sales += int(count)
+                sku.save()
+        except Exception as e:
+            # 数据库出错，回滚到事务保存点
+            transaction.savepoint_rollback(sid)
+            return JsonResponse({'res':7,'errmsg':'下单失败'})
 
             # todo:累加计算用户要购买的商品的总数目和总价格
             total_count += int(count)
