@@ -158,7 +158,7 @@ class CartUpdateView(View):
         for val in vals:
             total_count += int(val)
 
-        return JsonResponse({'res':6,'total_count':total_count,'errmsg':'信息更新成功'})
+        return JsonResponse({'res':6,'total_count':total_count,'message':'信息更新成功'})
 
 # /cart/delete
 # 前端采用ajax post请求
@@ -194,7 +194,6 @@ class CartDeleteView(View):
         vals = conn.hvals(cart_key)
         for val in vals:
             total_count += int(val)
-        print('^^^^^^',total_count)
         # 返回应答
         return JsonResponse({'res':3,'total_count':total_count,'message':'删除成功'})
 
