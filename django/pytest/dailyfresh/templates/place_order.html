@@ -9,7 +9,7 @@
 
 <div class="common_list_con clearfix">
     <dl>
-        <dt>寄送到：</dt> {% for addr in addres %}
+        <dt>寄送到：</dt> {% for addr in addrs %}
         <dd><input type="radio" name="" value="{{ addr.id }}" {% if addr.is_default %}checked{% endif %}>{{ addr.addr }} （{{ addr.receiver }} 收） {{ addr.phone }}</dd>
         {% empty %}暂无地址信息 {% endfor %}
     </dl>

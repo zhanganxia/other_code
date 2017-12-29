@@ -18,13 +18,13 @@ class OrderView(LoginRequiredMixin,View):
         '''显示'''
         # 获取用户所要购买的商品的id
         sku_ids = request.POST.getlist('sku_id')
-        print('^^^^',sku_ids)
         # 数据校验
         if not all([sku_ids]):
             return redirect(reverse('cart:show'))
         # 业务处理:页面信息的获取(用户收货地址信息)
         user = request.user
         addrs = Address.objects.filter(user=user)
+        print('^^^^^',addrs)
         # 获取用户购买的商品信息(cart_key,skus(商品信息),total_count,total_price)
         conn = get_redis_connection('default')
         cart_key = 'cart_%d'%user.id
