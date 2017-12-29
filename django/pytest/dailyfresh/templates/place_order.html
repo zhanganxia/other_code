@@ -65,6 +65,7 @@
 </div>
 
 <div class="order_submit clearfix">
+    {% csrf_token %}
     <a href="javascript:;" sku_ids="{{ sku_ids }}" id="order_btn">提交订单</a>
 </div>
 {% endblock body %} {% block bottom %}
@@ -76,20 +77,42 @@
     <div class="mask"></div>
 </div>
 {% endblock bottom %} {% block bottomfiles %}
-<script type="text/javascript" src="js/jquery-1.12.2.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
 <script type="text/javascript">
     $('#order_btn').click(function() {
-        localStorage.setItem('order_finish', 2);
+        // 获取用户选择的收货地址的id,支付方式，用户要购买的商品的id
+        var addr_id = $('input[name="addr_id"]:checked').val()
+        var pay_method = $('input[name="pay_style"]:checked').val()
+        var sku_ids = $(this).attr('sku_ids')
+        var csrf = $('input[name="csrfmiddlewaretoken"]').val()
+        var params = {
+            'addr_id': addr_id,
+            'pay_method': pay_method,
+            'sku_ids': sku_ids,
+            'csrfmiddlewaretoken': csrf
+        }
+        $.post('/order/commit', params, function(data) {
+                if (data.res == 5) {
+                    // 订单创建成功
+                    alert("订单创建成功")
+                } else {
+                    alert(data.errmsg)
+                }
+            })
+            // 发起ajax post请求，访问/order/commit,传递参数：addr_id pay_method sku_ids
 
-        $('.popup_con').fadeIn('fast', function() {
 
-            setTimeout(function() {
-                $('.popup_con').fadeOut('fast', function() {
-                    window.location.href = 'index.html';
-                });
-            }, 3000)
+        // localStorage.setItem('order_finish', 2);
 
-        });
+        // $('.popup_con').fadeIn('fast', function() {
+
+        //     setTimeout(function() {
+        //         $('.popup_con').fadeOut('fast', function() {
+        //             window.location.href = 'index.html';
+        //         });
+        //     }, 3000)
+
+        // });
     });
 </script>
 {% endblock bottomfiles %}
