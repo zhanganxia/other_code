@@ -24,7 +24,6 @@ class OrderView(LoginRequiredMixin,View):
         # 业务处理:页面信息的获取(用户收货地址信息)
         user = request.user
         addrs = Address.objects.filter(user=user)
-        print('^^^^^',addrs)
         # 获取用户购买的商品信息(cart_key,skus(商品信息),total_count,total_price)
         conn = get_redis_connection('default')
         cart_key = 'cart_%d'%user.id
@@ -53,7 +52,7 @@ class OrderView(LoginRequiredMixin,View):
         # 实付款
         total_pay = total_price + transit_price
         # 组织上上下文
-        sku_ids = ','.join(sku_ids)
+        sku_ids = ','.join(sku_ids) #把列表转换成一个以逗号分隔的字符串
         context={
             'total_count':total_count,
             'total_price':total_price,
@@ -67,3 +66,30 @@ class OrderView(LoginRequiredMixin,View):
 
         return render(request, 'place_order.html', context)
 
+# 订单的创建的流程：
+# 接收参数
+# 参数校验
+# 组织订单信息
+# todo:向df_order_info表中添加一条记录
+
+# todo:遍历向df_order_goods中添加记录
+# 获取商品的信息
+# 从redis中获取用户要购买商品的数量
+# todo：减少商品的库存，增加销量
+# todo:累加计算用户要购买的商品的数目和总价格
+
+# todo: 更新order对应记录中的total_count和total_price
+# 注意：(为了防止篡改信息，所以总数目和总价格需要重新计算，而不是从上一个页面传递过来)
+# todo: 删除购物车中对应的记录
+# todo: 删除购物车中对应的记录
+
+# 返回应答
+
+# /order/commit
+# 前端采用ajax post请求
+# 传递的参数：收货地址id(addr_id) 支付方式(pay_method) 用户要购买商品的id(sku_ids)1,2,3
+class OrderCommitView(View):
+    '''订单创建'''
+    def post(self,request):
+        '''订单创建'''
+        pass
