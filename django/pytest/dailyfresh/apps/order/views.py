@@ -243,41 +243,55 @@ class OrderCommitView(View):
             cart_key = 'cart_%d'%user.id
             sku_ids = sku_ids.split(',')
             for sku_id in sku_ids:
-                # 获取商品的信息
-                try:
-                    print('user:%id try get lock'%user.id)
-                    # sku = GoodsSKU.objects.get(id=sku_id)
-                    # 悲观锁，查询数据行的时候对数据行加锁select_for_update()；乐观锁：在获取信息的时候不加锁，但是在进行数据修改的时候需要进行条件的判断
-                    sku = GoodsSKU.objects.select_for_update().get(id=sku_id)
-                    print('user:%d get lock'%user.id)
-                except GoodsSKU.DoesNotExist:
-                    # 商品不存在，回滚到sid事务保存点
-                    transaction.savepoint_rollback(sid)
-                    return JsonResponse({'res':4,'errmsg':'商品不存在'})
+                for i in range(3):
+                    # 获取商品的信息
+                    try:
+                        # select * from df_goods_sku where id=sku_id;
+                        sku = GoodsSKU.objects.get(id=sku_id)
+                    except GoodsSKU.DoesNotExist:
+                        # 商品不存在，回滚到sid事务保存点
+                        transaction.savepoint_rollback(sid)
+                        return JsonResponse({'res':4,'errmsg':'商品不存在'})
 
-                # 获取用户要购买的商品的数量（从redis中读取）
-                count = conn.hget(cart_key,sku_id)
-                print('^^^^',sku.stock)
-                # 判断商品的库存
-                if int(count) > sku.stock:
-                    # 商品库存不足，回滚到事务保存点
-                    transaction.savepoint_rollback(sid)
-                    return JsonResponse({'res':6,'errmsg':'商品库存不足'})
-                
-                import time
-                time.sleep(10)
+                    # 获取用户要购买的商品的数量（从redis中读取）
+                    count = conn.hget(cart_key,sku_id)
+                    print('^^^^',sku.stock)
+                    # 判断商品的库存
+                    if int(count) > sku.stock:
+                        # 商品库存不足，回滚到事务保存点
+                        transaction.savepoint_rollback(sid)
+                        return JsonResponse({'res':6,'errmsg':'商品库存不足'})
+
+                    # todo:减少商品的库存，增加销量
+                    origin_stock = sku.stock
+                    new_stock = origin_stock - int(count)
+                    new_sales = sku.sales + int(count)
+
+                # 乐观锁：在获取信息的时候不加锁，但是在进行数据修改的时候需要进行判断
+                # mysql的事务隔离级别会导致事务前后读取的数据一致(另一事务对数据进行了修改)，修改mysql数据库默认的事务隔离级别为：read committed(读取提交内容)
+                # update from df_goods_sku set stock=new_stock,sales=new_sales
+                # where id=sku_id and stock = origin_stock
+                # update 返回的是更新的行数
+                res = GoodsSKU.objects.filter(id=sku_id,stock=origin_stock).update(stock=new_stock,sales=new_sales)
+                if res == 0:
+                    # 更新失败
+                    if i == 2:
+                        # 尝试3次之后仍然更新失败，直接下单失败，进行保存点的回滚
+                        transaction.savepoint_rollback(sid)
+                        return JsonResponse({'res':7,'errmsg':'下单失败2'})
+                    continue
 
                 # todo:向df_order_goods中添加一条记录
                 OrderGoods.objects.create(order=order,sku=sku,count=count,price=sku.price)
 
-                # todo:减少商品的库存，增加销量
-                sku.stock -= int(count)
-                sku.sales += int(count)
-                sku.save()
+                
 
                  # todo:累加计算用户要购买的商品的总数目和总价格
                 total_count += int(count)
                 total_price += sku.price*int(count)
+
+                # 更新成功之后则跳出循环
+                break
 
             # todo:更新order对应记录中的total_count和total_price
             order.total_count = total_count
