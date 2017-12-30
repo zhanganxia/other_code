@@ -90,6 +90,110 @@ class OrderView(LoginRequiredMixin,View):
 # /order/commit
 # 前端采用ajax post请求
 # 传递的参数：收货地址id(addr_id) 支付方式(pay_method) 用户要购买商品的id(sku_ids)1,2,3
+# 解决订单提交并发问题：悲观锁的实现
+class OrderCommitView1(View):
+    '''订单创建'''
+    @transaction.atomic
+    def post(self,request):
+        '''订单创建'''
+        user =  request.user
+        if not user.is_authenticated():
+            return JsonResponse({'res':0,'errmsg':'用户未登录'})
+        addr_id = request.POST.get('addr_id')
+        pay_method = request.POST.get('pay_method')
+        sku_ids = request.POST.get('sku_ids')
+
+        # 参数校验
+        if not all([addr_id,pay_method,sku_ids]):
+            return JsonResponse({'res':1,'errmsg':'参数不完整'})
+
+        # 校验地址信息
+        try:
+            addr = Address.objects.get(id=addr_id)
+        except Address.DoesNotExist:
+            # 地址不存在
+            return JsonResponse({'res':2,'errmsg':'地址信息错误'})
+
+        # 校验支付方式
+        if pay_method not in OrderInfo.PAY_METHODS.keys():
+            # 支付方式非法
+            return JsonResponse({'res':3,'errmsg':'支付方式非法'})
+        # 组织订单信息
+        # 订单id:20171226120029+用户id
+        order_id = datetime.now().strftime('%Y%m%d%H%M%S') + str(user.id)
+        # 运费
+        transit_price = 10
+        # 总数目和总价格
+        total_count = 0
+        total_price = 0
+
+        # todo:设置事务保存点
+        sid = transaction.savepoint()
+
+        try:
+            # todo:向df_order_info表中添加一条记录
+            order = OrderInfo.objects.create(order_id=order_id,user=user,addr=addr,pay_method=pay_method,
+                                    total_count=total_count,total_price=total_price,transit_price=transit_price)
+
+            # todo:遍历向df_order_goods中添加记录
+            conn =  get_redis_connection('default')
+            cart_key = 'cart_%d'%user.id
+            sku_ids = sku_ids.split(',')
+            for sku_id in sku_ids:
+                # 获取商品的信息
+                try:
+                    print('user:%id try get lock'%user.id)
+                    # sku = GoodsSKU.objects.get(id=sku_id)
+                    # 悲观锁，查询数据行的时候对数据行加锁select_for_update()；乐观锁：在获取信息的时候不加锁，但是在进行数据修改的时候需要进行条件的判断
+                    sku = GoodsSKU.objects.select_for_update().get(id=sku_id)
+                    print('user:%d get lock'%user.id)
+                except GoodsSKU.DoesNotExist:
+                    # 商品不存在，回滚到sid事务保存点
+                    transaction.savepoint_rollback(sid)
+                    return JsonResponse({'res':4,'errmsg':'商品不存在'})
+
+                # 获取用户要购买的商品的数量（从redis中读取）
+                count = conn.hget(cart_key,sku_id)
+                print('^^^^',sku.stock)
+                # 判断商品的库存
+                if int(count) > sku.stock:
+                    # 商品库存不足，回滚到事务保存点
+                    transaction.savepoint_rollback(sid)
+                    return JsonResponse({'res':6,'errmsg':'商品库存不足'})
+                
+                import time
+                time.sleep(10)
+
+                # todo:向df_order_goods中添加一条记录
+                OrderGoods.objects.create(order=order,sku=sku,count=count,price=sku.price)
+
+                # todo:减少商品的库存，增加销量
+                sku.stock -= int(count)
+                sku.sales += int(count)
+                sku.save()
+
+                 # todo:累加计算用户要购买的商品的总数目和总价格
+                total_count += int(count)
+                total_price += sku.price*int(count)
+
+            # todo:更新order对应记录中的total_count和total_price
+            order.total_count = total_count
+            order.total_price = total_price
+            order.save()
+
+        except Exception as e:
+            # 数据库出错，回滚到事务保存点
+            transaction.savepoint_rollback(sid)
+            return JsonResponse({'res':7,'errmsg':'下单失败'})
+
+           
+        # todo:删除购物车中对应的记录 sku_ids=[1,2],*sku_ids相当于解包，将每个元素做为参数
+        conn.hdel(cart_key,*sku_ids)
+
+        # 返回应答
+        return JsonResponse({'res':5,'message':'订单创建成功'})
+
+
 class OrderCommitView(View):
     '''订单创建'''
     @transaction.atomic
