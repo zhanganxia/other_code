@@ -10,7 +10,7 @@ sudo service fdfs_trackerd restart
 sudo service fdfs_storaged restart
 
 启动nginx：
-/usr/local/nginx/sbin/nginx
+sudo /usr/local/nginx/sbin/nginx
 
 
 关闭防火墙：

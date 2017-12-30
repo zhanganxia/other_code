@@ -149,7 +149,7 @@ class OrderCommitView(View):
 
                 # 获取用户要购买的商品的数量（从redis中读取）
                 count = conn.hget(cart_key,sku_id)
-
+                print('^^^^',sku.stock)
                 # 判断商品的库存
                 if int(count) > sku.stock:
                     # 商品库存不足，回滚到事务保存点
@@ -163,20 +163,22 @@ class OrderCommitView(View):
                 sku.stock -= int(count)
                 sku.sales += int(count)
                 sku.save()
+
+                 # todo:累加计算用户要购买的商品的总数目和总价格
+                total_count += int(count)
+                total_price += sku.price*int(count)
+
+            # todo:更新order对应记录中的total_count和total_price
+            order.total_count = total_count
+            order.total_price = total_price
+            order.save()
+
         except Exception as e:
             # 数据库出错，回滚到事务保存点
             transaction.savepoint_rollback(sid)
             return JsonResponse({'res':7,'errmsg':'下单失败'})
 
-            # todo:累加计算用户要购买的商品的总数目和总价格
-            total_count += int(count)
-            total_price += sku.price*int(count)
-
-        # todo:更新order对应记录中的total_count和total_price
-        order.total_count = total_count
-        order.total_price = total_price
-        order.save()
-
+           
         # todo:删除购物车中对应的记录 sku_ids=[1,2],*sku_ids相当于解包，将每个元素做为参数
         conn.hdel(cart_key,*sku_ids)
 
