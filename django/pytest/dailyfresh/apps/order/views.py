@@ -141,7 +141,11 @@ class OrderCommitView(View):
             for sku_id in sku_ids:
                 # 获取商品的信息
                 try:
-                    sku = GoodsSKU.objects.get(id=sku_id)
+                    print('user:%id try get lock'%user.id)
+                    # sku = GoodsSKU.objects.get(id=sku_id)
+                    # 悲观锁，查询数据行的时候对数据行加锁select_for_update()；乐观锁：在获取信息的时候不加锁，但是在进行数据修改的时候需要进行条件的判断
+                    sku = GoodsSKU.objects.select_for_update().get(id=sku_id)
+                    print('user:%d get lock'%user.id)
                 except GoodsSKU.DoesNotExist:
                     # 商品不存在，回滚到sid事务保存点
                     transaction.savepoint_rollback(sid)
@@ -155,6 +159,9 @@ class OrderCommitView(View):
                     # 商品库存不足，回滚到事务保存点
                     transaction.savepoint_rollback(sid)
                     return JsonResponse({'res':6,'errmsg':'商品库存不足'})
+                
+                import time
+                time.sleep(10)
 
                 # todo:向df_order_goods中添加一条记录
                 OrderGoods.objects.create(order=order,sku=sku,count=count,price=sku.price)
