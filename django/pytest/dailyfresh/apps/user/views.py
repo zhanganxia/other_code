@@ -5,10 +5,12 @@ from django.http import HttpResponse
 from django.views.generic import View
 from user.models import User,Address
 from goods.models import GoodsSKU
+from order.models import OrderInfo,OrderGoods
 import re
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer #实现数据的加密/解密/过期时间
 from itsdangerous import SignatureExpired
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
 from django.core.mail import send_mass_mail
 from celery_tasks.sendmail_task import send_register_active_email
 from django.contrib.auth import authenticate,login,logout #django自己的认证系统
@@ -202,13 +204,63 @@ class UsercenterView(LoginRequiredMixin,View):
 
         return render(request,'user_center_info.html',context)
 
-# /user/userorder
+# /user/userorder/页码
 # class UserorderView(View):
 # class UserorderView(LoginRequiredView):
 class UserorderView(LoginRequiredMixin,View):
-    '''用户定点页面显示'''
-    def get(self,request):
-        return render(request,'user_center_order.html',{'page':'userorder'})
+    '''用户订单页面显示'''
+    def get(self,request,page):
+        # 获取登录的用户
+        user = request.user
+        # 获取用户的订单信息
+        orders = OrderInfo.objects.filter(user=user).order_by('-create_time')
+        # 遍历获取每个订单中订单商品的信息
+        for order in orders:
+            # 获取和order订单关联的订单商品的信息
+            order_skus = OrderGoods.objects.filter(order=order)
+            # 遍历计算订单中每一个商品的小计
+            for order_sku in order_skus:
+                # 计算小计
+                amount = order_sku.count*order_sku.price
+                # 给order_sku增加属性amount，保存订单商品的小计
+                order_sku.amount = amount
+
+            # 获取订单支付状态的名称
+            order.status_name = OrderInfo.ORDER_STATUS[order.order_status]
+            
+            # 计算订单的实付款
+            order.total_pay = order.total_price + order.transit_price
+            
+            # 给order增加属性order_skus,保存订单商品的信息
+            order.order_skus =  order_skus
+
+        # 分页
+        paginator = Paginator(orders,2)
+        # 处理页码
+        page = int(page)
+        if page > paginator.num_pages or page <= 0:
+            # 默认显示第1页
+            page = 1
+        # 获取第page页的page对象
+        order_page = paginator.page(page)
+        # 页码处理(页面最多只显示5个页码)
+        num_pages = paginator.num_pages
+        if num_pages < 5:
+            pages = range(1,num_pages + 1)
+        elif page <= 3:
+            pages =  range(1,6)
+        elif num_pages - page <= 2:
+            pages = range(num_pages - 4,num_pages + 1)
+        else:
+            pages = range(page - 2,page + 3)
+
+        # 组织模板上下文
+        context = {
+            'order_page':order_page,
+            'pages':pages,
+            'page':'order'
+        }
+        return render(request,'user_center_order.tmpl',context)
 
 # /user/usersite
 # class UsersiteView(View):

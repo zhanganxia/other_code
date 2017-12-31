@@ -10,7 +10,7 @@
         <h3>用户中心</h3>
         <ul>
             <li><a href="{% url 'user:usercenter' %}" {% if page == 'usercenter' %}class="active" {% endif %}>· 个 人信息</a></li>
-            <li><a href="{% url 'user:userorder' %}" {% if page == 'userorder' %}class="active" {% endif %}>· 全部订单</a></li>
+            <li><a href="{% url 'user:userorder' 1 %}" {% if page == 'userorder' %}class="active" {% endif %}>· 全部订单</a></li>
             <li><a href="{% url 'user:usersite' %}" {% if page == 'usersite' %}class="active" {% endif %}>· 收货地址</a></li>
         </ul>
     </div>

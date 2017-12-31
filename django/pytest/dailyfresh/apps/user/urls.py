@@ -12,7 +12,7 @@ urlpatterns = [
     # url(r'^usersite$',login_required(UsersiteView.as_view()),name = 'usersite'),#用户收货地址
 
     url(r'^usercenter$',UsercenterView.as_view(),name = 'usercenter'),#用户中心
-    url(r'^userorder$',UserorderView.as_view(),name = 'userorder'),#用户订单
+    url(r'^userorder/(?P<page>\d+)$',UserorderView.as_view(),name = 'userorder'),#用户订单
     url(r'^usersite$',UsersiteView.as_view(),name = 'usersite'),#用户收货地址
 ]
 

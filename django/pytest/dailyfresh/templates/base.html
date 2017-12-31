@@ -39,7 +39,7 @@
                     <span>|</span>
                     <a href="{% url 'cart:show' %}">我的购物车</a>
                     <span>|</span>
-                    <a href="#">我的订单</a>
+                    <a href="{% url 'user:userorder' 1 %}">我的订单</a>
                     <span>|</span>
                     <a href="{% url 'goods:index' %}">首页</a>
                 </div>
