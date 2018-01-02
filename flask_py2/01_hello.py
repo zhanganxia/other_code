@@ -1,5 +1,5 @@
 #coding:utf-8
-from flask import Flask
+from flask import Flask,current_app
 
 # 创建flask应用核心对象
 # app = Flask(模块名)
@@ -14,21 +14,25 @@ app = Flask(__name__)
 # 方式一：使用文件
 # app.config.from_pyfile("config.cfg")
 
-# # 方式二：使用对象
-# class Config(object):
-#     '''配置参数'''
-#     DEBUG = True
-# app.config.from_object(Config)
+# 方式二：使用对象
+class Config(object):
+    '''配置参数'''
+    DEBUG = True
+    NAME = 'LJQ'
+app.config.from_object(Config)
 
 # 方式三：当作字典使用
-app.config["DEBUG"] = True 
+# app.config["DEBUG"] = True 
 
 # 定义视图函数
 @app.route("/")
 def index():
+    # n = app.config.get('NAME')
+    n = current_app.config.get('NAME')
+    print(n)
     return 'hello flask'
 
 if __name__ == '__main__':
     # 启动flask程序
-    app.run()
+    app.run(debug=True)
     
