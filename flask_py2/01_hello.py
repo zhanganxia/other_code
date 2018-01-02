@@ -81,8 +81,15 @@ class MobileConverter(BaseConverter):
         # regex用来保存正则表达式，最终被flask使用匹配读取
         self.regex = r'1[34578]\d{9}'
 
+    def to_python(self,value):
+        """我们定义，由flask调用，从路径中提取的参数先经过这个函数的处理，函数的返回值作为视图函数的传入参数"""
+        return "15994806458"
+
+    def to_url(self,value):
+        """我们定义，由flask调用，在用url_for反推路径的时候被调用，用来将处理后的参数添加到路径中"""
+        return "18218366567"
 # 2.向flask添加自定义的转换器
-# converters包含类flask的所有的转换器，可以向字典的方式使用
+# converters包含类flask的所有的转换器，可以像字典的方式使用
 app.url_map.converters["mobile"] = MobileConverter
 
 # GET /send_sms/186***678  
@@ -93,6 +100,11 @@ app.url_map.converters["mobile"] = MobileConverter
 def send_sms(mobile_num):
     return "send sms to mobile=%s " %mobile_num
 
+@app.route('/hello3')
+def sendMessage():
+    url = url_for("send_sms",mobile_num="12345678111") #/send_sms/12345678111
+    print('^^^^',url)
+    return redirect(url)
 
 if __name__ == '__main__':
     # 启动flask程序
