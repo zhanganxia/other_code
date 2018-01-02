@@ -32,9 +32,21 @@ def index():
     print(n)
     return 'hello flask'
 
+# 同一个路径，被不同的视图使用，如果请求方式也相同，则前面定义的会覆盖后面的，
+# 如果请求方式不一样，则会冲突；同一个视图函数可以定义多个路径
 @app.route('/hello')
-def hello():
-    pass
+def hello1():
+    return 'hello1'
+
+@app.route('/hello')
+def hello2():
+    return 'hello2'
+
+# 同一个视图被多个路径使用方式
+@app.route('/h1')
+@app.route('/h2')
+def hi():
+    return 'hi page h1,h2'
 
 if __name__ == '__main__':
     # 启动flask程序
