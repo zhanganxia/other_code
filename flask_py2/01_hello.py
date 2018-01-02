@@ -60,6 +60,11 @@ def login1():
     print(url)
     return redirect(url)
 
+# 转换器：<转换器类型：参数名字>
+@app.route("/goods/<int:goods_id>")
+def goodsPage(goods_id):
+    return "goods page goods_id=%s" % goods_id
+
 if __name__ == '__main__':
     # 启动flask程序
     print(app.url_map)

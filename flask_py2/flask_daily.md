@@ -35,9 +35,15 @@ tempalte_folder指明模板目录，默认值为templates
 
 路由的重定向：使用url_for来反弹反推路径，url_for接收参数，视图函数的名字
 
-转换器：<转换器类型：参数名字>:@app.route("goods"/<gint:oodss>)
+转换器：<转换器类型：参数名字>:@app.route("/goods/<int:goods_id>")
+    常见的转换器的类型：
+        int 接受整数  
+        float同int,但是接受浮点数  
+        path和默认的相似，也接受斜线
+
+
 int float path(可以包含/的字符串) 字符串（不能包含/） --默认
-@app.route('/goods/<init:goods_id>')
+@app.route('/goods/<goods_id>')#默认是字符串类型
 def index(goods_id):
     return 'goods_id=%s'%goods_id
 
