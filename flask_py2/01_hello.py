@@ -1,5 +1,5 @@
 #coding:utf-8
-from flask import Flask,current_app
+from flask import Flask,current_app,redirect,url_for
 
 # 创建flask应用核心对象
 # app = Flask(模块名)
@@ -47,6 +47,18 @@ def hello2():
 @app.route('/h2')
 def hi():
     return 'hi page h1,h2'
+
+# # 路径的重定向
+# @app.route('/login')
+# def login():
+#     return redirect('/')
+
+@app.route('/login')
+def login1():
+    # 使用url_for来反推路径url_for接收参数，视图函数的名字
+    url = url_for("index")
+    print(url)
+    return redirect(url)
 
 if __name__ == '__main__':
     # 启动flask程序
