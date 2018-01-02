@@ -34,5 +34,7 @@ def index():
 
 if __name__ == '__main__':
     # 启动flask程序
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run(host="192.168.20.81", port=8001)
+
     
