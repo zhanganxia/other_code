@@ -25,16 +25,21 @@ app.config.from_object(Config)
 # app.config["DEBUG"] = True 
 
 # 定义视图函数
-@app.route("/")
+@app.route("/",methods=['GET','POST'])
 def index():
     # n = app.config.get('NAME')
     n = current_app.config.get('NAME')
     print(n)
     return 'hello flask'
 
+@app.route('/hello')
+def hello():
+    pass
+
 if __name__ == '__main__':
     # 启动flask程序
-    # app.run(debug=True)
-    app.run(host="192.168.20.81", port=8001)
+    print(app.url_map)
+    app.run(debug=True)
+    # app.run(host="192.168.20.81", port=8001)
 
     
