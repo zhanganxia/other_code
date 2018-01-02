@@ -70,33 +70,36 @@ def goodsPage(goods_id):
 # 1.以类的方式定义
 class MobileConverter(BaseConverter):
     """自定义的手机号转化器"""
-    def __init__(self,url_map):
+    def __init__(self,url_map,reg_ex):
         """
         flask调用的初始化方法
         ：param url_map:是flask传递的
+        ：param reg_ex:在使用的时候，我们传递的正则表达式的参数
         """
         # 调用父类的初始化方法，将url_map传给父类
         super(MobileConverter,self).__init__(url_map)
 
         # regex用来保存正则表达式，最终被flask使用匹配读取
-        self.regex = r'1[34578]\d{9}'
+        self.regex = reg_ex
 
-    def to_python(self,value):
-        """我们定义，由flask调用，从路径中提取的参数先经过这个函数的处理，函数的返回值作为视图函数的传入参数"""
-        return "15994806458"
+    # def to_python(self,value):
+    #     """我们定义，由flask调用，从路径中提取的参数先经过这个函数的处理，函数的返回值作为视图函数的传入参数"""
+    #     return "15994806458"
 
-    def to_url(self,value):
-        """我们定义，由flask调用，在用url_for反推路径的时候被调用，用来将处理后的参数添加到路径中"""
-        return "18218366567"
+    # def to_url(self,value):
+    #     """我们定义，由flask调用，在用url_for反推路径的时候被调用，用来将处理后的参数添加到路径中"""
+    #     return "18218366567"
+
+
 # 2.向flask添加自定义的转换器
 # converters包含类flask的所有的转换器，可以像字典的方式使用
-app.url_map.converters["mobile"] = MobileConverter
+app.url_map.converters["re"] = MobileConverter
 
 # GET /send_sms/186***678  
 #根据转换器的类型名字找到转换器的类，然后实例化这个转换器的对象
 # 转换器对象中有一个对象属性regex,保存类用来匹配提取的正则表达式
 # 3.使用自定义的转换器
-@app.route('/send_sms/<mobile:mobile_num>')
+@app.route("/send_sms/<re(r'1[345678]\d{9}'):mobile_num>")
 def send_sms(mobile_num):
     return "send sms to mobile=%s " %mobile_num
 
