@@ -10,11 +10,15 @@ tempalte_folder指明模板目录，默认值为templates
 
 
 配置参数的使用：
-    方式一:使用文件: app.config.from_pyfile('config.cfg') #新建文件config.cfg,文件中写项目的参数哦诶值
+    方式一:使用文件: app.config.from_pyfile('config.cfg') #新建文件config.cfg,文件中写项目的参数和值：DEBUG=True
+
     方式二:使用对象: 定义Config的类，在类中保存属性信息，使用方式：app.config.from_object(Config)
     方式三：当作字典使用：app.config保存类flask的所有配置信息，我们可以把这个属性当作字典使用：app.config['DEBUG']=True
 
 调试模式的作用：1.自动重启 2.返回错误信息 
+调试模式的启用方式：
+    1.直接在应用对象上设置； app.debug=True
+    2.作为run方法的一个参数传入:app.run(debug=True)
 
 提取配置参数(通过app和current_app都可以提取)：
     从字典中获取：app.config.get('itcast')
