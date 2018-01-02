@@ -6,6 +6,8 @@ flask以模板名对应的模块所在的目录为工程目录，默认以目录
 static_url_path 指明访问静态文件的url前缀: app = Flask(__name__,static_url_path="/python")
 static_folder:指明静态文件陌路，默认值为static目录
 tempalte_folder指明模板目录，默认值为templates
+# app = Flask(__name__,static_url_path="/python",static_folder="static",template_folder="templates") -->此处的python是和浏览器中的static对应的
+
 
 配置参数的使用：
     方式一:使用文件: app.config.from_pyfile('config.cfg') #新建文件config.cfg,文件中写项目的参数哦诶值
