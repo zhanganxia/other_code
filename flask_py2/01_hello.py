@@ -1,5 +1,6 @@
 #coding:utf-8
 from flask import Flask,current_app,redirect,url_for
+from werkzeug.routing import BaseConverter #转换器的父类
 
 # 创建flask应用核心对象
 # app = Flask(模块名)
@@ -64,6 +65,34 @@ def login1():
 @app.route("/goods/<int:goods_id>")
 def goodsPage(goods_id):
     return "goods page goods_id=%s" % goods_id
+
+# 自定义转换器
+# 1.以类的方式定义
+class MobileConverter(BaseConverter):
+    """自定义的手机号转化器"""
+    def __init__(self,url_map):
+        """
+        flask调用的初始化方法
+        ：param url_map:是flask传递的
+        """
+        # 调用父类的初始化方法，将url_map传给父类
+        super(MobileConverter,self).__init__(url_map)
+
+        # regex用来保存正则表达式，最终被flask使用匹配读取
+        self.regex = r'1[34578]\d{9}'
+
+# 2.向flask添加自定义的转换器
+# converters包含类flask的所有的转换器，可以向字典的方式使用
+app.url_map.converters["mobile"] = MobileConverter
+
+# GET /send_sms/186***678  
+#根据转换器的类型名字找到转换器的类，然后实例化这个转换器的对象
+# 转换器对象中有一个对象属性regex,保存类用来匹配提取的正则表达式
+# 3.使用自定义的转换器
+@app.route('/send_sms/<mobile:mobile_num>')
+def send_sms(mobile_num):
+    return "send sms to mobile=%s " %mobile_num
+
 
 if __name__ == '__main__':
     # 启动flask程序
