@@ -50,6 +50,21 @@ def index():
 
     return "index page"
 
+@app.route("/upload",methods=["POST"])
+def upload():
+    # 通过files属性获取文件数据，返回文件对象
+    files_obj = request.files.get("pic")
+
+    # 通过read方法读取文件内容
+    file_data = files_obj.read()
+
+    # 获取用户上传文件的真实名字
+
+    # 在本地创建打开一个新文件，把用户上传的文件内容读取并写入新文件，关闭新文件
+    with open("./demo.png","wb") as new_file:
+        new_file.write(file_data)
+
+    return "upload ok"
 if __name__ == '__main__':
     app.run(debug=True)
     
