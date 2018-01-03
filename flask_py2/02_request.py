@@ -125,6 +125,29 @@ def jsonHandler():
     # return jsonify(data)
     return jsonify(name="python",age=18)
 
+@app.route("/set_cookie")
+def set_cookie():
+    # 设置cookie的方法
+    resp = make_response("set cookie ok")
+    resp.set_cookie("itcast","python1")#默认是临时cookie，浏览器关闭即失效
+
+    # 通过max_age指明有效期，单位是秒
+    resp.set_cookie("itcast2","python2",max_age=180)
+
+    return resp
+
+@app.route("/get_cookie")
+def get_cookie():
+    # 获取cookie
+    cookie = request.cookies.get("itcast")
+    return cookie
+
+@app.route("/del_cookie")
+def del_cookie():
+    resp = make_response("delete cookie ok")
+    resp.delete_cookie("itcast2")
+    return resp
+
 if __name__ == '__main__':
     app.run(debug=True)
     
