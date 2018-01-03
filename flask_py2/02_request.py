@@ -1,5 +1,5 @@
 #encoding=utf-8
-from flask import Flask,request,abort
+from flask import Flask,request,abort,make_response
 import json
 
 app = Flask(__name__)
@@ -89,6 +89,27 @@ def uploadNull():
     files_obj.save("./"+files_obj.filename)
 
     return "test upload null ok"
+
+@app.route("/resmessage")
+def resMesage():
+    # 构造响应信息的方式
+    # 方式一：元组
+    # return "index page", 403, [("Content-Type","application/json"),("name","python")]
+    # return "index page", 403, {"Content-Type":"application/json","name":"python2"}
+    # return "index page", "403 error",{"Content-Type":"application/json","name":"python3"}
+    # return "index page", 666,{"Content-Type":"application/json","name":"python2"}
+    # return "index page", "999 perfect",{"Content-Type":"application/json","name":"python2"}
+    # return "index page", 400
+    # return "index page",400
+
+    # 方式二：make_response()方法
+    # make_response(响应体) --> 返回响应对象
+    resp = make_response("index page 2")
+    resp.status = "400 bad request" #响应状态码
+    resp.headers["name3"] = "python3" #响应头
+
+    return resp
+
 
 if __name__ == '__main__':
     app.run(debug=True)
