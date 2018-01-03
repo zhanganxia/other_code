@@ -1,5 +1,5 @@
 #encoding=utf-8
-from flask import Flask,request
+from flask import Flask,request,abort
 import json
 
 app = Flask(__name__)
@@ -50,21 +50,46 @@ def index():
 
     return "index page"
 
+# 自定义错误页面的方式
+@app.errorhandler(404)
+def handler_404(e):
+    """自定义的处理404错误的方法"""
+    # e：被flask调用的时候，传入的错误对象
+    return u"自定义的404页面：%s"%e
+
+
 @app.route("/upload",methods=["POST"])
 def upload():
     # 通过files属性获取文件数据，返回文件对象
     files_obj = request.files.get("pic")
 
-    # 通过read方法读取文件内容
-    file_data = files_obj.read()
+    # if not files_obj:
+    #     abort(400)
 
-    # 获取用户上传文件的真实名字
+    # 通过read方法读取文件内容
+    # file_data = files_obj.read()
+
+    # 获取用户上传文件的真实名字：files_obj.filename
 
     # 在本地创建打开一个新文件，把用户上传的文件内容读取并写入新文件，关闭新文件
-    with open("./demo.png","wb") as new_file:
-        new_file.write(file_data)
+    # with open("./"+files_obj.filename,"wb") as new_file:
+    #     new_file.write(file_data)
+
+    files_obj.save("./"+files_obj.filename)
 
     return "upload ok"
+
+@app.route("/uploadnull",methods=["POST"])
+def uploadNull():
+    files_obj = request.files.get("pic")
+
+    if not files_obj:
+        abort(400)
+
+    files_obj.save("./"+files_obj.filename)
+
+    return "test upload null ok"
+
 if __name__ == '__main__':
     app.run(debug=True)
     

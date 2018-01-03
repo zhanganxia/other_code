@@ -1,4 +1,5 @@
 day-01
+
 创建flask应用核心对象
 app = Flask(模块名)
 __name__表示当前模块的名字: app = Flask(__name__)
@@ -98,7 +99,8 @@ http协议报文：起始行 请求头 Header /r/n 请求体(body)
     2.路径？传参 查询字符串 query string ?a=1&b=2 不限制请求方式，get能传，其他方式也能传
     3.从请求头中传递参数
     4.cookie(在请求头中)
-    5.请求体参数：图片、文件、字符串(
+    5.请求体参数：图片、文件、（多媒体表单）
+        字符串(
         1) 普通表单格式数据："c=3&d=4";
         2) json格式字符串：'{"c":3,"d":2}';
         3) xml格式字符串：'<xml><c>3</c>
@@ -108,21 +110,58 @@ http协议报文：起始行 请求头 Header /r/n 请求体(body)
 postman 接口测试工具
 接口：让别人访问的api
 
+
 -------------------------------------------------------------
 day-02
 
 json字符串中键的引号必须是双引号
 raw 原始
 
-json字符串在python中的处理
 
-    python中标准模块 json
-    json字符串 --> python中的字典 json.loads(json字符串) --> 返回字典数据
+flask获取请求数据：
+    1.获取查询字符串的数据：
+        a = request.args.get("a") -->获取同名参数的一个值
+        a_list = request.args.getlist("a") -->获取所有的同名参数
 
-    python中的字典 --> json字符串 json.dumps(python中的字典)  --> 返回json字符串
+    2.获取请求头数据：content_type = request.headers.get("Content-Type")
+    
+    3.获取请求体的数据:
+        1) 普通表单格式的字符串：c = request.form.get("c")
+        2）获取所有同名表单格式的字符串：d = request.form.getList("list")
+    
+    4.获取json格式的字符串
+        request.data中包含了最原始的请求体数据
 
-    请求头Content-Type是application/json时，使用postman接口测试工具测试接口时，需要在Header中指明Content-Type
+        json字符串在python中的处理
 
+            python中标准模块 json
+            json字符串 --> python中的字典 json.loads(json字符串) --> 返回字典数据
+
+            python中的字典 --> json字符串 json.dumps(python中的字典)  --> 返回json字符串
+
+            请求头Content-Type是application/json时，使用postman接口测试工具测试接口时，需要在Header中指明Content-Type
+        
+        flask获取json格式串的两种方法:
+            方式一：如果请求头中Context-Type不是application/json,通过请求原始数据的方式请求数据：request.data
+                json_str = request.data
+            方式二：如果请求头中Context-Type是application/json，通过简便的方式请求数据：get_json(会将请求体的json字符串直接转换为字典返回给我们)
+                json_dic = request.get_json()
+
+    5.保存文件数据
+        通过files属性获取文件数据，返回文件对象：
+        files_obj = request.files.get("pic")
+
+        方式一：自己手动保存
+            read方法读取文件内容-->获取上传文件的真实名字-->在本地创建打开一个新文件(with open(路径,读写方式) as new_file:)-->写入新文件
+
+        方式二：使用save方法
+            files_obj.save("./"+files_obj.filename)        
+
+        多媒体表单用html实现方式：
+            在表单声明中添加：enctype="multipart/form-data"属性
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="pic">
+            </form>
 
 python2与python3字符串的区别
     python3 类型 str
@@ -138,4 +177,40 @@ python2与python3字符串的区别
 
     ascii只对英文字符编码
 
-abort()函数可以立即终止视图函数的执行，并向前端返回指定的错误状态码：abort(错误状态码) 400-->错误的请求
+能包含请求体的方法：POST PUT DELETE
+
+abort()函数可以立即终止视图函数的执行，并向前端返回"标准的"指定的错误状态码：abort(错误状态码) 400-->错误的请求  403-->禁止访问
+
+
+构造响应信息的方式:
+    方式一:元组  
+        return (响应体，状态码，响应头) -->加不加括号都可以
+        return 响应体，状态码，响应头(列表，字典)
+        return "index page",403,[(响应头的名字,响应头的值),()...]
+
+    方式二：make_response()
+        res = make_response(响应体) -->返回响应对象
+        res.status = "状态码"
+        res.headers['name'] = 'python3'
+
+jsonify ==>等价与django的jsonResponse,把数据转换为json字符串返回，并帮助我们设置响应头Content-Type为application/json
+
+设置和读取cookie
+    设置cookie 通过make_response获取resp对象，resp.set_cookie(名字，cookie值)-->设置cookie
+    默认是临时cookie，浏览器关闭即失效
+    通过max_age指明有效期，单位是秒
+
+    获取cookie:request.cookies.get("键")
+
+    删除cookie:delete_cookie("键") -->把cookie的有效期提前
+
+
+设置session
+    使用session模块
+    flask中使用session需要配置secret_key参数
+
+session跨机访问问题
+
+没有了cookie，session也能实现：将session_id放在路径中
+
+全局变量--线程局部变量
