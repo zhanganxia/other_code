@@ -178,6 +178,7 @@ python2与python3字符串的区别
     ascii只对英文字符编码
 
 能包含请求体的方法：POST PUT DELETE
+pycharm 快速导包 alt+enter
 
 abort函数的使用
     abort函数在flask模块中

@@ -1,5 +1,5 @@
 #encoding=utf-8
-from flask import Flask,request,abort,make_response
+from flask import Flask,request,abort,make_response,jsonify
 import json
 
 app = Flask(__name__)
@@ -110,6 +110,20 @@ def resMesage():
 
     return resp
 
+@app.route("/jsonhandler")
+def jsonHandler():
+    # data = {
+    #     "name":"python",
+    #     "age":18
+    # }
+    # 原始方法将字典数据转换成json数据
+    # json_str = json.dumps(data)
+    # return json_str
+    # return json_str,200,{"Content-Type":"application/json"}
+    
+    # 等价与django的jsonResponse,把数据转换为json字符串返回，并帮助我们设置响应头Content-Type为application/json
+    # return jsonify(data)
+    return jsonify(name="python",age=18)
 
 if __name__ == '__main__':
     app.run(debug=True)
