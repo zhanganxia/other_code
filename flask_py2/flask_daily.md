@@ -215,7 +215,10 @@ jsonify ==>等价与django的jsonResponse,把数据转换为json字符串返回�
 
 设置session
     使用session模块
-    flask中使用session需要配置secret_key参数
+    flask中使用session需要配置secret_key参数，否则会报错：
+        RuntimeError: the session is unavailable because no secret key was set.
+    解决方法(设置secret_key)：
+        app.config['SECRET_KEY'] = "qwertyuiop" #随机的字符串
 
 session跨机访问问题
 

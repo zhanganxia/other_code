@@ -1,5 +1,5 @@
 #encoding=utf-8
-from flask import Flask,request,abort,make_response,jsonify
+from flask import Flask,request,abort,make_response,jsonify,session
 import json
 
 app = Flask(__name__)
@@ -136,17 +136,34 @@ def set_cookie():
 
     return resp
 
-@app.route("/get_cookie")
-def get_cookie():
-    # 获取cookie
-    cookie = request.cookies.get("itcast")
-    return cookie
+# @app.route("/get_cookie")
+# def get_cookie():
+#     # 获取cookie
+#     cookie = request.cookies.get("itcast")
+#     return cookie
 
-@app.route("/del_cookie")
-def del_cookie():
-    resp = make_response("delete cookie ok")
-    resp.delete_cookie("itcast2")
-    return resp
+# @app.route("/del_cookie")
+# def del_cookie():
+#     resp = make_response("delete cookie ok")
+#     resp.delete_cookie("itcast2")
+#     return resp
+
+# flask中使用session需要配置secre_key参数
+app.config['SECRET_KEY'] = "qwertyuiop" #随机的字符串
+
+@app.route("/login")
+def user_msg():
+    # 设置session
+    session["user_id"] = 12
+    session["user_name"] = "zax"
+
+    return "login ok"
+
+@app.route("/user_login")
+def user_login():
+    # 获取session
+    name = session.get("user_name")
+    return "welcom %s"%name
 
 if __name__ == '__main__':
     app.run(debug=True)
