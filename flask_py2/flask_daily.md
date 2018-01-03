@@ -106,3 +106,34 @@ http协议报文：起始行 请求头 Header /r/n 请求体(body)
                          </xml>')
 
 postman 接口测试工具
+接口：让别人访问的api
+
+-------------------------------------------------------------
+day-02
+
+json字符串中键的引号必须是双引号
+raw 原始
+
+json字符串在python中的处理
+
+    python中标准模块 json
+    json字符串 --> python中的字典 json.loads(json字符串) --> 返回字典数据
+
+    python中的字典 --> json字符串 json.dumps(python中的字典)  --> 返回json字符串
+
+    请求头Content-Type是application/json时，使用postman接口测试工具测试接口时，需要在Header中指明Content-Type
+
+
+python2与python3字符串的区别
+    python3 类型 str
+    python2 类型 unicode --> u"a" 
+                str --> "a"
+
+    python2中容易出现的错误：
+    错误提示信息：ascii cannot decode \xd3\xde
+    表示：程序中的
+
+    原因：用了str类型与unicode类型，两种不同的类型进行字符串处理，print("参数a=%s"%s)python都是转换为unicode类型再处理，默认以ascii编码来解读非英文字符
+    解决方法：对于非英文字符串声明的时候就声明为unicode类型 如：u"参数a=%s"
+
+    ascii只对英文字符编码
