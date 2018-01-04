@@ -1,0 +1,3 @@
+[submodule "django/blog"]
+	path = django/blog
+	url = https://github.com/tomming233/blog.git
