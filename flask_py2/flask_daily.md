@@ -220,8 +220,33 @@ jsonify ==>等价与django的jsonResponse,把数据转换为json字符串返回�
     解决方法(设置secret_key)：
         app.config['SECRET_KEY'] = "qwertyuiop" #随机的字符串
 
-session跨机访问问题
+    传统的session保存在数据库中的，flask是直接把session存在cookies中，secret_key的作用就是防止session数据被篡改
 
-没有了cookie，session也能实现：将session_id放在路径中
+    session跨机访问问题
 
-全局变量--线程局部变量
+    没有了cookie，session也能实现：将session_id放在路径中
+
+flask上下文
+    请求上下文
+        request：请求对象，封装了客户端发出的HTTP请求中的内容
+        session: 用户会话，用于存储请求之间需要"记住"的值的词典
+
+    程序上下文
+        current_app: 当前激活程序的实例
+        g：处理请求时，作临时存储的对象。每次请求都会重设这个变量
+
+        全局变量--线程局部变量
+        request={
+            "线程A"：{"args":{"a":1...}}
+            "线程B"：{"args":{"a":2...}}
+        }
+
+flask请求钩子(类似与django的中间件二次开发)
+    请求钩子使用装饰器实现。
+    before_first_request:注册一个函数，在处理第一个请求之前运行
+    before_request: 注册一个函数，在每次请求之前运行
+    after_request: 注册一个函数，如果没有未处理的异常抛出，则在每次请求之后运行
+    teardown_request: 注册一个函数，即使有未处理的异常抛出，也在每次请求之后运行
+
+    注意：在请求钩子函数和视图函数之间共享数据一般使用上下文全局变量g
+
