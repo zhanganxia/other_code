@@ -42,3 +42,19 @@ class Category(BaseModel):
 
     def __str__(self):
         return self.name
+
+class BlogComment(BaseModel):
+    '''用户评论模型类'''
+    user_name = models.CharField(max_length=100,verbose_name="评论者的名字")
+    user_email = models.EmailField(max_length=255,verbose_name="评论者邮箱")
+    body = models.TextField(verbose_name="评论内容")
+    # create_time = models.DateTimeField(verbose_name="评论发表时间",auto_now_add=True)
+    article = models.ForeignKey('Article',verbose_name="评论所属文章",on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'blog_comment'
+        verbose_name = '文章评论'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.body[:20]
