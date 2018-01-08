@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form method="post">
+        {{ form.csrf_token }}
+        <p>{{ form.user_name.label }}</p>
+        <p>{{ form.user_name }}</p>
+        <!--  -->
+        {% for err in form.user_name.errors %}
+        <p>{{ err }}</p>
+        {% endfor %}
+        <!--  -->
+        <P> {{ form.password.label }}</P>
+        <P>{{ form.password }}</P>
+        {% for err in form.password.errors %}
+        <p>{{ err }}</p>
+        {% endfor %}
+        <!--  -->
+        <p>{{ form.password2.label }}</p>
+        <p>{{ form.password2 }}</p>
+        {% for err in form.password2.errors %}
+        <p>{{ err }}</p>
+        {% endfor %}
+        <!--  -->
+        {{ form.submit }}
+    </form>
+</body>
+
+</html>
