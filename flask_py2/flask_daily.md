@@ -472,13 +472,126 @@ ady-05 微信开发
 
 必须运行在公网ip地址：80/wechat
 
-微信测试服务器：101.200.170.171:80
+接入微信配置与token参数说明
+    token:令牌（随机字符串），信赖谁就给谁
+    签名数据：对要转发的数据与token一起进行计算，得到签名
+    验证签名：从请求的数据中取出签名，计算需要的数据，连同token一起计算的，极端后的签名值，与请求中的签名值对比，如果相同，证明请求来自微信，否则非法请求
 
-token:自己制定
+    公网ip地址：80/wechat8012
 
-开发程序：@route("/wechate80xx")
+微信测试服务器
+    ip:101.200.170.171:80
+    帐号：s80xx s8012
+    密码：123456a
+    url:http://101.200.170.171/wechat8012
+    token:自己指定
+    
+    开发程序：@route("/wechate80xx")
         app.run(port=80xx)
 
+    登录服务器-->创建自己的文件夹，将本地的wechat.py远程推送到远程服务器( scp ./wechat.py s8012@101.200.170.171:~/wechat_zax/)-->在远程服务器中选择一个flask虚拟环境-->在虚拟环境中运行wechat.py
 
+验证服务器地址的有效性
+    开发者提交信息后，微信服务器将发送GET请求到填写的服务器地址URL上，GET请求携带的四个参数：
+    signature: 微信加密签名，signature结合了开发者填写的token参数和请求中的timestamp参数、nonce参数
+    timestamp: 时间戳
+    nonce：随机数
+    echostr: 随机字符串
+
+开发者通过校验signature对请求进行校验
+    校验流程：
+        1）将token、timestamp、nonce三个参数进行字典序排序
+        2）将三个参数字符串拼接成一个字符串进行sha1加密
+        3）开发者获得加密后的字符串可与signature对比，标识该将请求来源于威信
+    
+    代码
+    ------------------------------------------------------------------------------------------------------------
+    #encoding=utf-8
+    import time
+    from flask import Flask,request,abort
+    import hashlib  #python标准库，里面提供sha1 md5 sha256等加密方法
+    import xmltodict
+
+    WECHAT_TOKEN = "itcast" #常量
+
+    app = Flask(__name__)
+
+    # 第一请求：是微信服务器发起的验证请求
+    # GET /wechat
+    @app.route("/wechat8012",methods=["GET","POST"])
+    def wechat():
+        '''处理微信公众号的请求'''
+        # 验证请求是否来自微信
+        signature = request.args.get("signature")
+        timestamp = request.args.get("timestamp")
+        nonce = request.args.get("nonce")
+
+        # 按照微信指明的方式，计算签名值
+        # 1. 将token，timestamp,nonce三个参数进行字典排序
+        li = [WECHAT_TOKEN,timestamp,nonce]
+        li.sort()
+
+        # 2.将三个参数字符串平成一个字符串
+        tmp_str = "".join(li)
+
+        # 3.进行sha1加密计算
+        hash_obj= hashlib.sha1(tmp_str)
+        sign = hash_obj.hexdigest()#获取计算后的结果
+
+        # 4.对比自己计算的sign值与请求中的signature值，如果相同，证明请求成功
+        if sign != signature:
+            # 表示请求不是微信
+            abort(403)        
+        if request.method == "GET":
+            
+            # 按照微信的说明，为了响应微信的验证请求，需要把微信请求中的
+            echostr = request.args.get("echostr")
+            return echostr
+        else:
+            # post
+            # 获取请求体xml消息数据
+            xml_str = request.data
+            # 解析xml
+            xml_dict = xmltodict.parse(xml_str)
+            req_dict = xml_dict["xml"]
+
+            # 取出消息类型
+            msg_type = req_dict["MsgType"]
+
+            if msg_type == "text":
+                # 表示文本类型消息
+                # 构造回复的消息
+                resp_dict = {
+                    "xml": {
+                        "ToUserName":req_dict.get("FromUserName"),
+                        "FromUserName":req_dict.get("ToUserName"),
+                        "CreateTime":int(time.time()),
+                        "MsgType":"text",
+                        "Content":req_dict.get("Content")
+                    }
+                }
+            else:
+                resp_dict = {
+                    "xml": {
+                        "ToUserName":req_dict.get("FromUserName"),
+                        "FromUserName":req_dict.get("ToUserName"),
+                        "CreateTime":int(time.time()),
+                        "MsgType":"text",
+                        "Content":"hello welcome!"
+                    }
+                }
+                
+            # 决定返回的xml数据
+            xml_resp_str = xmltodict.unparse(resp_dict)
+            return xml_resp_str            
+    if __name__ == '__main__':
+        app.run(port=8012,debug=True)
+    --------------------------------------------------------------------------------------------------
+
+
+
+
+
+xmltodict模块：可以把xml字符串转化为python中的字典
 
 http://101.200.170.171/wechat8012
