@@ -588,10 +588,160 @@ ady-05 微信开发
         app.run(port=8012,debug=True)
     --------------------------------------------------------------------------------------------------
 
+微信网页授权获取用户基本信息
+    流程：
+    第一步：用户同意授权，获取code(授权书)
+    第二步：通过code换取网页授权access_token(微信服务器访问令牌)
+    第三步：拉取用户信息(需scope为snaspi_userinfo)
+
+
+    xmltodict模块：可以把xml字符串转化为python中的字典
+
+    http://101.200.170.171/wechat8012
+
+    1.在微信中配置域名：www.itcastcpp.cn
+
+    http://101.200.170.171/wechat8012/index
+    http://www.itcastcpp.cn/wechat8012/index
+
+    2.将网址转换
+    urllib.quote("http://www.itcastcpp.cn/wechat8012/index")
+    转换后：http%3A//www.itcastcpp.cn/wechat8012/index
+
+    3.用户访问地址
+    https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa401712a4f50cc75&redirect_uri=http%3A//www.itcastcpp.cn/wechat8012/index&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect
+        用在线二维码生成器生成上面这个链接地址的二维码信息，用手机扫描，进行授权
+
+    代码 
+    ————————————————————————————————————————————————————————————————————————————————————————————————————————
+    web_page:
+        #encoding=utf-8
+        from flask import Flask,request,render_template
+        import urllib2
+        import json
+
+        WECHAT_APPID = "wxa401712a4f50cc75"
+        WECHAT_SECRET = "e0f5cd4b2a1c793f9760b9a5a7f26ccc"
+
+        app = Flask(__name__)
+
+        # GET /wechat8012/index?code=xxx
+        @app.route("/wechat8012/index")
+        def index():
+            # 获取code参数
+            code = request.args.get("code")
+            # 获取access_token
+            url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code"%(WECHAT_APPID,WECHAT_SECRET,code)
+            
+            # 使用urllib2发起请求,返回响应对象
+            response = urllib2.urlopen(url)
+
+            # 读取响应体的数据
+            json_str = response.read()
+            resp_dict = json.loads(json_str)
+
+            if "errcode" in resp_dict:
+                # 表示微信出错
+                return "获取access_token失败"
+            access_token = resp_dict.get("access_token")
+            user_openid = resp_dict.get("openid")
+
+            # 获取用户的数据
+            url = "https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s&lang=zh_CN"%(access_token,user_openid)
+            
+            # 使用urllib2发起请求,返回响应对象
+            response = urllib2.urlopen(url)
+
+            # 读取响应体的数据
+            json_str = response.read()
+            resp_dict = json.loads(json_str)
+
+            if "errcode" in resp_dict:
+                # 表示微信出错
+                return "获取用户数据失败"
+            # 获取用户数据成功
+            return render_template("index.html",user=resp_dict)
+
+        if __name__ == '__main__':
+            app.run(port=8012,debug=True)
+    *************************************************************************
+    templates/index.html:
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <title>{{user["nickname"]}}的个人主页</title>
+        </head>
+
+        <body>
+            <img alt="头像" src="{{user['headimgurl']}}" width="60">
+            <table>
+                <tr>
+                    <th>openid</th>
+                    <td>{{user["openid"]}}</td>
+                </tr>
+                <tr>
+                    <th>昵称</th>
+                    <td>{{user["nickname"]}}</td>
+                </tr>
+                <tr>
+                    <th>性别</th>
+                    <td>
+                        {% if 1 == user["sex"] %} 男 {% elif 2 == user["sex"] %} 女 {% else %} 未知 {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>省份</th>
+                    <td>{{user["province"]}}</td>
+                </tr>
+                <tr>
+                    <th>城市</th>
+                    <td>{{user["city"]}}</td>
+                </tr>
+                <tr>
+                    <th>国家</th>
+                    <td>{{user["country"]}}</td>
+                </tr>
+            </table>
+        </body>
+        </html>
+    _________________________________________________________________________________________________________
+    
+
+-----------------------------------------------------------------
+day-06 flask项目
+
+前后端分离：后端只提供数据，不负责前端页面处理，SEO优化（搜索引擎优化）
+前后端分离：
+
+
+确定数据库的表结构
+
+
+版本号
+
+绝对路径以启动目录做为思考
+
+循环导入，解决方法-->延迟导入，什么时候用什么时候导
+
+utils 目录（utility）存放自己实现的通用共用组件（函数，类，模块）
+libs 目录（library）存放：第三方(别人)开发的工具包（函数，类，模块） 完整的库
+
+6.日志 logging(python的标准日志模块)
+    flask使用日志
+    app.logger() 记录日志信息
+    current_app.logger
+
+    日志等级:
+        error 错误
+        warning 警告级别
+        info 通知信息
+        debug 调试
+
+        current_app.logger.error("数据库发生异常")
+        current_app.logger.warning()
+        current_app.logger.info()
+        current_app.logger.debug()
 
 
 
-
-xmltodict模块：可以把xml字符串转化为python中的字典
-
-http://101.200.170.171/wechat8012
