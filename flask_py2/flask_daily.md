@@ -711,8 +711,66 @@ ady-05 微信开发
 -----------------------------------------------------------------
 day-06 flask项目
 
-前后端分离：后端只提供数据，不负责前端页面处理，SEO优化（搜索引擎优化）
-前后端分离：
+前后端分离和不分离的比较：
+    前后端不分离：前端看到页面的内容是从后端处理完成的结果传递给前端的(前端看到的页面内容是后端处理的结果)对SEO优化友好(搜索引擎优化)
+    前后端分离：后端只提供数据，不负责前端页面处理。(无论前端是网页还是app都可以达到后端的复用)网页前端采用ajax请求，对SEO优化不友好
+
+以单一文件构建项目的所有工具
+    -.导入flask_script的Manager模块(使用：；python xxx.py runserver)
+        添加启动命令扩展:manager = Manager(app),使用manager启动程序
+    -.添加配置信息(两种方式：类的方式，单一文件方式)，此处使用类的方式.
+        class Config(object):
+            DEBUG = True
+
+            #数据库
+            SQLALCHEMY_DATABASE_URL="数据库类型://用户名：密码@本地IP：端口/数据库名"  #数据库配置信息
+            SQLALCHEMY_TRACK_MODIFICATIONS = True #Flask-SQLAlchemy 将会追踪对象的修改并且发送信号，默认为True
+
+            #redis
+            REDIS_HOST = "127.0.0.1"
+            REDIS_PORT = 6379
+            REDIS_DB = 0
+
+            #session的配置信息
+            SESSION_TYPE = "redis" #指明session数据保存在redis中
+            SESSION_REDIS = redis.StrictRedis(host=REDIS_HOST,port=REDIS_PORT,db=1)#使用redis数据库 
+            SESSION_USE_SIGNER = True #指明对cookie中保存的session_id进行加密防护
+            PERMANENT_SESSION_LIFETIME = 3*24*60*60 #session有效期，单位秒
+
+        #1.添加flask配置
+        app.config.from_object(Config)
+        
+        #2.创建数据库工具，从flask_sqlalchemy导入模块SQLAlchemy
+        db = SQLAlchemy(app) 
+
+        #3.初始化迁移工具，从flask_migrate导入：Migrate,Migratecommand
+        Migrate(app,db)
+
+        #4.添加数据库迁移命令
+        manager.add_command("db",Migratecommand)
+
+        #5.创建redis链接实例，并接收，使用导入模块redis
+        redis.StrictRedis(host=Config.REDIS_HOST,port=xxx,db=xxx)
+
+        #6.配置session，引入扩展flask_session,对session进行初化
+        Session(app)
+
+        #7.补充csrf防护
+        #flask_wtf 表单扩展(有实现csrf_token,但是未实现前后端的分离)，csrf防护是这个扩展的组成部分，可以直接使用csrf而不使用表单
+
+
+补充：
+csrf的防护机制：
+    对于包含了请求体的请求(POST,PUT,DELETE),从请求的cookie中读取一个csrftoken的值,从请求体中读取一个csrf_token的值，进行比较，如果相同则允许访问，否则返回403的错误
+    csrf在flask_wtf中是通过请求钩子的方式添加上来的
+
+flask模块session和flask_session中Session的比较
+    from flask import session -->从flask中导入操作session对象
+    from flask_session import Session  -->从扩展工具导入Session的初始化的类，这个扩展工具改变了flask默认存储session的位置(不再存储在cookie中，而是可以自己选择)
+
+
+
+
 
 
 确定数据库的表结构
