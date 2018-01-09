@@ -721,6 +721,7 @@ day-06 flask项目
     -.添加配置信息(两种方式：类的方式，单一文件方式)，此处使用类的方式.
         class Config(object):
             DEBUG = True
+            SECRET_KEY = "ADSGJKKGFFAADadsf"
 
             #数据库
             SQLALCHEMY_DATABASE_URL="数据库类型://用户名：密码@本地IP：端口/数据库名"  #数据库配置信息
@@ -758,15 +759,16 @@ day-06 flask项目
         #7.补充csrf防护
         #flask_wtf 表单扩展(有实现csrf_token,但是未实现前后端的分离)，csrf防护是这个扩展的组成部分，可以直接使用csrf而不使用表单
 
+    补充：
+    csrf的防护机制：
+        对于包含了请求体的请求(POST,PUT,DELETE),从请求的cookie中读取一个csrftoken的值,从请求体中读取一个csrf_token的值，进行比较，如果相同则允许访问，否则返回403的错误
+        csrf在flask_wtf中是通过请求钩子的方式添加上来的
 
-补充：
-csrf的防护机制：
-    对于包含了请求体的请求(POST,PUT,DELETE),从请求的cookie中读取一个csrftoken的值,从请求体中读取一个csrf_token的值，进行比较，如果相同则允许访问，否则返回403的错误
-    csrf在flask_wtf中是通过请求钩子的方式添加上来的
+    flask模块session和flask_session中Session的比较
+        from flask import session -->从flask中导入操作session对象
+        from flask_session import Session  -->从扩展工具导入Session的初始化的类，这个扩展工具改变了flask默认存储session的位置(不再存储在cookie中，而是可以自己选择)
 
-flask模块session和flask_session中Session的比较
-    from flask import session -->从flask中导入操作session对象
-    from flask_session import Session  -->从扩展工具导入Session的初始化的类，这个扩展工具改变了flask默认存储session的位置(不再存储在cookie中，而是可以自己选择)
+        在配置此扩展类的时候需要添加secrit_key="任意字符"，用于cookie中保存的session_id进行加密保护
 
 
 
