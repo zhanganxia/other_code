@@ -18,7 +18,7 @@ class DevelopmentConfig(Config):
     
     # 数据库的配置信息
     
-    SQLALCHEMY_DATABASE_URI = "mysql://：test:mysql@127.0.0.1:3306/ihome"
+    SQLALCHEMY_DATABASE_URI = "mysql://test:mysql@127.0.0.1:3306/ihome"
     SQLALCHEMY_TRACK_MODIFICATIONS = True #Flask-SQLAlchemy 将会追踪对象的修改并且发送信号
 
     # redis

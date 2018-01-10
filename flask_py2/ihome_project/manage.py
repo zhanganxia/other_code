@@ -1,8 +1,8 @@
 #encoding=utf-8
+from ihome import create_app,db
 from flask_script import Manager
 from flask_migrate import Migrate,MigrateCommand
 
-from ihome import create_app,db
 
 # 创建flask工程应用对象
 app = create_app("develop")

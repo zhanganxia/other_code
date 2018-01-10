@@ -822,6 +822,16 @@ libs 目录（library）存放：第三方(别人)开发的工具包（函数，
         # 为全局的日志工具对象（flask app使用的）添加日记录器
         logging.getLogger().addHandler(file_log_handler)
 
+数据库的迁移
+        pip install flask-migrate
+    创建迁移仓库： python manage.py db init  -->创建migrations文件夹，所有迁移文件都放在里面
+
+    创建迁移脚本：python manage.py db migrate -m 'initial migration'
+
+    更新数据库： python database.py db upgrade
+
+    回退数据库： python database.py db downgrade 版本号
+
         
         
         
