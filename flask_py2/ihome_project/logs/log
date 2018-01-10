@@ -1,6 +1,0 @@
-INFO _internal.py:87  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
-ERROR users.py:9 错误级别信息
-WARNING users.py:10 警告级别信息
-INFO users.py:11 信息级别信息
-DEBUG users.py:12 调试级别信息
-INFO _internal.py:87 127.0.0.1 - - [10/Jan/2018 11:51:41] "GET /api/1.0/register HTTP/1.1" 200 -
