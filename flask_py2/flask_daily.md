@@ -791,19 +791,41 @@ libs 目录（library）存放：第三方(别人)开发的工具包（函数，
 
 6.日志 logging(python的标准日志模块)
     flask使用日志
-    app.logger() 记录日志信息
-    current_app.logger
+        app.logger() 记录日志信息
+        current_app.logger
 
     日志等级:
-        error 错误
-        warning 警告级别
-        info 通知信息
-        debug 调试
+        error 错误   --   current_app.logger.error("数据库发生异常")
+        warning 警告级别 -- current_app.logger.warning()
+        info 通知信息  --   current_app.logger.info()
+        debug 调试   --    current_app.logger.debug()
 
-        current_app.logger.error("数据库发生异常")
-        current_app.logger.warning()
-        current_app.logger.info()
-        current_app.logger.debug()
+        error日志等级最高，debug日志等级最低
+            设置日志记录等级为debug，日志中会记录：debug,info,warning,error信息
+            设置日志记录等级为info，日志中会记录：info,warning,error信息
+            设置日志记录等级为warning，日志中会记录：warning和error信息
+            设置日志记录等级为error，日志中仅会记录error信息，不会记录warning,info,debug信息
+
+    日志的配置信息：
+        # 设置日志的记录等级
+        logging.basicConfig(level=logging.DEBUG)  # 调试debug级
+
+        # 创建日志记录器，指明日志保存的路径、每个日志文件的最大大小、保存的日志文件个数上限
+        file_log_handler = RotatingFileHandler("logs/log", maxBytes=1024*1024*100, backupCount=10)
+
+        # 创建日志记录的格式                 日志等级    输入日志信息的文件名 行数    日志信息
+        formatter = logging.Formatter('%(levelname)s %(filename)s:%(lineno)d %(message)s')
+
+        # 为刚创建的日志记录器设置日志记录格式
+        file_log_handler.setFormatter(formatter)
+
+        # 为全局的日志工具对象（flask app使用的）添加日记录器
+        logging.getLogger().addHandler(file_log_handler)
+
+        
+        
+        
+        
 
 
 
