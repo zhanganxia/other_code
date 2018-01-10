@@ -5,7 +5,7 @@ from flask_session import Session
 from flask_wtf import CSRFProtect
 from config import config_map 
 import redis
-from ihome import api_v1_0 
+ 
 
 # 创建数据库工具
 db = SQLAlchemy()
@@ -40,6 +40,7 @@ def create_app(run_name):
     CSRFProtect(app)
 
     # 注册接口蓝图
-    app.register_blueprint(api_v1_0.api)
+    from ihome import api_v1_0 #方式db循环导入，什么时候用什么时候导入，放在函数内部
+    app.register_blueprint(api_v1_0.api,url_prefix="/api/1.0")
 
     return app
