@@ -843,6 +843,36 @@ day-07
 current_app.send_static_file(文件名) 
 csrf_token 在django和flask中设置的区别？
 设置cookie?
+    from flask_wtf import csrf
+    make_response(文件名)
+    # 生成csrf_token随机字符串的值
+    csrf_token = csrf.generate_csrf()
+
+    # 设施csrf用到的cookie
+    resp.set_cookie("csrf_token",csrf_token)
+
+浏览器同源策略：不同源的网站不能相互操作资源
+    判断同源：网站域名+端口号+协议
+
+图片验证码的流程？
+
+Restful风格？
+    goods
+    不符合风格：
+        /get_goods
+        /save_goods
+        /update_goods
+
+    符合风格：
+        /goods 路径中只出现名词，表示操作的数据资源
+        使用HTTP的不同请求方式来对应增删改查四种操作
+
+        GET /goods 查询商品数据
+        POST /goods 保存一个商品数据
+        PUT /goods 新建一个商品数据
+        DELETE /goods 删除一个商品数据
+
+自定义响应头？
 
         
 

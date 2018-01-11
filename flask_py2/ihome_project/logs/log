@@ -75,3 +75,77 @@ WARNING _internal.py:87  * Debugger is active!
 INFO _internal.py:87  * Debugger PIN: 909-896-716
 INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 10:05:42] "GET / HTTP/1.1" 304 -
 INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 10:05:42] "GET /static/plugins/swiper/js/maps/swiper.jquery.min.js.map HTTP/1.1" 404 -
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/__init__.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/ihome/api_v1_0/verify_code.py', reloading
+INFO _internal.py:87  * Restarting with stat
