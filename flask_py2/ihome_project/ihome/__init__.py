@@ -59,6 +59,7 @@ def create_app(run_name):
 
     # 注册接口蓝图
     from ihome import api_v1_0 #方式db循环导入，什么时候用什么时候导入，放在函数内部
-    app.register_blueprint(api_v1_0.api,url_prefix="/api/1.0")
+    #  app.register_blueprint(api_v1_0.api,url_prefix="/api/1.0")指明版本号
+    app.register_blueprint(api_v1_0.api)
 
     return app
