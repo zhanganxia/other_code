@@ -841,6 +841,8 @@ day-07
 转换器 
 自定义转换器的流程？
 current_app.send_static_file(文件名) 
+csrf_token 在django和flask中设置的区别？
+设置cookie?
 
         
 
