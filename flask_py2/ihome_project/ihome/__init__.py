@@ -7,6 +7,7 @@ from config import config_map
 import redis
 import logging
 from logging.handlers import RotatingFileHandler
+from ihome.utils.commons import ReConverter
  
 
 # 创建数据库工具
@@ -57,9 +58,15 @@ def create_app(run_name):
     # 防护机制：从请求的cookie中读取一个csrftoken的值，从请求体中读取一个csrf_token的值，进行比较，如果相同则允许访问，否则返回403的错误，通过钩子的方式添加上来的
     CSRFProtect(app)
 
+    # 注册自定义的转换器
+    app.url_map.converters["re"] = ReConverter
+
     # 注册接口蓝图
     from ihome import api_v1_0 #方式db循环导入，什么时候用什么时候导入，放在函数内部
     #  app.register_blueprint(api_v1_0.api,url_prefix="/api/1.0")指明版本号
     app.register_blueprint(api_v1_0.api)
+
+    from ihome import web_page
+    app.register_blueprint(web_page.html)
 
     return app
