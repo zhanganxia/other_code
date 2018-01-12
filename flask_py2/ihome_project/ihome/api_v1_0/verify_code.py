@@ -88,7 +88,7 @@ def send_sms_code(mobile):
     # 手机号没有注册过
     # 判断是否在60秒内发送过短信，如果发送过，则提前终止
     try:
-        redis_store.get("send_sms_code_flag_%s" % mobile)
+        flag = redis_store.get("send_sms_code_flag_%s" % mobile)
     except Exception as e:
         current_app.logger.error(e)
     else:
