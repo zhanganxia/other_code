@@ -6,3 +6,10 @@ INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 14:58:27] "GET /register.html HT
 INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 14:58:27] "GET /api/v1.0/image_codes/b9a6c349-2a96-48c4-bb12-e815cd0830e0 HTTP/1.1" 200 -
 INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 14:58:30] "GET /api/v1.0/image_codes/215398e0-65d8-40a6-a159-f6f165dfbc47 HTTP/1.1" 200 -
 INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 14:58:32] "GET /api/v1.0/image_codes/0a572952-7fb8-4a29-a5f7-13bd1bf56411 HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 15:53:50] "GET /api/v1.0/image_codes/59eb0ff4-6a46-4c91-8772-ef32849f44de HTTP/1.1" 200 -
+INFO _internal.py:87  * Detected change in '/home/kk/other_code/flask_py2/ihome_project/manage.py', reloading
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 18:03:56] "GET /register.html HTTP/1.1" 304 -
+INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 18:03:57] "GET /api/v1.0/image_codes/8d2bda9b-c446-4dfc-af90-74ccbe1efb53 HTTP/1.1" 200 -

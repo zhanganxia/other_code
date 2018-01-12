@@ -2,8 +2,10 @@
 from flask import jsonify,current_app
 from . import api
 from ihome.utils.captcha.captcha import captcha
-from ihome import redis_store,constance
+from ihome import redis_store,constants,db
 from ihome.utils.response_code import RET
+
+
 # GET /image_codes/图片验证码编号
 # ?:代表过滤资源  /:代表获取某一个特定的资源
 @api.route('/image_codes/<image_code_id>')
@@ -22,9 +24,9 @@ def get_image_code(image_code_id):
     
     # redis_store.set(key,value)
     # redis_store.set("image_code_%s"%image_code_id,text)
-    # redis_store.expire("image_code_%s"%image_code_id,constance.IMAGE_CODE_REDIS_EXPIRES)
+    # redis_store.expire("image_code_%s"%image_code_id,constants.IMAGE_CODE_REDIS_EXPIRES)
     try:
-        redis_store.setex("image_code_%s" % image_code_id,constance.IMAGE_CODE_REDIS_EXPIRES,text)
+        redis_store.setex("image_code_%s" % image_code_id,constants.IMAGE_CODE_REDIS_EXPIRES,text)
     except Exception as e:
         # 日志中记录异常信息
         current_app.logger.error(e)

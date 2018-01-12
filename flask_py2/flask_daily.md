@@ -1,13 +1,13 @@
 day-01
 
 创建flask应用核心对象
-app = Flask(模块名)
-__name__表示当前模块的名字: app = Flask(__name__)
-flask以模板名对应的模块所在的目录为工程目录，默认以目录中的static为静态文件目录，以templates为模板目录
-static_url_path 指明访问静态文件的url前缀: app = Flask(__name__,static_url_path="/python")
-static_folder:指明静态文件陌路，默认值为static目录
-tempalte_folder指明模板目录，默认值为templates
-# app = Flask(__name__,static_url_path="/python",static_folder="static",template_folder="templates") -->此处的python是和浏览器中的static对应的
+    app = Flask(模块名)
+    __name__表示当前模块的名字: app = Flask(__name__)
+    flask以模板名对应的模块所在的目录为工程目录，默认以目录中的static为静态文件目录，以templates为模板目录
+    static_url_path 指明访问静态文件的url前缀: app = Flask(__name__,static_url_path="/python")
+    static_folder:指明静态文件陌路，默认值为static目录
+    tempalte_folder指明模板目录，默认值为templates
+    # app = Flask(__name__,static_url_path="/python",static_folder="static",template_folder="templates") -->此处的python是和浏览器中的static对应的
 
 
 配置参数的使用：
@@ -259,19 +259,19 @@ day-03
 
 Jinja2模板
 
-1.传递模板变量
+1. 传递模板变量
     render_template(模板路径，模板变量)执行渲染操作
     注意:这里的模板变量和django不同，不是字典格式的，是以"键=值"的形式传递模板变量
 
     如果要使用类似django的字典传参，在render_template中对字典进行解包"**kwargs"
 
-2.jinja模板获取变量
+2. jinja模板获取变量
     直接获取字符串，列表，列表[下标]，字典["key"],字典.key
     在jinja模板中是直接可以进行加法运算：
         1)数字加法:list[1,2]-->{{ list[0] + list[1] }}
         2)字符串加法：name = "python"-->{{ name + "zax" }}
 
-3.模板过滤器
+3. 模板过滤器
     字符串过滤器
         safe：禁用转义 -->{{ '<em>hello</em>' | safe }}  防止 xss 注入攻击
         capitalize:把变量值的首字母转成大写，其余字母转成小写 -->{{ 'hello' | capitalize }}
@@ -307,7 +307,7 @@ Jinja2模板
                 return ls[::-3]
             ------------------------------------------------------------
 
-4.控制语句和宏
+4. 控制语句和宏
     控制语句：
         {% if %}{% endif %} 
         {% for item in samples %}{% endfor %}
@@ -326,7 +326,7 @@ Jinja2模板
             {% import 'macro_input.html' as m_input %}
             {{ m_input.input() }}
 
-5.表单 - WTForm
+5. 表单 - WTForm
     使用Flask-WTF表单扩展，可以帮助进行CSRF验证，帮助我们快速定义表单
     注意：使用wtform扩展，需要配置secret_key：app.config["SECRET_KEY"] = "aaaasssddd"
     使用表单的流程：
@@ -364,7 +364,7 @@ Jinja2模板
         模板中传入csrf_token
         {{ form.csrf_token }}:表单对象传给模板的form中有一个csrf_token的属性
 
-6.代码的重用
+6. 代码的重用
     include：将另一个模板加载到当前模板中，并直接渲染，包含在使用时，如果包含的模板文件不存在，程序会抛出TemplateNotFound异常，使用ignore missing关键字，如果包含的模板文件不存在，会忽略这条include语句
 
     宏，继承，包含：
@@ -373,7 +373,7 @@ Jinja2模板
         宏(Macro)的功能类似函数，可以传入参数，需要定义，调用
         包含(include)是直接将目标模板文件整个渲染出来
 
-7.Flask中的特殊变量和方法
+7. Flask中的特殊变量和方法
     在Flask中，有一些特殊的变量和方法，是可在模板文件中直接访问的
     config对象：app.config对象
     request对象：当前请求的request对象
@@ -386,7 +386,79 @@ Jinja2模板
         flask在实现闪现的时候，是将flask的数据保存到session中，
         使用flash需要保证程序中有配置过secret_key的参数
 
-8.数据库
+8. Flask-SQLAlchemy引入
+    SQLAlchemy是一个独立的,成熟的ORM扩展框架
+    Flask-SQLALchemy是SQLAlchemy的进一步封装 -->pip install flask-sqlalchemy
+    安装数据库驱动：pip install flask-mysqldb
+
+    ORM的作用：
+        orm框架将模型类的操作转换成sql语句
+        pymysql:
+            connect()
+            cursor
+            cursor.execute(sql)
+            cursor.fetch
+        orm框架将结果转换为模型类对象
+
+    数据库驱动程序包：
+        pymysql：python2 python3都支持
+        MySQL-Python: 仅支持python2
+    
+        ORM只认mysqldb,使用MySQL-Python，直接导入mysqldb，故在python2中直接使用驱动MySQL-Python
+
+9. sqlalchemy配置与创建数据库的模型类
+   flask的数据库设置：
+
+        #设置连接数据库的URL(必须)
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://test:mysql@127.0.0.1:3306/ihome'
+        
+        #设置保证：模型类对象的数据和数据库数据的同步变化(必须)
+        app.config[SQLALCHEMY_TRACK_MODIFICATIONS] = True
+
+        #设置每次请求结束后会自动提交数据库中的改动(事务的提交，不建议使用)
+        app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+
+        #查询时会显示原始的SQL语句
+        app.config['SQLALCHEMY_ECHO'] = True
+    
+    sqlAlchemy的配置流程：
+
+        1）以类或单一文件的形式配置数据库连接信息
+        2）将配置信息导入到flask app中
+            app.config.from_object(Config) -->以类的形式添加的配置
+        3）创建sqlalchemy工具对象(去配置文件中读取配置信息)
+            from flask_sqlalchemy import SQLAlchemy 
+            db = SQLAlchemy(app)
+            或者：
+            db = SQLAlchemy()
+            db.init_app(app)
+
+        4）创建模型类
+            自定义表名：__tablename__ = ''
+            主键需自己定义:id = db.Column(db.Integer,primary_key=True) #默认自增主键
+
+            db.Column:真实存在的列
+            db.relationship:不真实存在的列，仅仅为了查询方便，额外补充的
+
+            class User(db.Model):
+                ...
+                #外键（flask）
+                role_id = db.Column(db.Integer,db.Foreignkey("tbl_roles.id"))
+
+                user1.role_id --> 返回主键的id值(不是对象)
+
+                #为了查询方便，在Role表中添加额外字段，数据库中不存在的
+                补充：users = db.relationship("User" backref="role")
+                backref:指明为User类添加一个额外的数据行role
+
+                user1.role --> Role对象
+                role1.users --> User表的对象 列表
+
+                #Django:
+                #role = ForeignKey(Role)
+
+                #user1.role -->Role对象(django)
+                #role1.user_set -->User对象的列表(django)
 
 -----------------------------------------------------------------
 day-04
@@ -833,11 +905,36 @@ libs 目录（library）存放：第三方(别人)开发的工具包（函数，
     回退数据库： python database.py db downgrade 版本号
 
         
- --------------------------------------------------------------------
+ -----------------------------------------------------------------------------------
 
 day-07 
 
-联合主键：      
+数据库模型类的说明：
+    多对多关系中间表的创建
+        tbl_house(房屋)和 tbl_faclity(设施)，之间是多对多的关系，在两个表之间抽象出一个中间表tbl_house_facility,这张
+        中间表连接了两个模型类之间的关系，对与中间这张表很少用模型类对应(很少操作这个模型类的对象)。
+        在sqlAlchamy中如果建立起多对多的关系，中间这张表不用模型类去对应，直接用底层的方式声明通过：db.table()构建一张表
+            关键字参数一：表名
+            关键字参数二: db.Column(列名，类型，外键指向)
+
+        给中间表关联的两个类中添加对应的属性：relationship(backref非必备),secondary 查询出关联的对象
+
+        联合主键(不需要添加一个额外的主键字段)：一张表中多个字段联合起来形成的值保证不会重复出现，就可以当作联合主键(例如：多对多的中间表)，sqlAlchamy中声明字段联合主键，只需要添加属性：primary_key = True，设置为联合主键的字段联合起来就会当作是一个联合主键
+
+            create table(
+                id1 ...
+                id2 ...
+                primary key(id1,id2)
+            )  
+
+    多对多关系中间表添加记录的方法
+        查询：house1.facilities --> [Facility objects...]
+        模型类中的relationship字段不光可以用来查询数据，也可以保存数据
+        保存数据：
+        house1 = House() facility1 = Facility() facility2 = Facility()
+        house1.facilitys = [facility1,facility2] #赋值操作
+        db.session().add(house)  #保存中间表的数据
+
 转换器 
 自定义转换器的流程？
 current_app.send_static_file(文件名) 
@@ -877,7 +974,58 @@ Restful风格？
 UUID 通用唯一识别码(全局唯一标识符) -- 在前端中生成验证码图片ID
 时间戳
 
-        
+-------------------------------------------------------------------
+day-08 项目
 
+1. 接口文档
+    1） 图片验证码接口
+        功能描述：通过访问这个接口，可以获取验证码图片
+
+    url：/image_codes/图片验证码编号
+        /image_codes/<image_code_id>
+
+
+    method: GET
+    请求参数：路径参数 （比如：查询字符串，表单格式，json,xml）
+
+        名字         类型     是否必传      说明
+    image_code_id    str      是        图片验证码编号
+
+    示例：/image_codes/59eb0ff4-6a46-4c91-8772-ef32849f44de
+        
+    
+    返回值：
+        正常：验证码图片
+        异常：json格式
+
+        名字         类型      是否必传     说明
+      errcode      str         是       错误编号
+      errmsg       str         是       错误内容
+
+      示例：{"errcode":"4001","errmsg":"错误内容"}
+
+2. 发送短信验证码
+    容联 云通讯
+
+
+因为后端返回的响应数据是json字符传，并且包含了响应头Content-Type指明是appliction/json，所以ajax会将收到的响应数据自动转换为js中的对象(字典)，我们可以直接按照
+
+倒计时：setInterval(function(){
+    
+})
+
+
+3. 注册的流程
+    获取参数 手机号，短信验证码，密码，确认密码 请求体(json)
+    校验参数
+        判断手机号格式
+        判断密码一致
+    从redis中获取短信验证码的真实值
+    与用户填写的短信验证码进行对比
+    如果相同，表示短信验证码填写正确
+    对用户的密码进行加密
+    将用户数据保存到数据库中
+    保存登录状态
+    返回注册成功的信息
 
 
