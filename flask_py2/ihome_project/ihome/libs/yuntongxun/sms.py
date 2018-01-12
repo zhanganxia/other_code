@@ -4,16 +4,16 @@ from CCPRestSDK import REST
 import ConfigParser
 
 # 主帐号
-accountSid= '8a216da860e4d4f10160e869839500f4';
+accountSid= '8a216da860e4d4f10160e869839500f4'
 
 # 主帐号Token
-accountToken= '8a59416aff1843ecbccfcb7aed34a791';
+accountToken= '8a59416aff1843ecbccfcb7aed34a791'
 
 # 应用ID
-appId='8a216da860e4d4f10160e86983f300fb';
+appId='8a216da860e4d4f10160e86983f300fb'
 
 # 请求地址，格式如下，不需要写http：//
-serverIP='app.cloopen.com';
+serverIP='app.cloopen.com'
 
 # 请求端口
 serverPort='8883';
@@ -65,9 +65,43 @@ class CCP(object):
 
     def send_template_sms(self,to,datas,temp_id):
         result = self.rest.sendTemplateSMS(to,datas,temp_id)
+        # for k,v in result.iteritems(): 
+            
+        #     if k=='templateSMS' :
+        #         for k,s in v.iteritems(): 
+        #             print '%s:%s' % (k, s)
+        #     else:
+        #         print '%s:%s' % (k, v)
+        # result = self.rest.sendTemplateSMS(to,datas,temp_id)
         status_code = result.get("statusCode")
         if status_code == "000000":
-            # 表示发送短信成功
+            # 表示发送短信成功，0表示没有出现任何异常，如果失败，返回负值
             return 0
 
 #sendTemplateSMS(手机号码，内容数据，模板ID)
+if __name__ == '__main__':
+    ccp = CCP()
+    ccp.send_template_sms("18218366324",["1234",5],1)
+
+# 运行此文件测试结果：
+
+# 这是请求的URL：
+# https://app.cloopen.com:8883/2013-12-26/Accounts/8a216da860e4d4f10160e869839500f4/SMS/TemplateSMS?sig=A16D35298DCBD93A037D409CA50B34C4
+# 这是请求包体:
+# <?xml version="1.0" encoding="utf-8"?><SubAccount><datas><data>1234</data><data>5</data></datas><to>18218366324</to><templateId>1</templateId><appId>8a216da860e4d4f10160e86983f300fb</appId>            </SubAccount>            
+# 这是响应包体:
+# <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+# <Response>
+#     <statusCode>000000</statusCode>
+#     <TemplateSMS>
+#         <smsMessageSid>5d6a2d3b796e47068a231945a2d0f7cd</smsMessageSid>
+#         <dateCreated>20180112162417</dateCreated>
+#     </TemplateSMS>
+# </Response>
+
+# ********************************
+# smsMessageSid:5d6a2d3b796e47068a231945a2d0f7cd
+# dateCreated:20180112162417
+# statusCode:000000
+
+    
