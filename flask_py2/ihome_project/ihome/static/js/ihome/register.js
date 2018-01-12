@@ -21,7 +21,7 @@ function generateUUID() {
 function generateImageCode() {
     // 向后端请求图片验证码
     // 生成验证码图片的编号
-    var imageCodeId = generateUUID();
+    imageCodeId = generateUUID();
     // 拼接验证码图片的路径(即，后端的额请求路径)
     var url = "/api/v1.0/image_codes/" + imageCodeId;
 
@@ -30,6 +30,7 @@ function generateImageCode() {
 }
 
 function sendSMSCode() {
+    // 防止用户连击
     $(".phonecode-a").removeAttr("onclick");
     var mobile = $("#mobile").val();
     if (!mobile) {
@@ -45,29 +46,61 @@ function sendSMSCode() {
         $(".phonecode-a").attr("onclick", "sendSMSCode();");
         return;
     }
-    $.get("/api/smscode", { mobile: mobile, code: imageCode, codeId: imageCodeId },
-        function(data) {
-            if (0 != data.errno) {
-                $("#image-code-err span").html(data.errmsg);
-                $("#image-code-err").show();
-                if (2 == data.errno || 3 == data.errno) {
-                    generateImageCode();
+
+    var reqData = {
+        image_code_id: imageCodeId,
+        image_code_text: imageCode
+    };
+    $.get("/api/v1.0/sms_codes/" + mobile, reqData, function(resp) {
+        // 因为后端返回的响应数据是json格式的字符串，并且包含了响应头Content-Type指明是application/json
+        // 所以ajax将收到的响应数据自动转换为js中的对象(字典)，我们可以直接按照对象属性的操作获取返回数据
+        // resp.errcode
+        // resp.errmsg
+        // 根据后端返回的不同错误编号
+        if (resp.errcode == "0") {
+            // 表示发送成功
+            // 显示倒计时
+            var num = 60;
+            var timer = setInterval(function() {
+                num--;
+                if (num > 0) {
+                    $(".phonecode-a").html(num + "秒");
+                } else {
+                    $(".phonecode-a").html("获取验证码");
+                    $(".phonecode-a").attr("onclick", sendSMSCode());
+                    clearInterval(timer)
                 }
-                $(".phonecode-a").attr("onclick", "sendSMSCode();");
-            } else {
-                var $time = $(".phonecode-a");
-                var duration = 60;
-                var intervalid = setInterval(function() {
-                    $time.html(duration + "秒");
-                    if (duration === 1) {
-                        clearInterval(intervalid);
-                        $time.html('获取验证码');
-                        $(".phonecode-a").attr("onclick", "sendSMSCode();");
-                    }
-                    duration = duration - 1;
-                }, 1000, 60);
-            }
-        }, 'json');
+
+            }, 1000, 60)
+        } else {
+            alert(resp.errmsg);
+            $(".phonecode-a").attr("onclick", sendSMSCode());
+        }
+    });
+
+    // $.get("/api/smscode", { mobile: mobile, code: imageCode, codeId: imageCodeId },
+    //     function(data) {
+    //         if (0 != data.errno) {
+    //             $("#image-code-err span").html(data.errmsg);
+    //             $("#image-code-err").show();
+    //             if (2 == data.errno || 3 == data.errno) {
+    //                 generateImageCode();
+    //             }
+    //             $(".phonecode-a").attr("onclick", "sendSMSCode();");
+    //         } else {
+    //             var $time = $(".phonecode-a");
+    //             var duration = 60;
+    //             var intervalid = setInterval(function() {
+    //                 $time.html(duration + "秒");
+    //                 if (duration === 1) {
+    //                     clearInterval(intervalid);
+    //                     $time.html('获取验证码');
+    //                     $(".phonecode-a").attr("onclick", "sendSMSCode();");
+    //                 }
+    //                 duration = duration - 1;
+    //             }, 1000, 60);
+    //         }
+    //     }, 'json');
 }
 
 $(document).ready(function() {

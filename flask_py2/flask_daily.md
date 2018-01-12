@@ -1028,4 +1028,19 @@ day-08 项目
     保存登录状态
     返回注册成功的信息
 
+4. 防止用户连击
+    移除点击事件：
+    $(".phonecode-a").removeAttr("onclick"); -->获取验证码的时候
+    添加点击事件：
+    $(".phonecode-a").attr("onclick", sendSMSCode());
+
+5. jsonify(后端的返回值)
+    因为后端返回的响应数据是json格式的字符串，并且包含了响应头Content-Type指明是application/json
+    所以ajax将收到的响应数据自动转换为js中的对象(字典)，我们可以直接按照对象属性的操作获取返回数据
+        resp.errcode
+        resp.errmsg
+        
+
+
+
 

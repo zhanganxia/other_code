@@ -13,3 +13,94 @@ WARNING _internal.py:87  * Debugger is active!
 INFO _internal.py:87  * Debugger PIN: 909-896-716
 INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 18:03:56] "GET /register.html HTTP/1.1" 304 -
 INFO _internal.py:87 127.0.0.1 - - [11/Jan/2018 18:03:57] "GET /api/v1.0/image_codes/8d2bda9b-c446-4dfc-af90-74ccbe1efb53 HTTP/1.1" 200 -
+INFO _internal.py:87  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO _internal.py:87  * Restarting with stat
+WARNING _internal.py:87  * Debugger is active!
+INFO _internal.py:87  * Debugger PIN: 909-896-716
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:52:01] "GET /register.html HTTP/1.1" 304 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:52:02] "GET /api/v1.0/image_codes/fbc4cbfa-7f77-44e7-abaa-23139d68a378 HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:52:32] "GET /api/smscode?mobile=18218366324&code=fxvp&codeId= HTTP/1.1" 404 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:06] "GET /register.html HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:06] "GET /static/plugins/bootstrap/css/bootstrap.min.css HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:06] "GET /static/plugins/font-awesome/css/font-awesome.min.css HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:06] "GET /static/css/reset.css HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:06] "GET /static/css/ihome/main.css HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:06] "GET /static/css/ihome/register.css HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:07] "GET /static/js/jquery.min.js HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:07] "GET /static/plugins/bootstrap/js/bootstrap.min.js HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:07] "GET /static/js/ihome/register.js HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:07] "GET /static/images/logo@128x59.png HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:07] "GET /static/plugins/font-awesome/fonts/fontawesome-webfont.woff2?v=4.6.3 HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:07] "GET /static/plugins/bootstrap/css/bootstrap.min.css.map HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:07] "GET /api/v1.0/image_codes/04085042-cc27-4b1e-b050-9a8e0973c1cc HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:18] "GET /api/v1.0/image_codes/7d2d17f7-7272-4e0b-9f73-38ca9e832eb3 HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:56:46] "GET /api/v1.0/image_codes/b99789c1-d38a-418c-be33-51e8ee1a0fa3 HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:57:45] "GET /register.html HTTP/1.1" 304 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:57:46] "GET /api/v1.0/image_codes/ace0b460-57c5-4d7c-a373-064d52a53aa0 HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:58:39] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:39] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:44] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:45] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:46] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:47] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:48] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:49] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:52] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:52] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:53] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:53] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:53] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:53] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:53] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:53] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:54] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:55] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:56] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:57] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:58] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:58] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:58] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:58] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:58] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 21:59:59] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 22:00:00] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 22:00:05] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 22:00:10] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 22:00:10] "GET /register.html HTTP/1.1" 304 -
+ERROR _internal.py:87 Error on request:
+Traceback (most recent call last):
+  File "/home/kk/virtual/flask_py2/lib/python2.7/site-packages/werkzeug/serving.py", line 209, in run_wsgi
+    execute(self.server.app)
+  File "/home/kk/virtual/flask_py2/lib/python2.7/site-packages/werkzeug/serving.py", line 202, in execute
+    write(b'')
+  File "/home/kk/virtual/flask_py2/lib/python2.7/site-packages/werkzeug/serving.py", line 168, in write
+    self.send_header(key, value)
+  File "/usr/lib64/python2.7/BaseHTTPServer.py", line 412, in send_header
+    self.wfile.write("%s: %s\r\n" % (keyword, value))
+IOError: [Errno 32] Broken pipe
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 22:00:10] "GET /register.html HTTP/1.1" 200 -
+ERROR _internal.py:87 Error on request:
+Traceback (most recent call last):
+  File "/home/kk/virtual/flask_py2/lib/python2.7/site-packages/werkzeug/serving.py", line 209, in run_wsgi
+    execute(self.server.app)
+  File "/home/kk/virtual/flask_py2/lib/python2.7/site-packages/werkzeug/serving.py", line 200, in execute
+    write(data)
+  File "/home/kk/virtual/flask_py2/lib/python2.7/site-packages/werkzeug/serving.py", line 168, in write
+    self.send_header(key, value)
+  File "/usr/lib64/python2.7/BaseHTTPServer.py", line 412, in send_header
+    self.wfile.write("%s: %s\r\n" % (keyword, value))
+IOError: [Errno 32] Broken pipe
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 22:00:10] "GET /register.html HTTP/1.1" 200 -
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 22:00:11] "GET /api/v1.0/sms_codes/18218366324?image_code_id=ace0b460-57c5-4d7c-a373-064d52a53aa0&image_code_text=sczf HTTP/1.1" 200 -
+ERROR _internal.py:87 Error on request:
+Traceback (most recent call last):
+  File "/home/kk/virtual/flask_py2/lib/python2.7/site-packages/werkzeug/serving.py", line 209, in run_wsgi
+    execute(self.server.app)
+  File "/home/kk/virtual/flask_py2/lib/python2.7/site-packages/werkzeug/serving.py", line 200, in execute
+    write(data)
+  File "/home/kk/virtual/flask_py2/lib/python2.7/site-packages/werkzeug/serving.py", line 168, in write
+    self.send_header(key, value)
+  File "/usr/lib64/python2.7/BaseHTTPServer.py", line 412, in send_header
+    self.wfile.write("%s: %s\r\n" % (keyword, value))
+IOError: [Errno 32] Broken pipe
+INFO _internal.py:87 127.0.0.1 - - [12/Jan/2018 22:00:11] "GET /api/v1.0/image_codes/7a2d4b4c-642a-4503-b557-a4e2952225b9 HTTP/1.1" 200 -
