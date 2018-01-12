@@ -77,6 +77,9 @@ class CCP(object):
         if status_code == "000000":
             # 表示发送短信成功，0表示没有出现任何异常，如果失败，返回负值
             return 0
+        else:
+            # 表示发送短信失败
+            return -1
 
 #sendTemplateSMS(手机号码，内容数据，模板ID)
 if __name__ == '__main__':
