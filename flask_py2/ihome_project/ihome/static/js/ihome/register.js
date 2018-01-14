@@ -67,14 +67,14 @@ function sendSMSCode() {
                     $(".phonecode-a").html(num + "秒");
                 } else {
                     $(".phonecode-a").html("获取验证码");
-                    $(".phonecode-a").attr("onclick", sendSMSCode());
+                    $(".phonecode-a").attr("onclick", "sendSMSCode();");
                     clearInterval(timer)
                 }
 
             }, 1000, 60)
         } else {
-            alert(resp.errmsg);
-            $(".phonecode-a").attr("onclick", sendSMSCode());
+            // alert(resp.errmsg);
+            $(".phonecode-a").attr("onclick", "sendSMSCode();");
         }
     });
 

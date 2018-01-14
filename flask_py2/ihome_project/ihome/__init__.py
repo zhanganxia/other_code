@@ -56,7 +56,7 @@ def create_app(run_name):
     # flask_wtf 表单扩展(未实现前后端分离)，csrf防护是这个扩展的组成部分，可以直接使用csrf防护而不使用表单
     # 对于包含了请求体的请求(POST,PUT,DELETE)
     # 防护机制：从请求的cookie中读取一个csrftoken的值，从请求体中读取一个csrf_token的值，进行比较，如果相同则允许访问，否则返回403的错误，通过钩子的方式添加上来的
-    CSRFProtect(app)
+    #CSRFProtect(app)
 
     # 注册自定义的转换器
     app.url_map.converters["re"] = ReConverter

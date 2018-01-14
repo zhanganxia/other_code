@@ -3,8 +3,8 @@ from . import api
 from ihome import db,models
 from flask import current_app
 
-@api.route('/register')
-def register():
+@api.route('/register_test')
+def register_test():
     # 记录日志
     current_app.logger.error("错误级别信息")
     current_app.logger.warning("警告级别信息")

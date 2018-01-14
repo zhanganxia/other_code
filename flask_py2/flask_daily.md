@@ -1015,7 +1015,7 @@ day-08 项目
     清除计时器：clearInterval(计时器的对象)
 
 
-3. 注册的流程
+5. 注册的流程
     获取参数 手机号，短信验证码，密码，确认密码 请求体(json)
         request.get_json()方法可以直接将前端传递过来的json数据转换成字典格式的数据
     校验参数
@@ -1041,18 +1041,48 @@ day-08 项目
     保存登录状态
     返回注册成功的信息
 
-4. 防止用户连击
+6. 防止用户连击
     移除点击事件：
     $(".phonecode-a").removeAttr("onclick"); -->获取验证码的时候
     添加点击事件：
     $(".phonecode-a").attr("onclick", sendSMSCode());
 
-5. jsonify(后端的返回值)
+7. jsonify(后端的返回值)
     因为后端返回的响应数据是json格式的字符串，并且包含了响应头Content-Type指明是application/json
     所以ajax将收到的响应数据自动转换为js中的对象(字典)，我们可以直接按照对象属性的操作获取返回数据
         resp.errcode
         resp.errmsg
         
+8. 用户密码加密说明
+    常用的加密算法：md5(不建议使用，已被破解) sha1(不建议使用) sha256
+    
+    sha256算法：
+        hashlib.sha256(password).hexdigest()  -->取出加密之后的结果值
+     
+      例如：
+      user  密码       盐值      加密算法       加密结果
+       A："123456" + "acevef" -->sha256 -->  sdaabdfef
+       B："123456" + "fevbfs" -->sha256 -->  sdvsveeve
+       
+       盐值salt：系统随机生成的字符串
+       如上所示，即使在两个系统中用户的密码一样，但是加密的结果也不一样。
+
+    登录：用户填写的是明文，数据库中存的是密文，如何比较？
+        解决方法：
+        a. 在存储用户名密码的时候，以"|"做为分隔符，存储--盐值|密码(密文)
+        b. 在用户填写密码的时候对填写的密码进行sha256加密
+            1）先从数据库提取密码的盐值（"|"的前半部分）
+            2）对用户输入的密码+盐值 进行sha256加密
+            3）将加密后的结果与数据库中加密的密码进行对比("|"的后半部分)
+            4）返回对比结果
+
+    flask中sha256加密过程计算
+        模块实现：from werkzeug.security import generate_password_hash -->生成密码的加密文件
+
+        generate_password_hash(password,method='pbkdf2:sha256',salt_length=8)
+        参数说明：参数一：原始密码； 参数二：加密的算法；参数三：自动生成盐值的长度
+        
+
 
 --------------------------------------------------------------
 day-09 项目
