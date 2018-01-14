@@ -27,11 +27,32 @@ class User(BaseModel, db.Model):
     houses = db.relationship("House", backref="user")  # 用户发布的房屋
     orders = db.relationship("Order", backref="user")  # 用户下的订单
 
-    def generate_password_hash(self,origin_passworld):
-        """封装到类中的对象方法，对密码进行加密处理
-        origin_passworld：用户的原始明文密码
+    # def generate_password_hash(self,origin_passworld):
+    #     """封装到类中的对象方法，对密码进行加密处理
+    #     origin_passworld：用户的原始明文密码
+    #     """
+    #     self.passworld_hash = security.generate_password_hash(origin_passworld)
+
+    # property装饰器将方法变成属性
+    @property
+    def password(self):
+        """对应额外添加的属性password的读取行为
+        :return:
+        """
+        # 在我们这个应用场景中，读取密码没有实际意义，
+        # 所以对于password属性的读取行为不再实现
+        # 通常以抛出AttributeError的方式做为函数代码
+        raise AttributeError("不支持读取操作")
+
+    @password.setter
+    def password(self,origin_passworld):
+        """
+        对应额外添加的属性password的设置行为
+        :params origin_passworld:在进行属性设置的时候要设置的值 #user.password = origin_passworld
+        :return:
         """
         self.passworld_hash = security.generate_password_hash(origin_passworld)
+
 
 class Area(BaseModel, db.Model):
     """城区"""

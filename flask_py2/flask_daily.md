@@ -1089,10 +1089,44 @@ day-09 项目
 
 property属性装饰器的使用
     把方法的调用变成一种属性赋值的调用
-    property装饰器将方法编程属性
+    # property装饰器将方法变成属性，先读取后设置
+    @property
+    def password(self):
+        """对应额外添加的属性password的读取行为
+        :return:
+        """
+        pass
 
-在我们这个应用场景中，读取密码没有实际意义，所以对于password
-属性的读取行为，函数不再实现，通常以抛出AttributeError的方式来做为函数代码
+    @password.setter
+    def password(self):
+        """
+        对应额外添加的属性password的设置行为
+        :return:
+        """
+        pass
+
+    其他：
+    1）在将方法变成属性时，方法的中的实现没有意义时，函数就不再实现，可以抛出AttributeError的方式来做为函数代码
+    例如：
+    在我们这个应用场景中，读取密码没有实际意义，所以对于password
+    属性的读取行为，函数不再实现，通常以抛出AttributeError的方式来做为函数代码
+
+    2）在进行属性设置时设置的值可以直接做为参数传递给类属性
+    例如：
+
+    文件A：models.py --> User类属性设置
+    @password.setter
+    def password(self,origin_passworld):
+        """
+        对应额外添加的属性password的设置行为
+        :params origin_passworld:在进行属性设置的时候要设置的值 #user.password = origin_passworld
+        :return:
+        """
+        self.passworld_hash = security.generate_password_hash(origin_passworld)
+
+    文件B：passport.py中对类属性passworld的属性设置
+    user.password = password #设置属性   password <==> 参数origin_passworld  
+
 
 对应额外添加的属性password的设置行为
 

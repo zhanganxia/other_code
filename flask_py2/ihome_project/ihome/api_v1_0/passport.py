@@ -85,7 +85,11 @@ def register():
         mobile = mobile
     )
 
-    user.generate_password_hash(password)
+    # user.generate_password_hash(password)
+    user.password = password #设置属性
+    
+    # a = user.password #读取属性
+    # print(user.password)
 
     try:
         db.session.add(user)
