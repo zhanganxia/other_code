@@ -56,7 +56,7 @@ function sendSMSCode() {
         // 所以ajax将收到的响应数据自动转换为js中的对象(字典)，我们可以直接按照对象属性的操作获取返回数据
         // resp.errcode
         // resp.errmsg
-        // 根据后端返回的不同错误编号
+        // 根据后端返回的不同错误编号,做不同的处理
         if (resp.errcode == "0") {
             // 表示发送成功
             // 显示倒计时

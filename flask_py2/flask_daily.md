@@ -1007,24 +1007,37 @@ day-08 项目
 2. 发送短信验证码
     容联 云通讯
 
+3. 前端接收后端传递的json数据(jsonify传递的数据)
+    因为后端返回的响应数据是json字符传，并且包含了响应头Content-Type指明是appliction/json，所以ajax会将收到的响应数据自动转换为js中的对象(字典)，我们可以直接按照对象属性的操作返回数据：resp.errcode     resp.errmsg
 
-因为后端返回的响应数据是json字符传，并且包含了响应头Content-Type指明是appliction/json，所以ajax会将收到的响应数据自动转换为js中的对象(字典)，我们可以直接按照
-
-倒计时：setInterval(function(){
-    
-})
+4. 前端计时器的设置
+    设置计时器：setInterval(function(){ })
+    清除计时器：clearInterval(计时器的对象)
 
 
 3. 注册的流程
     获取参数 手机号，短信验证码，密码，确认密码 请求体(json)
+        request.get_json()方法可以直接将前端传递过来的json数据转换成字典格式的数据
     校验参数
         判断手机号格式
         判断密码一致
     从redis中获取短信验证码的真实值
+        判断验证码是否过期        
     与用户填写的短信验证码进行对比
+        判断手机号是否注册过
     如果相同，表示短信验证码填写正确
     对用户的密码进行加密
     将用户数据保存到数据库中
+        注意：IntegrityError
+        from sqlalchemy.exc import IntegrityError #集成的错误，对应到数据中出现重复记录的错误异常
+
+        try 可以捕获多个异常(需注意异常的先后顺序问题)：
+            try：
+                ...
+            except Exception1 as e:
+                ...
+            except Exception2 as e:
+                ...
     保存登录状态
     返回注册成功的信息
 
@@ -1041,6 +1054,44 @@ day-08 项目
         resp.errmsg
         
 
+--------------------------------------------------------------
+day-09 项目
+
+property装饰器将方法编程属性
+
+在我们这个应用场景中，读取密码没有实际意义，所以对于password
+属性的读取行为，函数不再实现，通常以抛出AttributeError的方式来做为函数代码
+
+对应额外添加的属性password的设置行为
+
+js获取cookie的方法
+    document.cookie()方法，取出的cookie之间以分号分隔
+    document.cookie.match("\\bcsrf_token = ([^;]*)\\b")
+
+python三目运算
+
+celery实现发送短信验证码
+    创建celery任务应用对象
+
+worker执行完成异步任务后，会将结果存到backenfs中
+
+登录的流程：
+    获取参数  手机号、密码
+    参数校验
+    根据请求用户的ip地址，读取他的错误次数
+    判断这个ip地址的错误尝试次数
+    如果错误次数超过限制，则直接返回
+    如果为超过限制，验证手机号与密码
+    根据手机号从数据库中读取用户的真实加密密码，对用户的登录输入密码进行加密计算，比较两个值
+    如果响应，登录成功，保存登录状态 
+    否则登录失败，保存记录错误次数 "access_num_ip地址"："错误次数"字符串类型
+        request.remote_addr #请求用户的ip地址
+
+incr()  expire()
+
+
+作业：1.退出 -- 清除session  session.clear()
+2.用户登录之后，显示用户昵称信息，不显示登录按钮
 
 
 
