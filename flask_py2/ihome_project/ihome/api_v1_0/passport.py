@@ -76,14 +76,17 @@ def register():
     #    如上所示，即使在两个系统中用户的密码一样，但是加密的结果也不一样。
 
     # 调用werkzeug提供的密码加密方法
-    password_hash = generate_password_hash(password)
+    # password_hash = generate_password_hash(password)
 
     # 将用户数据保存到数据库中
     user = User(
         name = mobile,
-        password_hash = password_hash,
+        password_hash = "",
         mobile = mobile
     )
+
+    user.generate_password_hash(password)
+
     try:
         db.session.add(user)
         db.session.commit()

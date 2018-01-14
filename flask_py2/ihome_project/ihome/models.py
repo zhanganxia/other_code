@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from . import db
+from werkzeug import security
 
 
 class BaseModel(object):
@@ -14,7 +15,7 @@ class BaseModel(object):
 class User(BaseModel, db.Model):
     """用户"""
 
-    __tablename__ = "ih_user_profile"
+    __tablename__ = "ih_uspasser_profile"
 
     id = db.Column(db.Integer, primary_key=True)  # 用户编号
     name = db.Column(db.String(32), unique=True, nullable=False)  # 用户暱称
@@ -26,6 +27,11 @@ class User(BaseModel, db.Model):
     houses = db.relationship("House", backref="user")  # 用户发布的房屋
     orders = db.relationship("Order", backref="user")  # 用户下的订单
 
+    def generate_password_hash(self,origin_passworld):
+        """封装到类中的对象方法，对密码进行加密处理
+        origin_passworld：用户的原始明文密码
+        """
+        self.passworld_hash = security.generate_password_hash(origin_passworld)
 
 class Area(BaseModel, db.Model):
     """城区"""
